@@ -27,7 +27,7 @@ page 종류:
 LandingPage 섹션 구성 (실제 구현 대상)
 AnimatedPathLogo.jsx - 회사로고 에니메이션
 TopSection.jsx - 회사 소개
-StorySection.jsx - 기술 소개
+TechnologySection.jsx - 기술 소개
 ProductsSection.jsx - 핵심제품 소개
 ContactSection.jsx - 연락처 및 강의 배너
 

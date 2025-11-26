@@ -3,13 +3,9 @@
  * 모든 섹션에서 사용되는 텍스트를 중앙 관리
  */
 
-// 이미지 import
-import ordinaryPeopleImg from '../assets/illust/ordinary_people.png';
-import storyImg from '../assets/photo/story.png';
-
 // HeroSection 콘텐츠
 export const heroContent = {
-  mainText: 'Design For\nOrdinary People',
+  mainText: '보이지 않는것을 봅니다',
   typingSpeed: 60,
   deleteSpeed: 30,
   startDelay: 300,
@@ -18,47 +14,38 @@ export const heroContent = {
 
 // TransitionSection 콘텐츠
 export const transitionContent = {
-  text: 'ORDINARY',
-  imagePath: ordinaryPeopleImg,
+  text: 'SENSOR',
 };
 
 // MissionSection 콘텐츠
 export const missionContent = {
-  title: 'Ordinary Mission',
+  title: '당신의 시스템에 적합한 코와 눈을 제공합니다',
   description: {
-    brandName: 'Ordinary Design',
+    brandName: 'Tempus',
     message: [
-      '은 평범한 사람들의 꿈을 고민합니다.',
-      '거창한 시작이 없이 가장 나다운 브랜드를',
-      '만들 수 있다고 믿습니다.',
+      '는 자체 MEMSFab 기반 차별화된 적외선센서 기술로',
+      'Physical AI의 새로운 가능성을 열어갑니다',
     ],
   },
 };
 
-// StorySection 콘텐츠
-export const storyContent = {
-  author: {
-    name: '김도연',
-    company: '베이커리 Bloom',
-    position: '대표',
-  },
-  mainMessage: ['반죽과 제 진짜 삶이', '부풀어 오르는 중입니다.'],
-  quote:
-    '손으로 반죽하고, 굽고, 나누는 일.\n이제는 그게 제 직업, 브랜드가 되었어요',
-  imagePath: storyImg,
+// TechnologySection 기술소개
+export const MicroThermopileContent = {
+  title: 'Micro Thermopile 원천기술',
+  mainMessage: ['In-house MEMS Fab 기반 개발/생산'],
 };
 
 // ProjectsSection 콘텐츠
-export const projectsContent = {
-  title: 'Ordinary Projects',
+export const productContent = {
+  title: 'NDIR 냉매센서',
   // 실제 프로젝트 데이터는 projectsData.js에서 관리
-  description: '평범한 사람들을 위한 디자인 프로젝트',
+  description: 'NDIR 가스센서 기반 냉매센서',
 };
 
 // ContactSection 콘텐츠
 export const contactContent = {
   title: ["Let's Work", 'Together'],
-  subtitle: ['평범한 사람들을 위한 디자인,', '함께 만들어 나가요.'],
+  subtitle: ['인재를 모집합니다,', '함께 만들어 나가요.'],
   contact: {
     email: {
       label: 'Email',
@@ -73,12 +60,13 @@ export const contactContent = {
 
 // 전체 사이트 메타 데이터
 export const siteMetadata = {
-  brandName: 'Ordinary Design',
-  brandTagline: '평범한 사람들을 위한 디자인',
+  brandName: 'Tempus',
+  brandTagline: 'See the unseen',
   navigation: {
     home: 'Home',
-    projects: 'Projects',
+    technology: 'Technology',
+    product: 'Product',
+    career: 'Career',
     contact: 'Contact',
-    story: 'Story',
   },
 };
