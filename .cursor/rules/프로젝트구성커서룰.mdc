@@ -75,12 +75,11 @@ src/data/contentData.js - 모든 섹션의 텍스트 중앙 관리
 섹션별 콘텐츠 데이터 활용:
 
 - `heroContent` - "보이지 않는것을 봅니다" 메인 텍스트, 타이핑 설정
-- `transitionContent` - "ORDINARY" 마스킹 텍스트
-- `missionContent` - "Ordinary Mission" 제목, 브랜드 미션 메시지
-- `storyContent` - 김도연 베이커리 Bloom 스토리, 인용구
-- `projectsContent` - "Ordinary Projects" 섹션 제목
+- `transitionContent` - 회사 technology
+- `missionContent` - 회사 미션 메시지
+- `projectsContent` - 회사 product 설명
 - `contactContent` - "Let's Work Together" 제목, 연락처 정보
-- `siteMetadata` - "Ordinary Design" 브랜드명, 네비게이션 메뉴
+- `siteMetadata` - 네비게이션 메뉴
 
 🌈 특별한 배경 시스템 이해하기
 
