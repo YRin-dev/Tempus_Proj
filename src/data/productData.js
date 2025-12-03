@@ -4,6 +4,7 @@ import bssImg from '../assets/photo/bssSensorImg.png';
 import co2Img from '../assets/photo/co2SensorImg.png';
 import hydrogenImg from '../assets/photo/hydrogenSensorImg.png';
 import irThermalImg from '../assets/photo/irThermalSensorImg.png';
+
 /**
  * 전역 프로젝트 데이터
  * - 프로젝트 목록과 상세 정보를 포함
