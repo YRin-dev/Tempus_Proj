@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  Drawer, 
-  IconButton, 
-  List, 
-  ListItem, 
+import {
+  Box,
+  Typography,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
   ListItemText,
-  useMediaQuery,
-  useTheme
+  // useMediaQuery,
+  // useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useBackground } from '../../context/BackgroundContext';
-import { useSectionRefs } from '../../context/SectionRefsContext';
+//import { useSectionRefs } from '../../context/SectionRefsContext';
 
 import { siteMetadata } from '../../data/contentData';
 import ContentArea from './container/ContentArea';
@@ -29,11 +29,10 @@ import ContentArea from './container/ContentArea';
  */
 const Header = () => {
   const { backgroundMode } = useBackground();
-  const { scrollToSection } = useSectionRefs();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  // const { scrollToSection } = useSectionRefs();
+  // const theme = useTheme();
+  //const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -101,7 +100,9 @@ const Header = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           p: 2,
-          borderBottom: `1px solid ${backgroundMode === 'light' ? '#e0e0e0' : '#333'}`,
+          borderBottom: `1px solid ${
+            backgroundMode === 'light' ? '#e0e0e0' : '#333'
+          }`,
         }}
       >
         <Typography
@@ -202,14 +203,15 @@ const Header = () => {
                   transform: isScrolled ? 'translateY(-50px)' : 'translateY(0)',
                   opacity: isScrolled ? 0 : 1,
                   whiteSpace: 'nowrap',
-                  textShadow: backgroundMode === 'light' 
-                    ? '0 1px 3px rgba(255,255,255,0.8), 0 1px 2px rgba(255,255,255,0.6)' 
-                    : 'none',
+                  textShadow:
+                    backgroundMode === 'light'
+                      ? '0 1px 3px rgba(255,255,255,0.8), 0 1px 2px rgba(255,255,255,0.6)'
+                      : 'none',
                 }}
               >
                 {siteMetadata.brandName}
               </Typography>
-              
+
               {/* OD - 스크롤 상태 */}
               <Typography
                 variant="h6"
@@ -225,16 +227,17 @@ const Header = () => {
                   transform: isScrolled ? 'translateY(0)' : 'translateY(50px)',
                   opacity: isScrolled ? 1 : 0,
                   whiteSpace: 'nowrap',
-                  textShadow: backgroundMode === 'light' 
-                    ? '0 1px 3px rgba(255,255,255,0.8), 0 1px 2px rgba(255,255,255,0.6)' 
-                    : 'none',
+                  textShadow:
+                    backgroundMode === 'light'
+                      ? '0 1px 3px rgba(255,255,255,0.8), 0 1px 2px rgba(255,255,255,0.6)'
+                      : 'none',
                 }}
               >
                 OD
               </Typography>
             </Box>
 
-            {/* 데스크톱 네비게이션 메뉴 */}
+            {/* 데스크톱 네비게이션 메뉴
             {!isMobile && !isProjectDetailPage && (
               <Box
                 sx={{
@@ -267,10 +270,10 @@ const Header = () => {
                   </Typography>
                 ))}
               </Box>
-            )}
+            )} */}
 
             {/* 모바일 햄버거 메뉴 */}
-            {isMobile && !isProjectDetailPage && (
+            {/* {isMobile && !isProjectDetailPage && (
               <IconButton
                 onClick={toggleDrawer}
                 sx={{
@@ -285,7 +288,7 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-            )}
+            )} */}
           </Box>
         </ContentArea>
       </Box>
@@ -307,4 +310,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;

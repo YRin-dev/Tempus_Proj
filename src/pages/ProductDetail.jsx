@@ -4,11 +4,11 @@ import { Box, Typography, Button } from '@mui/material';
 
 /**
  * ProductDetail 컴포넌트
- * 
+ *
  * 개별 제품(프로젝트) 상세 페이지
- * 
+ *
  * Props: 없음 (URL 파라미터로 제품 ID를 받음)
- * 
+ *
  * Example usage:
  * <ProductDetail />
  */
@@ -50,14 +50,19 @@ function ProductDetail() {
           sx={{
             fontFamily: 'Blackout-Midnight, sans-serif',
             fontWeight: 'normal',
-            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5.5rem' },
+            fontSize: {
+              xs: '2.5rem',
+              sm: '3.5rem',
+              md: '4.5rem',
+              lg: '5.5rem',
+            },
             mb: 3,
             lineHeight: 1.1,
           }}
         >
           Product Detail
         </Typography>
-        
+
         <Typography
           variant="h5"
           sx={{
@@ -88,4 +93,3 @@ function ProductDetail() {
 }
 
 export default ProductDetail;
-
