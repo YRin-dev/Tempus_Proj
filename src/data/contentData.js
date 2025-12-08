@@ -60,7 +60,7 @@ export const contactContent = {
 
 // 전체 사이트 메타 데이터
 export const siteMetadata = {
-  brandName: 'Tempus',
+  // brandName: 'Tempus',
   brandTagline: 'See the unseen',
   navigation: {
     home: 'Home',

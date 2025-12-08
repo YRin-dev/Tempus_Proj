@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -17,6 +17,7 @@ import { useBackground } from '../../context/BackgroundContext';
 
 import { siteMetadata } from '../../data/contentData';
 import ContentArea from './container/ContentArea';
+import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
 
 /**
  * Header 컴포넌트
@@ -34,21 +35,9 @@ const Header = () => {
   //const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   // 테마 모드에 따른 색상 결정
   const textColor = backgroundMode === 'light' ? '#000000' : '#ffffff';
-
-  // 스크롤 감지
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 100);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   /**
    * 로고 클릭 핸들러 - 페이지 최상단으로 이동
@@ -174,13 +163,13 @@ const Header = () => {
               mx: 'auto',
             }}
           >
-            {/* 인터랙티브 로고 - 수정된 구조 */}
+            {/* 회사 로고 이미지 */}
             <Box
               onClick={handleLogoClick}
               sx={{
                 cursor: 'pointer',
                 position: 'relative',
-                height: '2rem', // 고정 높이 설정
+                height: { xs: '2rem', md: '2.5rem' },
                 display: 'flex',
                 alignItems: 'center',
                 '&:hover': {
@@ -188,53 +177,21 @@ const Header = () => {
                 },
               }}
             >
-              {/* Ordinary Design - 기본 상태 */}
-              <Typography
-                variant="h6"
-                component="h1"
+              <Box
+                component="img"
+                src={tempusLogoImage}
+                alt="Tempus Logo"
                 sx={{
-                  fontWeight: 'bold',
-                  color: textColor,
-                  fontSize: { xs: '1.4rem', sm: '1.6rem', md: '1.8rem' },
+                  height: '100%',
+                  width: 'auto',
+                  objectFit: 'contain',
                   transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  transform: isScrolled ? 'translateY(-50px)' : 'translateY(0)',
-                  opacity: isScrolled ? 0 : 1,
-                  whiteSpace: 'nowrap',
-                  textShadow:
+                  filter:
                     backgroundMode === 'light'
-                      ? '0 1px 3px rgba(255,255,255,0.8), 0 1px 2px rgba(255,255,255,0.6)'
+                      ? 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'
                       : 'none',
                 }}
-              >
-                {siteMetadata.brandName}
-              </Typography>
-
-              {/* OD - 스크롤 상태 */}
-              <Typography
-                variant="h6"
-                component="h1"
-                sx={{
-                  fontWeight: 'bold',
-                  color: textColor,
-                  fontSize: { xs: '1.4rem', sm: '1.6rem', md: '1.8rem' },
-                  transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  transform: isScrolled ? 'translateY(0)' : 'translateY(50px)',
-                  opacity: isScrolled ? 1 : 0,
-                  whiteSpace: 'nowrap',
-                  textShadow:
-                    backgroundMode === 'light'
-                      ? '0 1px 3px rgba(255,255,255,0.8), 0 1px 2px rgba(255,255,255,0.6)'
-                      : 'none',
-                }}
-              >
-                OD
-              </Typography>
+              />
             </Box>
 
             {/* 데스크톱 네비게이션 메뉴
