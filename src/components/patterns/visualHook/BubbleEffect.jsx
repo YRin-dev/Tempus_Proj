@@ -1,7 +1,37 @@
-import { MathUtils } from 'three';
+import { MathUtils, Color } from 'three';
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Instances, Instance, Float } from '@react-three/drei';
+
+// 연한 그라데이션 색상 팔레트 (GradientBox의 pastelDream 등 참고)
+const softGradientColors = [
+  '#FFDEE9', // 연한 핑크
+  '#B5FFFC', // 연한 시안
+  '#E0F2FE', // 연한 스카이 블루
+  '#F0E6FF', // 연한 라벤더
+  '#FFF0E6', // 연한 피치
+  '#E6F5FF', // 연한 하늘색
+  '#FFE6F0', // 연한 로즈
+  '#E6FFE6', // 연한 민트
+];
+
+// 두 색상 사이의 그라데이션 색상 계산
+const interpolateColor = (color1, color2, factor) => {
+  const c1 = new Color(color1);
+  const c2 = new Color(color2);
+  return c1.lerp(c2, factor);
+};
+
+// 연한 그라데이션 색상 생성
+const getGradientColor = () => {
+  const colorIndex1 = Math.floor(Math.random() * softGradientColors.length);
+  const colorIndex2 = (colorIndex1 + 1) % softGradientColors.length;
+  const gradientFactor = Math.random();
+
+  const baseColor = softGradientColors[colorIndex1];
+  const targetColor = softGradientColors[colorIndex2];
+  return interpolateColor(baseColor, targetColor, gradientFactor);
+};
 
 // 파티클 데이터 생성 함수
 const createParticles = (count) => {
@@ -46,6 +76,11 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
     return Math.round(clamped * 50) / 50; // 0.02 단위로 스무딩
   }, [scrollProgress]);
 
+  // 연한 그라데이션 색상들을 메모이제이션
+  const gradientColors = useMemo(() => {
+    return Array.from({ length: bubbleCount }, () => getGradientColor());
+  }, [bubbleCount]);
+
   return (
     <Float speed={0.5} rotationIntensity={0.5} floatIntensity={1}>
       <Instances
@@ -57,7 +92,7 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
       >
         {/* 기하학 복잡도 최적화 (32 -> 20) - 품질과 성능의 균형 */}
         <sphereGeometry args={[1, 20, 20]} />
-        {/* <meshPhysicalMaterial
+        <meshPhysicalMaterial
           roughness={0.02}
           metalness={0.005}
           envMapIntensity={0.5}
@@ -65,35 +100,18 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
           thickness={1.2}
           ior={1.5}
           transparent={true}
-          opacity={0.25}
-          color="#d0e8ff"
+          opacity={0.3}
           clearcoat={0.1}
           clearcoatRoughness={0.1}
-        /> */}
-        <meshPhysicalMaterial
-          // 기본 반짝임/표면 느낌
-          roughness={0.1}
-          metalness={0.0}
-          envMapIntensity={0.8}
-          clearcoat={0.4}
-          clearcoatRoughness={0.2}
-          // 유리/물방울 느낌
-          transmission={0.98}
-          thickness={1.8}
-          ior={1.33}
-          transparent={true}
-          opacity={0.6}
-          // 바깥쪽은 거의 흰색에 가까운 연한 색
-          color="#f9fbff"
-          // ✅ 안쪽으로 갈수록 살짝 더 파랗게/짙어지는 그라데이션 느낌
-          attenuationColor="#93c5fd" // 안쪽 컬러 (연한 파랑)
-          attenuationDistance={3.0} // 얼마나 천천히 진해질지 (값 키우면 더 은은)
-
-          // 필요하면 예전 값들로 다시 살짝씩 튜닝 가능
         />
 
         {particles.map((data, i) => (
-          <SmoothBubble key={i} {...data} scrollProgress={smoothedProgress} />
+          <SmoothBubble
+            key={i}
+            {...data}
+            scrollProgress={smoothedProgress}
+            color={gradientColors[i]}
+          />
         ))}
       </Instances>
     </Float>
@@ -111,9 +129,11 @@ function SmoothBubble({
   baseSpeed,
   oscillationAmplitudeX,
   oscillationAmplitudeZ,
+  color,
 }) {
   const ref = useRef();
   const smoothProgressRef = useRef(scrollProgress);
+  const colorRef = useRef(new Color(color));
 
   // 초기값들을 useMemo로 메모이제이션
   const constants = useMemo(
@@ -147,12 +167,16 @@ function SmoothBubble({
     const currentZ =
       initialZ + Math.cos(oscillationTime * 0.7) * oscillationAmplitudeZ;
 
-    // 위치 및 크기 업데이트
+    // 위치, 크기 및 색상 업데이트
     if (ref.current) {
       ref.current.position.set(currentX, currentY, currentZ);
       ref.current.scale.setScalar(size);
+      // 각 버블의 색상 적용 (Instances에서 개별 색상 적용)
+      if (ref.current.color) {
+        ref.current.color.copy(colorRef.current);
+      }
     }
   });
 
-  return <Instance ref={ref} />;
+  return <Instance ref={ref} color={color} />;
 }
