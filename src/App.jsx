@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import './App.css';
 
 // 커스텀 테마 불러오기!
@@ -17,7 +17,6 @@ import { SectionRefsProvider } from './context/SectionRefsContext';
 // 공통 컴포넌트 불러오기
 import BackgroundLayer from './components/commons/BackgroundLayer';
 import Header from './components/commons/Header';
-import CustomTooltipCursor from './components/patterns/customCursor/CustomTooltipCursor';
 
 // 페이지 컴포넌트 불러오기
 import LandingPage from './pages/LandingPage';
@@ -32,16 +31,12 @@ import ProductDetail from './pages/ProductDetail';
  * - Lenis 부드러운 스크롤 전역 활성화
  * - GSAP ScrollTrigger 연동
  * - 전역 배경색 관리 시스템
- * - CustomTooltipCursor 커스텀 커서 시스템 (데스크탑만)
  * - Header 상단 고정 네비게이션
  * - SectionRefsContext 섹션 이동 기능
  * - 튜토리얼용 기본 환영 메시지
  */
 function App() {
   const theme = lightTheme;
-
-  // 모바일 버전 감지 (md 브레이크포인트 이하)
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // 브라우저 자동 스크롤 복원 비활성화
   useScrollRestoration();
@@ -68,11 +63,6 @@ function App() {
           <SectionRefsProvider>
             {/* 전역 배경 레이어 */}
             <BackgroundLayer />
-
-            {/* 커스텀 커서 - 데스크탑에서만 활성화 */}
-            {!isMobile && (
-              <CustomTooltipCursor size={40} borderWidth={3} lag={0.15} />
-            )}
 
             {/* 상단 고정 헤더 */}
             <Header />
