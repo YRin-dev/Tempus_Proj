@@ -1,3 +1,5 @@
+//
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Stack } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
@@ -5,6 +7,7 @@ import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { AnimatedPath } from '../components/patterns/visualHook/AnimatedPath';
 import TypingEffect from '../components/patterns/typoraphy/TypingEffect';
 import BubbleEffect from '../components/patterns/visualHook/BubbleEffect';
+import { gradientPalettes } from '../data/gradientPalettes';
 import {
   path_T,
   path_e,
@@ -42,6 +45,25 @@ function LandingPage() {
     handleScroll(); // 초기값 설정
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
+
+  // 그라데이션 팔레트 가져오기 (기존 배경색과 유사한 밝은 톤 선택)
+  const getGradientColors = () => {
+    // pastelDream 또는 부드러운 밝은 색상 팔레트 사용
+    const palette = gradientPalettes.find((p) => p.id === 'pastelDream');
+    return palette ? palette.colors : ['#FAFAF7', '#E8E8E5'];
+  };
+
+  // 그라데이션 생성 함수 (GradientBox 로직 참고)
+  const createGradient = () => {
+    const colors = getGradientColors();
+    const colorStops = colors
+      .map((color, index) => {
+        const percentage = (100 / (colors.length - 1)) * index;
+        return `${color} ${percentage}%`;
+      })
+      .join(', ');
+    return `linear-gradient(135deg, ${colorStops})`;
+  };
 
   // TEMPUS 로고 컴포넌트
   // LandingPage.jsx 안에서
@@ -173,13 +195,20 @@ function LandingPage() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FAFAF7',
+        background: createGradient(),
+        backgroundSize: '200% 200%',
         padding: '40px',
         overflow: 'visible',
         position: 'relative',
+        // 애니메이션 그라데이션 (GradientBox 로직 참고)
+        animation: 'gradientSlide 8s ease-in-out infinite',
+        '@keyframes gradientSlide': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
       }}
     >
-      {/* 버블 효과 배경 Canvas */}
+      {/* 버블 효과 배경 Canvas - BubbleBackground.jsx 설정 적용 */}
       <Canvas
         style={{
           position: 'absolute',
@@ -194,13 +223,11 @@ function LandingPage() {
         gl={{
           antialias: true,
           powerPreference: 'high-performance',
-          alpha: false,
+          alpha: true, // 그라데이션 배경이 보이도록 투명 설정 (BubbleBackground는 false지만 그라데이션을 위해 true)
           stencil: false,
         }}
         camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
       >
-        {/* 기존 배경색 유지 */}
-        <color attach="background" args={['#FAFAF7']} />
         <directionalLight
           position={[0, 30, 10]}
           intensity={1.5}
@@ -214,7 +241,11 @@ function LandingPage() {
           shadow-camera-top={15}
           shadow-camera-bottom={-15}
         />
-        <BubbleEffect scrollProgress={scrollProgress} bubbleCount={80} />
+        <BubbleEffect
+          scrollProgress={scrollProgress}
+          bubbleCount={120}
+          gradientColors={getGradientColors()}
+        />
         <EffectComposer disableNormalPass>
           <N8AO
             aoRadius={4}

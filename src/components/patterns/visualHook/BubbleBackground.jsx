@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
-import { Canvas } from "@react-three/fiber";
-import { EffectComposer, N8AO } from "@react-three/postprocessing";
-import { Box } from "@mui/material";
-import BubbleEffect from "./BubbleEffect";
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { EffectComposer, N8AO } from '@react-three/postprocessing';
+import { Box } from '@mui/material';
+import BubbleEffect from './BubbleEffect';
 
 // Throttle 유틸리티 함수 (60FPS)
 const throttle = (func, delay) => {
@@ -88,36 +88,37 @@ export default function BubbleBackground({
     const element = scrollRef.current;
     if (element) {
       handleScroll();
-      element.addEventListener("scroll", throttledHandleScroll, {
+      element.addEventListener('scroll', throttledHandleScroll, {
         passive: true,
       });
-      return () => element.removeEventListener("scroll", throttledHandleScroll);
+      return () => element.removeEventListener('scroll', throttledHandleScroll);
     }
   }, [handleScroll, throttledHandleScroll, useInternalScroll]);
 
-  // children이 없고 외부 scrollProgress만 있는 경우 (기존 방식)
   if (!children && externalScrollProgress !== undefined) {
     return (
       <Canvas
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          background: 'transparent', // ✅ CSS 배경도 투명
         }}
-        shadows
         dpr={[1, 1.5]}
         gl={{
           antialias: true,
-          powerPreference: "high-performance",
-          alpha: false,
+          powerPreference: 'high-performance',
+          alpha: true, // ✅ DOM 배경이 비치도록
           stencil: false,
         }}
         camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
       >
-        <color attach="background" args={["#0040a0"]} />
+        {/* ❌ 여기 background 컬러 지워야 함 */}
+        {/* <color attach="background" args={["#0040a0"]} /> */}
+
         <directionalLight
           position={[0, 30, 10]}
           intensity={1.5}
@@ -153,35 +154,84 @@ export default function BubbleBackground({
   return (
     <Box
       sx={{
-        position: "fixed",
+        position: 'fixed',
         top: 0,
         left: 0,
-        width: "100%",
-        height: "100%",
-        overflow: "hidden",
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
       }}
     >
-      {/* 버블 배경 Canvas */}
+      {/* 버블 배경 Canvas
       <Canvas
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
           zIndex: 0,
         }}
         shadows
         dpr={[1, 1.5]}
         gl={{
           antialias: true,
-          powerPreference: "high-performance",
+          powerPreference: 'high-performance',
           alpha: false,
           stencil: false,
         }}
         camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
       >
-        <color attach="background" args={["#0040a0"]} />
+        <color attach="background" args={['#0040a0']} />
+        <directionalLight
+          position={[0, 30, 10]}
+          intensity={1.5}
+          color="#ffffff"
+          castShadow
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+          shadow-camera-far={50}
+          shadow-camera-left={-15}
+          shadow-camera-right={15}
+          shadow-camera-top={15}
+          shadow-camera-bottom={-15}
+        />
+        <BubbleEffect
+          scrollProgress={scrollProgress}
+          bubbleCount={bubbleCount}
+        />
+        <EffectComposer disableNormalPass>
+          <N8AO
+            aoRadius={4}
+            intensity={3}
+            distanceFalloff={1}
+            color="#030f24"
+          />
+        </EffectComposer>
+      </Canvas> */}
+
+      <Canvas
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          background: 'transparent', // ✅
+        }}
+        dpr={[1, 1.5]}
+        gl={{
+          antialias: true,
+          powerPreference: 'high-performance',
+          alpha: true, // ✅
+          stencil: false,
+        }}
+        camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
+      >
+        {/* ❌ 배경 컬러 제거 */}
+        {/* <color attach="background" args={["#0040a0"]} /> */}
+
         <directionalLight
           position={[0, 30, 10]}
           intensity={1.5}
@@ -213,25 +263,25 @@ export default function BubbleBackground({
       <Box
         ref={scrollRef}
         sx={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
-          overflowY: "scroll",
+          width: '100%',
+          height: '100%',
+          overflowY: 'scroll',
           zIndex: 1,
-          color: "#e0e0e0",
+          color: '#e0e0e0',
           fontFamily: "'Poppins', sans-serif",
-          scrollbarWidth: "thin",
-          scrollbarColor: "#555 #333",
-          "&::-webkit-scrollbar": {
-            width: "4px",
+          scrollbarWidth: 'thin',
+          scrollbarColor: '#555 #333',
+          '&::-webkit-scrollbar': {
+            width: '4px',
           },
-          "&::-webkit-scrollbar-track": {
-            background: "rgba(30, 30, 30, 0.4)",
+          '&::-webkit-scrollbar-track': {
+            background: 'rgba(30, 30, 30, 0.4)',
           },
-          "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "rgba(255, 255, 255, 0.3)",
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(255, 255, 255, 0.3)',
           },
         }}
       >
@@ -243,4 +293,4 @@ export default function BubbleBackground({
 }
 
 // BubbleSection 컴포넌트 export
-export { default as BubbleSection } from "../../commons/container/BubbleSection";
+export { default as BubbleSection } from '../../commons/container/BubbleSection';

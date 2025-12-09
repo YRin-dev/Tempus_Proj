@@ -2,6 +2,7 @@ import { MathUtils } from 'three';
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Instances, Instance, Float } from '@react-three/drei';
+import { gradientPalettes } from '../../../data/gradientPalettes';
 
 // 파티클 데이터 생성 함수
 const createParticles = (count) => {
@@ -34,7 +35,11 @@ const calculateSmoothSpeed = (baseSpeed, scrollProgress) => {
   return baseSpeed * speedMultiplier * smoothFactor;
 };
 
-export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
+export default function BubbleEffect({
+  scrollProgress,
+  bubbleCount = 120,
+  gradientColors, // prop으로 전달되면 사용, 없으면 내부 로직 사용
+}) {
   const ref = useRef();
 
   // 파티클 데이터를 메모이제이션하여 성능 최적화
@@ -46,6 +51,44 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
     return Math.round(clamped * 50) / 50; // 0.02 단위로 스무딩
   }, [scrollProgress]);
 
+  // 그라데이션 색상을 평균하여 버블 색상 결정 (LandingPage와 동일한 로직 사용)
+  const bubbleColor = useMemo(() => {
+    // LandingPage와 동일한 그라데이션 색상 가져오기 로직
+    let colors;
+    // prop으로 전달된 색상이 있으면 사용
+    if (gradientColors && gradientColors.length > 0) {
+      colors = gradientColors;
+    } else {
+      // 없으면 LandingPage와 동일한 로직 사용
+      const palette = gradientPalettes.find((p) => p.id === 'pastelDream');
+      colors = palette ? palette.colors : ['#FAFAF7', '#E8E8E5'];
+    }
+    // 두 색상의 중간값 계산
+    const hexToRgb = (hex) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result
+        ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16),
+          }
+        : null;
+    };
+
+    const rgb1 = hexToRgb(colors[0]);
+    const rgb2 = hexToRgb(colors[1] || colors[0]);
+
+    if (rgb1 && rgb2) {
+      const avgR = Math.round((rgb1.r + rgb2.r) / 2);
+      const avgG = Math.round((rgb1.g + rgb2.g) / 2);
+      const avgB = Math.round((rgb1.b + rgb2.b) / 2);
+      return `#${avgR.toString(16).padStart(2, '0')}${avgG
+        .toString(16)
+        .padStart(2, '0')}${avgB.toString(16).padStart(2, '0')}`;
+    }
+    return '#e0f0ff'; // 기본값
+  }, [gradientColors]);
+
   return (
     <Float speed={0.5} rotationIntensity={0.5} floatIntensity={1}>
       <Instances
@@ -55,7 +98,6 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
         receiveShadow
         position={[0, -5, 0]}
       >
-        {/* 기하학 복잡도 최적화 (32 -> 20) - 품질과 성능의 균형 */}
         <sphereGeometry args={[1, 20, 20]} />
         <meshPhysicalMaterial
           roughness={0.02}
@@ -65,8 +107,8 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
           thickness={1.2}
           ior={1.5}
           transparent={true}
-          opacity={0.25}
-          color="#d0e8ff"
+          opacity={0.3}
+          color={bubbleColor}
           clearcoat={0.1}
           clearcoatRoughness={0.1}
         />
