@@ -95,74 +95,9 @@ export default function BubbleBackground({
     }
   }, [handleScroll, throttledHandleScroll, useInternalScroll]);
 
+  // children이 없고 외부 scrollProgress만 있는 경우 (기존 방식)
   if (!children && externalScrollProgress !== undefined) {
     return (
-      <Canvas
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
-          background: 'transparent', // ✅ CSS 배경도 투명
-        }}
-        dpr={[1, 1.5]}
-        gl={{
-          antialias: true,
-          powerPreference: 'high-performance',
-          alpha: true, // ✅ DOM 배경이 비치도록
-          stencil: false,
-        }}
-        camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
-      >
-        {/* ❌ 여기 background 컬러 지워야 함 */}
-        {/* <color attach="background" args={["#0040a0"]} /> */}
-
-        <directionalLight
-          position={[0, 30, 10]}
-          intensity={1.5}
-          color="#ffffff"
-          castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-far={50}
-          shadow-camera-left={-15}
-          shadow-camera-right={15}
-          shadow-camera-top={15}
-          shadow-camera-bottom={-15}
-        />
-        <BubbleEffect
-          scrollProgress={scrollProgress}
-          bubbleCount={bubbleCount}
-        />
-        <EffectComposer disableNormalPass>
-          <N8AO
-            aoRadius={4}
-            intensity={3}
-            distanceFalloff={1}
-            color="#030f24"
-          />
-        </EffectComposer>
-      </Canvas>
-    );
-  }
-
-  // 새로운 방식: children을 포함한 전체 스크롤 컨테이너
-  const sectionCount = React.Children.count(children) || 1;
-
-  return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        overflow: 'hidden',
-      }}
-    >
-      {/* 버블 배경 Canvas
       <Canvas
         style={{
           position: 'absolute',
@@ -208,8 +143,25 @@ export default function BubbleBackground({
             color="#030f24"
           />
         </EffectComposer>
-      </Canvas> */}
+      </Canvas>
+    );
+  }
 
+  // 새로운 방식: children을 포함한 전체 스크롤 컨테이너
+  const sectionCount = React.Children.count(children) || 1;
+
+  return (
+    <Box
+      sx={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+      }}
+    >
+      {/* 버블 배경 Canvas */}
       <Canvas
         style={{
           position: 'absolute',
@@ -217,21 +169,19 @@ export default function BubbleBackground({
           left: 0,
           width: '100%',
           height: '100%',
-          pointerEvents: 'none',
-          background: 'transparent', // ✅
+          zIndex: 0,
         }}
+        shadows
         dpr={[1, 1.5]}
         gl={{
           antialias: true,
           powerPreference: 'high-performance',
-          alpha: true, // ✅
+          alpha: false,
           stencil: false,
         }}
         camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
       >
-        {/* ❌ 배경 컬러 제거 */}
-        {/* <color attach="background" args={["#0040a0"]} /> */}
-
+        <color attach="background" args={['#0040a0']} />
         <directionalLight
           position={[0, 30, 10]}
           intensity={1.5}
