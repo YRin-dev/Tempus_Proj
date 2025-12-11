@@ -65,9 +65,9 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
           ior={1.5}
           transparent={true}
           opacity={0.3}
-          //color="#d0e8ff"
+          color="#d0e8ff"
           // color="#ffffff"
-          color="#ebf5ff"
+          //color="#ebf5ff"
           clearcoat={0.1}
           clearcoatRoughness={0.1}
         />

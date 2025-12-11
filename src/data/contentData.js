@@ -14,17 +14,17 @@ export const heroContent = {
 
 // TransitionSection 콘텐츠
 export const transitionContent = {
-  text: 'SENSOR',
+  text: 'ABOUT',
 };
 
 // MissionSection 콘텐츠
 export const missionContent = {
-  title: '당신의 시스템에 적합한 코와 눈을 제공합니다',
+  title: 'Tempus Mission/ 응용 분야 및 특징',
   description: {
     brandName: 'Tempus',
     message: [
-      '는 자체 MEMSFab 기반 차별화된 적외선센서 기술로',
-      'Physical AI의 새로운 가능성을 열어갑니다',
+      '는 다양한 산업 분야에서 활용되는',
+      '센서 기술과 솔루션으로 Physical AI의 새로운 가능성을 열어갑니다',
     ],
   },
 };

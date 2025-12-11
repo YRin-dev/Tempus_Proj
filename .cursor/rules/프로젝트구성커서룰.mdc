@@ -25,8 +25,7 @@ page 종류:
 /ESG -> esg.jsx
 
 LandingPage 섹션 구성 (실제 구현 대상)
-AnimatedPathLogo.jsx - 회사로고 에니메이션
-TopSection.jsx - 회사 소개
+TopSection.jsx - 애니메이션 + 회사 소개
 TechnologySection.jsx - 기술 소개
 ProductsSection.jsx - 핵심제품 소개
 ContactSection.jsx - 연락처 및 강의 배너
@@ -35,10 +34,10 @@ ContactSection.jsx - 연락처 및 강의 배너
 
 TopSection 컴포넌트 구성:
 
-- `HorizontalScrollSection` -가로 스크롤 컨테이너
-- `HeroSection` - 첫 번째 회사 소개.
-- `TransitionSection` - 두 번째 연결 화면
-- `MissionSection` - 세 번째 미션 화면
+- `VerticalScrollSection` -가로 스크롤 컨테이너
+- `HeroSection` - animation
+- `TransitionSection` - about tempus
+- `MissionSection` - 응용분야 및 특징
 
 TechnologySection 컴포넌트 구성:
 

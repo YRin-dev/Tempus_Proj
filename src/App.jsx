@@ -17,6 +17,7 @@ import { SectionRefsProvider } from './context/SectionRefsContext';
 // 공통 컴포넌트 불러오기
 import BackgroundLayer from './components/commons/BackgroundLayer';
 import Header from './components/commons/Header';
+import LenisScrollRestoration from './components/commons/LenisScrollRestoration';
 
 // 페이지 컴포넌트 불러오기
 import LandingPage from './pages/LandingPage';
@@ -63,6 +64,9 @@ function App() {
           <SectionRefsProvider>
             {/* 전역 배경 레이어 */}
             <BackgroundLayer />
+
+            {/* Lenis 스크롤 위치 복원 */}
+            <LenisScrollRestoration />
 
             {/* 상단 고정 헤더 */}
             <Header />

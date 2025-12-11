@@ -36,7 +36,7 @@ alwaysApply: false
 콘텐츠 데이터 시스템:
 
 - contentData.js에서 모든 섹션의 텍스트를 중앙 관리
-- 브랜드명 "Ordinary Design", 메뉴 텍스트 "Projects/Contact" 등 사이트 전체 문구 통합
+- 브랜드명 "Tempus", 메뉴 텍스트 "Products/Contact" 등 사이트 전체 문구 통합
 - heroContent, missionContent 등 데이터 객체를 직접 import하여 사용
 - UI와 데이터 분리로 콘텐츠 수정 시 한 곳에서만 변경 가능
 
@@ -68,60 +68,77 @@ Header 컴포넌트 (commons 폴더):
 
 LandingPage.jsx 메인 포트폴리오 페이지를 4개의 큰 섹션으로 나누어 만들어주세요.
 
-TopSection.jsx는 FreeHorizontalScrollSection 컴포넌트로 3개의 하위 섹션들을 가로 스크롤로 관리합니다.
+TopSection.jsx는 FreeVerticalScrollSection 컴포넌트로 3개의 하위 섹션들을 세로 스크롤로 관리합니다.
 
 위에서 아래로 순서대로 배치될 섹션들:
 
 1. TopSection.jsx (첫 번째 섹션):
 
-   - FreeHorizontalScrollSection(height="100vh")으로 3개 섹션을 가로 스크롤로 관리
+   - FreeVerticalScrollSection(height="100vh")으로 섹션을 세로 스크롤로 관리
 
    1-1. HeroSection 컴포넌트:
-
-   - FullPageSection(widthType="vw")으로 전체 뷰포트 폭 차지
-   - import { heroContent } from [contentData.js](mdc:src/data/contentData.js) 로 데이터 가져와서 heroContent.mainText, heroContent.typingSpeed 등 직접 사용
-   - TypingEffect 컴포넌트로 동적 타이핑 효과와 함께 우측 상단 배치
-   - HumanIllustCarousel(pathType="horizontal", theme="light")을 배경 전체에 배치
-   - 좌측 패딩으로 텍스트와 배경 일러스트 분리
-     강의중 작성
-   - useBackground('light') 모드 전환 + [useIsInView.js](mdc:src/hooks/useIsInView.js) 사용
+   AnimationLogoSection.jsx 사용
 
    1-2. TransitionSection 컴포넌트:
+      <!-- - [MaskingText.jsx](mdc:src/components/patterns/typoraphy/MaskingText.jsx) 컴포넌트 + ordinary_people.png로 텍스트 모양 이미지 마스킹 -->
+      <!-- - calc(100cqw / 5) 폰트 사이즈로 300vw 폭을 완벽하게 채우는 타이포그래피 -->
 
-   - 300vw 초대형 폭 (뷰포트의 3배 너비)으로 가로 스크롤 영역에서 압도적 존재감
-   - transitionContent에서 "ORDINARY" 텍스트 가져오기
-   - [MaskingText.jsx](mdc:src/components/patterns/typoraphy/MaskingText.jsx) 컴포넌트 + ordinary_people.png로 텍스트 모양 이미지 마스킹
-   - calc(100cqw / 5) 폰트 사이즈로 300vw 폭을 완벽하게 채우는 타이포그래피
+   -회사 소개에 대한 내용
+
+   - 가로로 넓은 카드 형식으로
+   - 300vw 초대형 폭 (뷰포트의 3배 너비)으로 세로 스크롤 영역에서 압도적 존재감
+   - transitionContent에서 "ABOUT" 텍스트 가져오기
+   - "템퍼스는 '가격 경쟁력이 있는 IR 멀티밴드 분광 센서'에
+     중점을 두고, 높은 노이즈 대비 감도( SNR) 및 넓은
+     감지파장 (WDR)을 가진 마이크로써모파일을 성공적으로
+     개발하였습니다."
+     "34개의 특허와 13년 기술력을 바탕으로 차별화된 적외선 센서 솔루션을 제공합니다"
    - Container Query Units 활용해 컨테이너 크기에 맞춰 텍스트 자동 조정
-     강의중 작성
-   - useBackground('dark') 모드 전환 + @useIsInView.js 사용
+   - useBackground('light') 모드 전환 + @useIsInView.js 사용
+   - 더 디테일한 내용을 원할때 클릭해서 디테일 회사 소개 페이지로 넘어 갈 수 있는 버튼 카드 아래에
 
 강의중 작성
-각 섹션의 @useIsInView.js 의 thresold 값을 조정해서 @TransitionSection.jsx 이 10%만 보여둬 dark로 설정
+각 섹션의 @useIsInView.js 의 thresold 값을 조정해서 @TransitionSection.jsx 이 10%만 보여둬 light로 설정
 
 1-3. MissionSection 컴포넌트:
 
 - FullPageSection(widthType="vw")으로 전체 뷰포트 폭 차지
-- missionContent에서 "Ordinary Mission" 제목과 브랜드 미션 메시지 가져오기
-- "Ordinary Design은 평범한 사람들의 꿈을 고민합니다" 등 실제 브랜드 스토리 표시
+- missionContent에서 "Tempus Mission/ 응용 분야 및 특징" 제목과 브랜드 미션 메시지 가져오기
+- "다양한 산업 분야에서 활용되는 TEMPUS의 센서 기술과 솔루션" 등 실제 브랜드 스토리 표시
 - HumanIllustCarousel(pathType="circle", theme="dark")을 화면 중앙에 원형 배치
 - 텍스트는 z-index로 일러스트 위에 오버레이
+- useBackground('dark') 모드 전환 + @useIsInView.js 사용
+  각 섹션의 @useIsInView.js 의 thresold 값을 조정해서 @MissionSection.jsx 이 10%만 보여둬 dark로 설정
 
+2. TechnologySection.jsx (두 번째 섹션):
 
-    강의중 작성
-
-@useBackground 는 @TransitionSection.jsx 이후에는 사용하지 않는다. 그 이후로는 계속 다크 모드이기댸문에 그래서 @MissionSection.jsx 에 관련 코드를 삭제
-
-2. StorySection.jsx (두 번째 섹션):
    - [StickySection.jsx](mdc:src/components/commons/container/StickySection.jsx) 으로 이미지 고정 + 텍스트 스크롤 구조
-   - [story.png](mdc:src/assets/photo/story.png) 배경 이미지가 스크롤하면서 서서히 축소되고 흐려지는 효과
-   - storyContent에서 김도연 베이커리 Bloom 대표 정보와 스토리 가져오기
-   - "반죽과 제 진짜 삶이 부풀어 오르는 중입니다" 메인 메시지를 배열로 관리
-   - "손으로 반죽하고, 굽고, 나누는 일..." 인용구와 출처가 애니메이션으로 등장
-3. ProjectsSection.jsx (세 번째 섹션):
+   - [fabImg.png](mdc:src/assets/photo/fabImg.png) 배경 이미지가 스크롤하면서 서서히 축소되고 흐려지는 효과
+   - "당신의 시스템에 적합한 코와 눈을 제공합니다" 메인 메시지를 배열로 관리
+   - "자체 MEMS Fab 기반 차별화된 적외선센서 기술로 Physical AI의 새로운 가능성을 열어갑니다"
+   - 그다음에 technology 3개정도 간략하게 설명되어 있는 구조, 세개의 카드가 가로로 나열되어있는 느낌.
+   - 세개의 카드 위에는 "TECHNOLOGY" main text 은은하게 뒤에 비치게 위의 ABOUT 처럼 두껍게 .
+   - 밑에 H1 text "독자적 Micro-Thermopile 기반 MEMS 센서 기술", 밑에 description으로는 "마이크로 전자기계시스템(MEMS) 기술을 활용한 초소형,고성능 멀티체널센서를 제공합니다. 자체개발 원천기술에 기반하여 고객요구에 맞춤형으로 대응합니다"
+   - Technology 관련 3개의 카드는
+
+   1. photo
+      title: "Micro-thermopile 원천기술"
+      descrition: "in-house MEMS FAB를 통한 개발/생산"
+      detail 설명하는 페이지로 가는 버튼
+
+   2. photo
+      title: "코: NDIR/TCD 가스 센서"
+      descrition: "로봇의 후각 기능을 구현하는 비접촉 가스센서"
+      detail 설명하는 페이지로 가는 버튼
+   3. photo
+      title: "눈:SWIR/FIR 적외선영상센서"
+      descrition: "로봇의 시각 기능을 구현하는 수분/열영상센서"
+      detail 설명하는 페이지로 가는 버튼
+
+3. ProductsSection.jsx (세 번째 섹션):
 
    - 일반 Box 컨테이너 (FullPageSection 미사용)
-   - ParallaxContainer(maxZ={8})로 8개 레이어 깊이 관리
+   - ParallaxContainer(maxZ={6})로 6개 레이어 깊이 관리
    - 배경/제목/카드/장식 요소를 각각 다른 ParallaxLayer에 배치
    - projectsContent에서 "Ordinary Projects" 섹션 제목 가져오기
    - [projectsData.js](mdc:src/data/projectsData.js) 에서 프로젝트 데이터 가져오기
