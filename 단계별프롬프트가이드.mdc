@@ -80,8 +80,6 @@ TopSection.jsx는 FreeVerticalScrollSection 컴포넌트로 3개의 하위 섹�
    AnimationLogoSection.jsx 사용
 
    1-2. TransitionSection 컴포넌트:
-      <!-- - [MaskingText.jsx](mdc:src/components/patterns/typoraphy/MaskingText.jsx) 컴포넌트 + ordinary_people.png로 텍스트 모양 이미지 마스킹 -->
-      <!-- - calc(100cqw / 5) 폰트 사이즈로 300vw 폭을 완벽하게 채우는 타이포그래피 -->
 
    -회사 소개에 대한 내용
 
@@ -141,19 +139,22 @@ TopSection.jsx는 FreeVerticalScrollSection 컴포넌트로 3개의 하위 섹�
    - ParallaxContainer(maxZ={6})로 6개 레이어 깊이 관리
    - 배경/제목/카드/장식 요소를 각각 다른 ParallaxLayer에 배치
    - projectsContent에서 "Ordinary Projects" 섹션 제목 가져오기
-   - [projectsData.js](mdc:src/data/projectsData.js) 에서 프로젝트 데이터 가져오기
+   - [productData.js](mdc:src/data/prductData.js) 에서 프로젝트 데이터 가져오기
    - [ProjectCard.jsx](mdc:src/components/commons/ProjectCard.jsx) 들을 Grid(xs: 6, md: 6, lg: 4) 반응형 격자로 배치
    - 각 카드마다 리듬감 있는 depthZ 패턴으로 입체적 패럴랙스 효과
+   - 하나의 product 마다 한 열을 차지
+   - 구성은, 한열에서 반은 사진, 반은 title 반은 description
+   - 각 카드마다 밑에 detail page 가는 버튼도 생성
 
    강의중 발생
 
-   @ProjectsSection.jsx @/scroll 안에있는 ParallaxContainer ParallaxLayer를 사용
+   @ProductsSection.jsx @/scroll 안에있는 ParallaxContainer ParallaxLayer를 사용
 
-   @ProjectsSection.jsx
+   @ProductsSection.jsx
 
    - 불필요한 장식요소 모두 제거
    - 배치 규칙
-     가장 밖에 패럴럭스 컨테이너 > @projectsData.js 로 Grid (2열 )로 레이아웃 배치 > 레이아웃 안에 @ProjectCard.jsx
+     가장 밖에 패럴럭스 컨테이너 > @projectsData.js 로 Grid (6열 )로 레이아웃 배치 > 레이아웃 안에 @ProjectCard.jsx
    - 위 내용외에 어떤것도 추가 금지
 
    강의중 발생
@@ -168,12 +169,13 @@ TopSection.jsx는 FreeVerticalScrollSection 컴포넌트로 3개의 하위 섹�
 
 4. ContactSection.jsx (마지막 섹션):
    - FullPageSection으로 전체 화면 높이 차지
-   - HumanIllustCarousel(pathType="horizontal", theme="dark")을 배경 전체에 배치
+   - "인재를 모집합니다"
    - contactContent에서 "Let's Work Together" 제목과 서브타이틀 가져오기
-   - "평범한 사람들을 위한 디자인, 함께 만들어 나가요" 서브타이틀 표시
+   - "사람들을 위한 센서, 함께 만들어 나가요" 서브타이틀 표시
+   - 현재 open 되어있는 두 공고를 flex 레이아웃으로 카드 형태로 배치
+   - 카드 및에 체용공고 사이트 페이지로 연결해 주는 버튼
    - 하단에 이메일 "hello@ordinary.design"과 전화번호를 큰 폰트로 표시
    - flex 레이아웃으로 좌우 분할하여 연락처 정보 배치
-   - useBackground('dark') 모드 전환
    - [contentData.js](mdc:src/data/contentData.js) 활용
 
 각 섹션은 BackgroundContext를 통해 배경색이 다르게 설정되며, 스크롤하면서 부드럽게 전환됩니다.
@@ -194,14 +196,14 @@ ProjectDetail.jsx 페이지를 만들어 메인 페이지의 ProjectCard 클릭 
 
 특별한 기능:
 
-- useParams 훅으로 "/project/:id" 형태 URL 파라미터 처리
-- projectsData.js에서 해당 ID 프로젝트 데이터 조회
+- useParams 훅으로 "/product/:id" 형태 URL 파라미터 처리
+- productData.js에서 해당 ID 프로젝트 데이터 조회
 - 존재하지 않는 프로젝트 ID 접근 시 404 컴포넌트 표시
 - useLenisScroll 훅으로 뒤로가기 시 메인 페이지 원래 스크롤 위치 복귀
 - FadeInContainer 컴포넌트로 이미지 부드러운 로딩 애니메이션
 - useResponsive 훅으로 모바일/데스크탑 이미지 크기 자동 조정
 
-getProjectById() 함수로 projectsData.js에서 특정 프로젝트 데이터를 가져와 표시합니다.
+getProjectById() 함수로 productData.js에서 특정 프로젝트 데이터를 가져와 표시합니다.
 
 2-2. 헤더 네비게이션 상세 구현
 
@@ -211,10 +213,10 @@ StickyContainer 컴포넌트를 사용해서 화면 상단에 항상 보이는 �
 
 - 왼쪽: siteMetadata에서 가져온 브랜드명 표시
   - 평상시: "Ordinary Design" 전체 브랜드명 표시
-  - 스크롤하면: "OD"로 줄어드는 애니메이션 효과 (축약형)
+  <!-- - 스크롤하면: "OD"로 줄어드는 애니메이션 효과 (축약형) -->
   - 클릭하면: 메인 페이지 맨 위로 부드럽게 스크롤
 - 오른쪽: siteMetadata에서 가져온 메뉴 항목들
-  - "Projects", "Contact" 메뉴 표시
+  - "Product", "Contact" 메뉴 표시
   - 데스크탑: 메뉴가 나란히 보임, 마우스 인터랙션 효과
   - 모바일: 햄버거 버튼 → 전체화면 메뉴 형태
 

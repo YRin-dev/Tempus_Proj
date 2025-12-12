@@ -10,7 +10,7 @@ import irThermalImg from '../assets/photo/irThermalSensorImg.png';
  * - 프로젝트 목록과 상세 정보를 포함
  * - ID를 키로 하는 객체 구조로 빠른 조회 가능
  */
-export const projectsData = {
+export const productData = {
   1: {
     id: 1,
     title: 'NDIR 냉매센서',
@@ -54,7 +54,7 @@ export const projectsData = {
  * @returns {Array} 프로젝트 객체들의 배열
  */
 export const getProjectsList = () => {
-  return Object.values(projectsData);
+  return Object.values(productData);
 };
 
 /**
@@ -64,7 +64,7 @@ export const getProjectsList = () => {
  */
 export const getProjectById = (id) => {
   const projectId = parseInt(id);
-  return projectsData[projectId] || null;
+  return productData[projectId] || null;
 };
 
 /**
@@ -73,16 +73,16 @@ export const getProjectById = (id) => {
  * @returns {object} next, prev ID를 포함한 객체
  */
 export const getAdjacentProjects = (currentId) => {
-  const projectIds = Object.keys(projectsData)
+  const productIds = Object.keys(productData)
     .map((id) => parseInt(id))
     .sort((a, b) => a - b);
-  const currentIndex = projectIds.findIndex((id) => id === parseInt(currentId));
+  const currentIndex = productIds.findIndex((id) => id === parseInt(currentId));
 
   return {
-    prev: currentIndex > 0 ? projectIds[currentIndex - 1] : null,
+    prev: currentIndex > 0 ? productIds[currentIndex - 1] : null,
     next:
-      currentIndex < projectIds.length - 1
-        ? projectIds[currentIndex + 1]
+      currentIndex < productIds.length - 1
+        ? productIds[currentIndex + 1]
         : null,
   };
 };
