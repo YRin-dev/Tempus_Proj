@@ -1,9 +1,9 @@
 // 썸네일 이미지들 import
-import refrigerImg from '../assets/photo/refigerSensorImg.png';
-import bssImg from '../assets/photo/bssSensorImg.png';
+import refrigerImg from '../assets/photo/refrigerSensorImg.png';
+import bssImg from '../assets/photo/BssSensorImg.png';
 import co2Img from '../assets/photo/co2SensorImg.png';
-import hydrogenImg from '../assets/photo/hydrogenSensorImg.png';
-import irThermalImg from '../assets/photo/irThermalSensorImg.png';
+import hydrogenImg from '../assets/photo/hydrigenSensorImg.png';
+import irThermalImg from '../assets/photo/irArraySensorImg.png';
 
 /**
  * 전역 프로젝트 데이터

@@ -1,16 +1,14 @@
 import React from 'react';
-import FreeVerticalScrollSection from '../components/patterns/scroll/FreeVerticalScrollSection';
-import HeroSection from './HeroSection';
+import SmoothScroll from '../components/patterns/scroll/SmoothScroll';
+import AnimationLogoSection from './AnimationLogoSection';
 import TransitionSection from './TransitionSection';
-import MissionSection from './MissionSection';
 
 /**
  * TopSection 컴포넌트
  *
- * 메인 랜딩 페이지의 최상단 섹션으로 FreeVerticalScrollSection으로 관리됩니다.
+ * 메인 랜딩 페이지의 최상단 섹션으로 SmoothScroll로 부드러운 스크롤을 제공합니다.
  * - HeroSection: AnimationLogoSection 사용
  * - TransitionSection: 회사 소개
- * - MissionSection: 브랜드 미션
  *
  * Props:
  * (현재 props 없음)
@@ -20,11 +18,10 @@ import MissionSection from './MissionSection';
  */
 function TopSection() {
   return (
-    <FreeVerticalScrollSection width="100vw">
-      <HeroSection />
+    <SmoothScroll duration={1.2} smoothWheel={true}>
+      <AnimationLogoSection />
       <TransitionSection />
-      <MissionSection />
-    </FreeVerticalScrollSection>
+    </SmoothScroll>
   );
 }
 

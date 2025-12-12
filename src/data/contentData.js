@@ -15,6 +15,13 @@ export const heroContent = {
 // TransitionSection 콘텐츠
 export const transitionContent = {
   text: 'ABOUT',
+  description: [
+    "템퍼스는 '가격 경쟁력이 있는 IR 멀티밴드 분광 센서'에",
+    '중점을 두고, 높은 노이즈 대비 감도( SNR) 및 넓은',
+    '감지파장 (WDR)을 가진 마이크로써모파일을 성공적으로',
+    '개발하였습니다.',
+    '34개의 특허와 13년 기술력을 바탕으로 차별화된 적외선 센서 솔루션을 제공합니다',
+  ],
 };
 
 // MissionSection 콘텐츠
@@ -30,6 +37,36 @@ export const missionContent = {
 };
 
 // TechnologySection 기술소개
+export const technologyContent = {
+  mainMessage: ['당신의 시스템에 적합한 코와 눈을 제공합니다'],
+  subMessage:
+    '자체 MEMS Fab 기반 차별화된 적외선센서 기술로 Physical AI의 새로운 가능성을 열어갑니다',
+  mainTitle: 'TECHNOLOGY',
+  h1Title: '독자적 Micro-Thermopile 기반 MEMS 센서 기술',
+  description:
+    '마이크로 전자기계시스템(MEMS) 기술을 활용한 초소형,고성능 멀티체널센서를 제공합니다. 자체개발 원천기술에 기반하여 고객요구에 맞춤형으로 대응합니다',
+  cards: [
+    {
+      id: 1,
+      title: 'Micro-thermopile 원천기술',
+      description: 'in-house MEMS FAB를 통한 개발/생산',
+      photo: '/src/assets/photo/technology1.png', // TODO: 실제 이미지 경로로 변경
+    },
+    {
+      id: 2,
+      title: '코: NDIR/TCD 가스 센서',
+      description: '로봇의 후각 기능을 구현하는 비접촉 가스센서',
+      photo: '/src/assets/photo/technology2.png', // TODO: 실제 이미지 경로로 변경
+    },
+    {
+      id: 3,
+      title: '눈:SWIR/FIR 적외선영상센서',
+      description: '로봇의 시각 기능을 구현하는 수분/열영상센서',
+      photo: '/src/assets/photo/technology3.png', // TODO: 실제 이미지 경로로 변경
+    },
+  ],
+};
+
 export const MicroThermopileContent = {
   title: 'Micro Thermopile 원천기술',
   mainMessage: ['In-house MEMS Fab 기반 개발/생산'],
@@ -37,9 +74,13 @@ export const MicroThermopileContent = {
 
 // ProjectsSection 콘텐츠
 export const productContent = {
-  title: 'NDIR 냉매센서',
-  // 실제 프로젝트 데이터는 projectsData.js에서 관리
-  description: 'NDIR 가스센서 기반 냉매센서',
+  title: 'Ordinary Projects',
+  // 실제 프로젝트 데이터는 productData.js에서 관리
+};
+
+// ProductsSection 콘텐츠
+export const productsContent = {
+  title: 'Ordinary Projects',
 };
 
 // ContactSection 콘텐츠

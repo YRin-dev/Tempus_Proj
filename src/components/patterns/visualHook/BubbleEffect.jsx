@@ -23,8 +23,13 @@ const createParticles = (count) => {
   return data;
 };
 
-// 부드러운 속도 계산 함수 (스크롤 방향 고려하지 않음)
-const calculateSmoothSpeed = (baseSpeed, scrollProgress) => {
+// 부드러운 속도 계산 함수 (스크롤 없이 고정 속도 사용)
+const calculateSmoothSpeed = (baseSpeed, scrollProgress = null) => {
+  // scrollProgress가 없으면 기본 속도 사용
+  if (scrollProgress === null || scrollProgress === undefined) {
+    return baseSpeed;
+  }
+
   // 스크롤 진행률에 따른 부드러운 배율 (0.8 ~ 1.2)
   const speedMultiplier = 0.8 + scrollProgress * 0.4;
 
@@ -40,8 +45,11 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
   // 파티클 데이터를 메모이제이션하여 성능 최적화
   const particles = useMemo(() => createParticles(bubbleCount), [bubbleCount]);
 
-  // 스크롤 진행률 스무딩 (급격한 변화 방지)
+  // 스크롤 진행률 스무딩 (scrollProgress가 있을 때만)
   const smoothedProgress = useMemo(() => {
+    if (scrollProgress === null || scrollProgress === undefined) {
+      return null;
+    }
     const clamped = Math.max(0, Math.min(1, scrollProgress));
     return Math.round(clamped * 50) / 50; // 0.02 단위로 스무딩
   }, [scrollProgress]);
@@ -73,7 +81,13 @@ export default function BubbleEffect({ scrollProgress, bubbleCount = 120 }) {
         />
 
         {particles.map((data, i) => (
-          <SmoothBubble key={i} {...data} scrollProgress={smoothedProgress} />
+          <SmoothBubble
+            key={i}
+            {...data}
+            scrollProgress={
+              smoothedProgress !== null ? smoothedProgress : undefined
+            }
+          />
         ))}
       </Instances>
     </Float>
@@ -93,7 +107,9 @@ function SmoothBubble({
   oscillationAmplitudeZ,
 }) {
   const ref = useRef();
-  const smoothProgressRef = useRef(scrollProgress);
+  const smoothProgressRef = useRef(
+    scrollProgress !== undefined ? scrollProgress : null
+  );
 
   // 초기값들을 useMemo로 메모이제이션
   const constants = useMemo(
@@ -109,11 +125,13 @@ function SmoothBubble({
     const t = state.clock.elapsedTime;
     const { initialX, initialZ, computedBaseSpeed } = constants;
 
-    // 스크롤 진행률을 부드럽게 보간 (lerp)
-    smoothProgressRef.current +=
-      (scrollProgress - smoothProgressRef.current) * 0.05;
+    // scrollProgress가 있을 때만 보간 처리
+    if (scrollProgress !== undefined && smoothProgressRef.current !== null) {
+      smoothProgressRef.current +=
+        (scrollProgress - smoothProgressRef.current) * 0.05;
+    }
 
-    // 항상 위로 상승하는 속도 (음수 없음)
+    // 항상 위로 상승하는 속도 (scrollProgress가 없으면 기본 속도 사용)
     const riseSpeed = calculateSmoothSpeed(
       computedBaseSpeed,
       smoothProgressRef.current

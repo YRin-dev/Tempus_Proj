@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Stack } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import { EffectComposer, N8AO } from '@react-three/postprocessing';
@@ -29,28 +29,11 @@ import { heroContent } from '../data/contentData';
 function AnimationLogoSection() {
   // 페이지 reload 시 TypingEffect를 재시작하기 위한 key
   const [typingKey, setTypingKey] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   // 컴포넌트 마운트 시 key 초기화
   useEffect(() => {
     setTypingKey((prev) => prev + 1);
   }, []);
-
-  // 스크롤 진행률 계산
-  const handleScroll = useCallback(() => {
-    const scrollTop = window.scrollY;
-    const scrollHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
-    const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
-    setScrollProgress(Math.min(1, Math.max(0, progress)));
-  }, []);
-
-  // 스크롤 이벤트 리스너 등록
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // 초기값 설정
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
 
   // TEMPUS 로고 컴포넌트
   const TempusLogo = ({ size = 2 }) => {
@@ -176,14 +159,15 @@ function AnimationLogoSection() {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FAFAF7',
-        padding: '40px',
-        overflow: 'visible',
+        padding: { xs: '20px', md: '40px' },
+        overflow: 'hidden',
         position: 'relative',
       }}
     >
@@ -221,7 +205,7 @@ function AnimationLogoSection() {
           shadow-camera-top={15}
           shadow-camera-bottom={-15}
         />
-        <BubbleEffect scrollProgress={scrollProgress} bubbleCount={80} />
+        <BubbleEffect bubbleCount={80} />
         <EffectComposer disableNormalPass>
           <N8AO
             aoRadius={4}
