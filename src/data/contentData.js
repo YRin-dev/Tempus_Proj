@@ -39,8 +39,10 @@ export const missionContent = {
 // TechnologySection 기술소개
 export const technologyContent = {
   mainMessage: ['당신의 시스템에 적합한 코와 눈을 제공합니다'],
-  subMessage:
-    '자체 MEMS Fab 기반 차별화된 적외선센서 기술로 Physical AI의 새로운 가능성을 열어갑니다',
+  subMessage: [
+    '자체 MEMS Fab 기반 차별화된 적외선센서 기술로',
+    ' Physical AI의 새로운 가능성을 열어갑니다',
+  ],
   mainTitle: 'TECHNOLOGY',
   h1Title: '독자적 Micro-Thermopile 기반 MEMS 센서 기술',
   description:

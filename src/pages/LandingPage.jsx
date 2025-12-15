@@ -1,6 +1,7 @@
 import React from 'react';
 import TopSection from '../sections/TopSection';
 import TechnologySection from '../sections/TechnologySection';
+//import TechnologyCardsSection from '../sections/TechnologyCardsSection';
 import ProductsSection from '../sections/ProductsSection';
 import ContactSection from '../sections/ContactSection';
 //import MissionSection from './MissionSection';
@@ -9,7 +10,8 @@ import ContactSection from '../sections/ContactSection';
  *
  * 메인 랜딩 페이지로 모든 섹션을 포함합니다.
  * - TopSection: HeroSection, TransitionSection, MissionSection
- * - TechnologySection: 기술 소개
+ * - TechnologySection: 기술 소개 (StickySection + StorySection 스타일 텍스트)
+ * - TechnologyCardsSection: 3개의 기술 카드
  * - ProductsSection: 제품 소개
  * - ContactSection: 연락처 정보
  *
@@ -21,6 +23,7 @@ function LandingPage() {
     <>
       <TopSection />
       <TechnologySection />
+      {/* <TechnologyCardsSection /> */}
       <ProductsSection />
       <ContactSection />
     </>
