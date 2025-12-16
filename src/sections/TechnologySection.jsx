@@ -3,6 +3,7 @@ import { Box, Typography, Stack } from '@mui/material';
 import StickySection from '../components/patterns/pageTransition/StickySection';
 import { technologyContent } from '../data/contentData';
 import fabImg from '../assets/photo/fabImg.png';
+import useIsInView from '../hooks/useIsInView';
 
 /**
  * TechnologySection 컴포넌트
@@ -10,6 +11,7 @@ import fabImg from '../assets/photo/fabImg.png';
  * 기술 소개 섹션입니다.
  * - StickySection으로 fabImg 이미지 고정 + 축소 효과
  * - StorySection 스타일의 글자 모션 적용
+ * - useIsInView를 사용한 텍스트 색상 전환 효과
  * - msg: 메인 메시지 (mainMessage, subMessage)
  * - content: H1 텍스트와 설명 (StorySection의 StoryContent 스타일)
  *
@@ -20,6 +22,20 @@ import fabImg from '../assets/photo/fabImg.png';
  * <TechnologySection />
  */
 function TechnologySection() {
+  // StoryContent용 useIsInView 훅
+  const [textRef, isTextInView] = useIsInView({
+    threshold: 1,
+    rootMargin: '0px',
+    triggerOnce: false, // 스크롤할 때마다 감지
+  });
+
+  // mainMessage와 subMessage용 useIsInView 훅 (90% 보일 때 활성화)
+  const [messageRef, isMessageInView] = useIsInView({
+    threshold: 0.8, // 90% 이상 보일 때 true (10% 가려지면 false)
+    rootMargin: '0px',
+    triggerOnce: false,
+  });
+
   // 메인 메시지 (msg prop으로 전달)
   const mainMessage = (
     <Box
@@ -31,6 +47,7 @@ function TechnologySection() {
       }}
     >
       <Stack
+        ref={messageRef}
         width={'100%'}
         sx={{
           position: 'absolute',
@@ -44,6 +61,9 @@ function TechnologySection() {
           padding: '20px',
           maxWidth: '80%',
           zIndex: 2,
+          // 🎨 opacity 전환 효과
+          opacity: isMessageInView ? 1 : 0,
+          transition: 'opacity 0.8s ease-in-out',
         }}
       >
         <Box
@@ -112,6 +132,7 @@ function TechnologySection() {
 
       {/* StoryContent - mainTitle 밑에 위치 */}
       <Box
+        ref={textRef}
         sx={{
           position: 'absolute',
           bottom: { xs: '5%', md: '-10%', lg: '-68%' },
@@ -161,7 +182,6 @@ function TechnologySection() {
                 width={'100%'}
                 textAlign="center"
                 fontWeight={'400'}
-                color="#000000"
                 sx={{
                   whiteSpace: 'pre-line',
                   lineHeight: 1.4,
@@ -171,6 +191,9 @@ function TechnologySection() {
                     md: '1.8rem',
                     lg: '2.2rem',
                   },
+                  // 🎨 텍스트 색상 전환 효과
+                  color: isTextInView ? '#000000' : 'transparent',
+                  transition: 'color 1.2s ease-in-out',
                 }}
               >
                 {technologyContent.h1Title}
@@ -179,7 +202,6 @@ function TechnologySection() {
                 width={'100%'}
                 fontWeight={'bold'}
                 textAlign="center"
-                color="#000000"
                 sx={{
                   mt: 2,
                   fontSize: {
@@ -188,6 +210,9 @@ function TechnologySection() {
                     md: '1.2rem',
                     lg: '1.4rem',
                   },
+                  // 🎨 텍스트 색상 전환 효과
+                  color: isTextInView ? '#000000' : 'transparent',
+                  transition: 'color 1.2s ease-in-out 0.3s', // 약간의 딜레이 추가
                 }}
               >
                 {technologyContent.description}
@@ -203,7 +228,6 @@ function TechnologySection() {
     <StickySection
       image={fabImg}
       msg={mainMessage}
-      // content={<StoryContent />}
       targetScale={0.7}
       useFadeEffect={true}
       targetOpacity={0.3}

@@ -159,7 +159,8 @@ function AnimationLogoSection() {
   return (
     <Box
       sx={{
-        height: '100vh',
+        minHeight: '120vh',
+        height: '120vh',
         width: '100vw',
         display: 'flex',
         flexDirection: 'column',
@@ -167,6 +168,7 @@ function AnimationLogoSection() {
         justifyContent: 'center',
         backgroundColor: '#FAFAF7',
         padding: { xs: '20px', md: '40px' },
+        paddingBottom: { xs: '40vh', md: '45vh' },
         overflow: 'hidden',
         position: 'relative',
       }}

@@ -1,7 +1,7 @@
 import React from 'react';
 import SmoothScroll from '../components/patterns/scroll/SmoothScroll';
 import AnimationLogoSection from './AnimationLogoSection';
-import TransitionSection from './TransitionSection';
+//import TransitionSection from './TransitionSection';
 
 /**
  * TopSection 컴포넌트
@@ -20,7 +20,7 @@ function TopSection() {
   return (
     <SmoothScroll duration={1.2} smoothWheel={true}>
       <AnimationLogoSection />
-      <TransitionSection />
+      {/* <TransitionSection /> */}
     </SmoothScroll>
   );
 }
