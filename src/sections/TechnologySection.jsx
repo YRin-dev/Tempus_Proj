@@ -100,7 +100,7 @@ function TechnologySection() {
           fontSize: { xs: '8rem', md: '12rem', lg: '15rem' },
           fontWeight: 900,
           lineHeight: 0.8,
-          color: 'rgba(255, 255, 255, 0.1)',
+          color: 'rgba(240, 235, 235, 0.35)',
           letterSpacing: '-0.02em',
           fontFamily: 'Arial, sans-serif',
           zIndex: 0,
@@ -109,22 +109,17 @@ function TechnologySection() {
       >
         {technologyContent.mainTitle}
       </Typography>
-    </Box>
-  );
 
-  // StoryContent 스타일의 텍스트 콘텐츠 (content prop으로 전달)
-  const StoryContent = () => {
-    const storyText = technologyContent.h1Title;
-    const byText = technologyContent.description;
-
-    return (
+      {/* StoryContent - mainTitle 밑에 위치 */}
       <Box
         sx={{
-          backgroundColor: 'transparent',
+          position: 'absolute',
+          bottom: { xs: '5%', md: '-10%', lg: '-68%' },
+          left: '50%',
+          transform: 'translateX(-50%)',
           width: '100%',
-          mt: 8,
-          position: 'relative',
-          minHeight: '100vh',
+          maxWidth: '1200px',
+          zIndex: 1,
         }}
       >
         <Box
@@ -133,7 +128,6 @@ function TechnologySection() {
             display: 'flex',
             justifyContent: 'center',
             position: 'relative',
-            zIndex: 1,
           }}
         >
           <Box
@@ -167,7 +161,7 @@ function TechnologySection() {
                 width={'100%'}
                 textAlign="center"
                 fontWeight={'400'}
-                color="#c0c0c0"
+                color="#000000"
                 sx={{
                   whiteSpace: 'pre-line',
                   lineHeight: 1.4,
@@ -179,13 +173,13 @@ function TechnologySection() {
                   },
                 }}
               >
-                {storyText}
+                {technologyContent.h1Title}
               </Typography>
               <Typography
                 width={'100%'}
                 fontWeight={'bold'}
                 textAlign="center"
-                color="#E0e0e0"
+                color="#000000"
                 sx={{
                   mt: 2,
                   fontSize: {
@@ -196,20 +190,20 @@ function TechnologySection() {
                   },
                 }}
               >
-                {byText}
+                {technologyContent.description}
               </Typography>
             </Stack>
           </Box>
         </Box>
       </Box>
-    );
-  };
+    </Box>
+  );
 
   return (
     <StickySection
       image={fabImg}
       msg={mainMessage}
-      content={<StoryContent />}
+      // content={<StoryContent />}
       targetScale={0.7}
       useFadeEffect={true}
       targetOpacity={0.3}
