@@ -12,6 +12,7 @@ import { useBackground } from '../context/BackgroundContext';
  * - 화면 최대 넓이 (100vw)
  * - transitionContent에서 "ABOUT" 텍스트 가져오기
  * - useBackground('light') 모드 전환 + useIsInView 사용 (threshold: 0.1)
+ * - 성능 최적화: triggerOnce: true로 한 번만 트리거
  *
  * Props:
  * (현재 props 없음)
@@ -21,9 +22,12 @@ import { useBackground } from '../context/BackgroundContext';
  */
 function TransitionSection() {
   const { updateBackgroundMode } = useBackground();
-  const [ref, isInView] = useIsInView({ threshold: 0.1, triggerOnce: false });
+  const [ref, isInView] = useIsInView({
+    threshold: 0.1,
+    triggerOnce: true, // 성능 최적화: 한 번만 트리거
+  });
 
-  // 뷰포트에 10%만 보여도 light 모드로 전환
+  // 뷰포트에 10%만 보여도 light 모드로 전환 (한 번만)
   React.useEffect(() => {
     if (isInView) {
       updateBackgroundMode('light');

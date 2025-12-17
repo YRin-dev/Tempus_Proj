@@ -5,6 +5,7 @@ import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { AnimatedPath } from '../components/patterns/visualHook/AnimatedPath';
 import TypingEffect from '../components/patterns/typoraphy/TypingEffect';
 import BubbleEffect from '../components/patterns/visualHook/BubbleEffect';
+import useIsInView from '../hooks/useIsInView';
 import {
   path_T,
   path_e,
@@ -16,19 +17,26 @@ import {
 import { heroContent } from '../data/contentData';
 
 /**
- * TopSection 컴포넌트
+ * AnimationLogoSection 컴포넌트
  *
  * 회사 소개 섹션으로 애니메이션 로고, 버블 효과, 타이핑 효과를 포함합니다.
+ * 성능 최적화: 뷰포트에 보일 때만 Canvas 렌더링
  *
  * Props:
  * (현재 props 없음)
  *
  * Example usage:
- * <TopSection />
+ * <AnimationLogoSection />
  */
 function AnimationLogoSection() {
   // 페이지 reload 시 TypingEffect를 재시작하기 위한 key
   const [typingKey, setTypingKey] = useState(0);
+
+  // 성능 최적화: 뷰포트에 보일 때만 Canvas 렌더링
+  const [sectionRef, isInView] = useIsInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  });
 
   // 컴포넌트 마운트 시 key 초기화
   useEffect(() => {
@@ -158,6 +166,7 @@ function AnimationLogoSection() {
 
   return (
     <Box
+      ref={sectionRef}
       sx={{
         minHeight: '120vh',
         height: '120vh',
@@ -168,55 +177,50 @@ function AnimationLogoSection() {
         justifyContent: 'center',
         backgroundColor: '#FAFAF7',
         padding: { xs: '20px', md: '40px' },
-        paddingBottom: { xs: '40vh', md: '45vh' },
+        paddingBottom: { xs: '20vh', md: '25vh' },
         overflow: 'hidden',
         position: 'relative',
       }}
     >
-      {/* 버블 효과 배경 Canvas */}
-      <Canvas
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 0,
-        }}
-        shadows
-        dpr={[1, 1.5]}
-        gl={{
-          antialias: true,
-          powerPreference: 'high-performance',
-          alpha: false,
-          stencil: false,
-        }}
-        camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
-      >
-        <color attach="background" args={['#FAFAF7']} />
-        <directionalLight
-          position={[0, 30, 10]}
-          intensity={1.5}
-          color="#ffffff"
-          castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-far={50}
-          shadow-camera-left={-15}
-          shadow-camera-right={15}
-          shadow-camera-top={15}
-          shadow-camera-bottom={-15}
-        />
-        <BubbleEffect bubbleCount={80} />
-        <EffectComposer disableNormalPass>
-          <N8AO
-            aoRadius={4}
-            intensity={2}
-            distanceFalloff={1}
-            color="#030f24"
+      {/* 버블 효과 배경 Canvas - 성능 최적화: 뷰포트에 보일 때만 렌더링 */}
+      {isInView && (
+        <Canvas
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 0,
+          }}
+          shadows={false}
+          dpr={[1, 1.5]}
+          gl={{
+            antialias: true,
+            powerPreference: 'high-performance',
+            alpha: false,
+            stencil: false,
+          }}
+          camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
+        >
+          <color attach="background" args={['#FAFAF7']} />
+          <directionalLight
+            position={[0, 30, 10]}
+            intensity={1.5}
+            color="#ffffff"
+            castShadow={false}
           />
-        </EffectComposer>
-      </Canvas>
+          <BubbleEffect bubbleCount={50} />
+          <EffectComposer disableNormalPass>
+            <N8AO
+              aoRadius={4}
+              intensity={1.5}
+              distanceFalloff={1}
+              color="#030f24"
+            />
+          </EffectComposer>
+        </Canvas>
+      )}
 
       {/* 기존 콘텐츠 - 버블 위에 표시 */}
       <Box

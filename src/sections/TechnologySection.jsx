@@ -24,7 +24,7 @@ import useIsInView from '../hooks/useIsInView';
 function TechnologySection() {
   // StoryContent용 useIsInView 훅
   const [textRef, isTextInView] = useIsInView({
-    threshold: 1,
+    threshold: 0.9,
     rootMargin: '0px',
     triggerOnce: false, // 스크롤할 때마다 감지
   });
