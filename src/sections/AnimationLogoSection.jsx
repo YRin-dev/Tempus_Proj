@@ -168,8 +168,8 @@ function AnimationLogoSection() {
     <Box
       ref={sectionRef}
       sx={{
-        minHeight: '120vh',
-        height: '120vh',
+        minHeight: '140vh',
+        height: '140vh',
         width: '100vw',
         display: 'flex',
         flexDirection: 'column',
@@ -182,6 +182,21 @@ function AnimationLogoSection() {
         position: 'relative',
       }}
     >
+      {/* 하단 경계선 블러 효과 - TransitionSection으로 자연스럽게 전환 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '150px',
+          background:
+            'linear-gradient(to bottom, transparent, rgba(250, 250, 247, 0.8), rgba(250, 250, 247, 1))',
+          backdropFilter: 'blur(10px)',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }}
+      />
       {/* 버블 효과 배경 Canvas - 성능 최적화: 뷰포트에 보일 때만 렌더링 */}
       {isInView && (
         <Canvas
