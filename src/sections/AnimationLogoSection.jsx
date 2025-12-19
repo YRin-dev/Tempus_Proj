@@ -168,8 +168,8 @@ function AnimationLogoSection() {
     <Box
       ref={sectionRef}
       sx={{
-        minHeight: '140vh',
-        height: '140vh',
+        minHeight: '120vh',
+        height: '120vh',
         width: '100vw',
         display: 'flex',
         flexDirection: 'column',
