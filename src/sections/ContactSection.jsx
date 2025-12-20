@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Box, Typography, Button, Stack } from '@mui/material';
 import FullPageSection from '../components/commons/container/FullPageSection';
 import {
@@ -19,19 +19,19 @@ import {
  * - 하단에 이메일과 전화번호를 큰 폰트로 표시
  *
  * Props:
- * (현재 props 없음)
+ * @param {React.Ref} ref - 섹션 ref [Optional]
  *
  * Example usage:
- * <ContactSection />
+ * <ContactSection ref={contactSectionRef} />
  */
-function ContactSection() {
+const ContactSection = forwardRef((props, ref) => {
   const careerPosts = [
     qualityManagementCareerContent,
     EngineeringCareerContent,
   ];
 
   return (
-    <FullPageSection>
+    <FullPageSection ref={ref}>
       <Box
         sx={{
           width: '100%',
@@ -222,6 +222,8 @@ function ContactSection() {
       </Box>
     </FullPageSection>
   );
-}
+});
+
+ContactSection.displayName = 'ContactSection';
 
 export default ContactSection;

@@ -1,22 +1,48 @@
-import React from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { Box, Typography, Button, Grid } from '@mui/material';
 import { technologyContent } from '../data/contentData';
+import useIsInView from '../hooks/useIsInView';
+import { useBackground } from '../context/BackgroundContext';
 
 /**
  * TechnologyCardsSection 컴포넌트
  *
  * 3개의 기술 카드를 표시하는 섹션입니다.
  * TechnologySection 다음에 나타나는 컴포넌트입니다.
+ * - useBackground를 사용하여 섹션이 10%만 보여도 lightgray 배경색으로 전환
  *
  * Props:
- * (현재 props 없음)
+ * @param {React.Ref} ref - 섹션 ref [Optional]
  *
  * Example usage:
- * <TechnologyCardsSection />
+ * <TechnologyCardsSection ref={technologyCardsSectionRef} />
  */
-function TechnologyCardsSection() {
+const TechnologyCardsSection = forwardRef((props, ref) => {
+  const { updateBackgroundMode } = useBackground();
+
+  // 배경색 등록용 useIsInView - 섹션이 10%만 보여도 배경색 전환
+  const [sectionBgRef, isInView] = useIsInView({
+    threshold: 0.4,
+    triggerOnce: false,
+  });
+  useEffect(() => {
+    console.log('🔍 TransitionSection isInView changed:', isInView);
+    if (isInView) {
+      updateBackgroundMode('lightgray');
+    }
+  }, [isInView, updateBackgroundMode]);
+
   return (
     <Box
+      ref={(node) => {
+        // forwardRef와 useIsInView ref 병합
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+        sectionBgRef.current = node;
+      }}
       sx={{
         width: '100%',
         minHeight: '100vh',
@@ -25,7 +51,7 @@ function TechnologyCardsSection() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: { xs: '40px 20px', md: '80px 40px' },
-        backgroundColor: '#000000',
+        // backgroundColor: '#F3F4F6',
         position: 'relative',
       }}
     >
@@ -44,18 +70,18 @@ function TechnologyCardsSection() {
           <Grid key={card.id} size={{ xs: 12, md: 4 }}>
             <Box
               sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
+                backgroundColor: '#ffffff',
                 borderRadius: 2,
                 padding: 4,
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
-                transition: 'transform 0.3s ease, background-color 0.3s ease',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                 '&:hover': {
                   transform: 'translateY(-8px)',
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
                 },
               }}
             >
@@ -67,7 +93,7 @@ function TechnologyCardsSection() {
                   position: 'relative',
                   borderRadius: 1,
                   overflow: 'hidden',
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  backgroundColor: '#F3F4F6',
                 }}
               >
                 <Box
@@ -91,7 +117,7 @@ function TechnologyCardsSection() {
                 sx={{
                   fontSize: { xs: '1.25rem', md: '1.5rem' },
                   fontWeight: 600,
-                  color: '#ffffff',
+                  color: '#111827',
                 }}
               >
                 {card.title}
@@ -103,7 +129,7 @@ function TechnologyCardsSection() {
                 sx={{
                   fontSize: { xs: '0.875rem', md: '1rem' },
                   fontWeight: 400,
-                  color: '#ffffff',
+                  color: '#111827',
                   opacity: 0.8,
                   flex: 1,
                 }}
@@ -115,8 +141,8 @@ function TechnologyCardsSection() {
               <Button
                 variant="outlined"
                 sx={{
-                  borderColor: '#ffffff',
-                  color: '#ffffff',
+                  borderColor: '#111827',
+                  color: '#111827',
                   padding: '10px 24px',
                   fontSize: '0.875rem',
                   fontWeight: 500,
@@ -124,9 +150,9 @@ function TechnologyCardsSection() {
                   textTransform: 'none',
                   marginTop: 'auto',
                   '&:hover': {
-                    borderColor: '#ffffff',
-                    backgroundColor: '#ffffff',
-                    color: '#000000',
+                    borderColor: '#111827',
+                    backgroundColor: '#111827',
+                    color: '#ffffff',
                   },
                 }}
               >
@@ -138,6 +164,8 @@ function TechnologyCardsSection() {
       </Grid>
     </Box>
   );
-}
+});
+
+TechnologyCardsSection.displayName = 'TechnologyCardsSection';
 
 export default TechnologyCardsSection;

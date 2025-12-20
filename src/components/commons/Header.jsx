@@ -13,7 +13,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useBackground } from '../../context/BackgroundContext';
-//import { useSectionRefs } from '../../context/SectionRefsContext';
+import { useSectionRefs } from '../../context/SectionRefsContext';
 
 import { siteMetadata } from '../../data/contentData';
 import ContentArea from './container/ContentArea';
@@ -24,13 +24,14 @@ import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
  * Fixed 포지션으로 상단에 고정되며 테마 모드에 따라 색상이 변경됨
  * 모바일에서는 Drawer 메뉴, 인터랙티브 로고 포함
  * 스크롤 시 로고 축약 기능
+ * SectionRefsContext를 사용하여 섹션 네비게이션 기능 제공
  *
  * Example usage:
  * <Header />
  */
 const Header = () => {
   const { backgroundMode } = useBackground();
-  // const { scrollToSection } = useSectionRefs();
+  const { scrollToSection } = useSectionRefs();
   // const theme = useTheme();
   //const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -40,19 +41,25 @@ const Header = () => {
   const textColor = backgroundMode === 'light' ? '#000000' : '#ffffff';
 
   /**
-   * 로고 클릭 핸들러 - 페이지 최상단으로 이동
+   * 로고 클릭 핸들러 - TopSection으로 이동
    */
   const handleLogoClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToSection('top');
   };
 
   /**
-   * 네비게이션 메뉴 클릭 핸들러 (튜토리얼용으로 비활성화)
-   * @param {string} section - 이동할 섹션 (현재 미사용)
+   * 네비게이션 메뉴 클릭 핸들러
+   * @param {string} section - 이동할 섹션 ('products', 'contact')
    */
   const handleNavClick = (section) => {
     setDrawerOpen(false); // 모바일 메뉴 닫기
-    console.log(`${section} 섹션 클릭됨 - 튜토리얼용으로 비활성화`);
+    // 섹션 이름 매핑: 'projects' -> 'products'
+    const sectionMap = {
+      projects: 'products',
+      contact: 'contact',
+    };
+    const targetSection = sectionMap[section] || section;
+    scrollToSection(targetSection);
   };
 
   /**

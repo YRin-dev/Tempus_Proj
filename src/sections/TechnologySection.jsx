@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
 import StickySection from '../components/patterns/pageTransition/StickySection';
 import { technologyContent } from '../data/contentData';
 import fabImg from '../assets/photo/fabImg.png';
 import useIsInView from '../hooks/useIsInView';
+import { useBackground } from '../context/BackgroundContext';
 
 /**
  * TechnologySection 컴포넌트
@@ -12,16 +13,31 @@ import useIsInView from '../hooks/useIsInView';
  * - StickySection으로 fabImg 이미지 고정 + 축소 효과
  * - StorySection 스타일의 글자 모션 적용
  * - useIsInView를 사용한 텍스트 색상 전환 효과
+ * - useBackground를 사용하여 섹션이 10%만 보여도 gray 배경색으로 전환
  * - msg: 메인 메시지 (mainMessage, subMessage)
  * - content: H1 텍스트와 설명 (StorySection의 StoryContent 스타일)
  *
  * Props:
- * (현재 props 없음)
+ * @param {React.Ref} ref - 섹션 ref [Optional]
  *
  * Example usage:
- * <TechnologySection />
+ * <TechnologySection ref={technologySectionRef} />
  */
-function TechnologySection() {
+const TechnologySection = forwardRef((props, ref) => {
+  const { updateBackgroundMode } = useBackground();
+
+  // 배경색 등록용 useIsInView - 섹션이 10%만 보여도 배경색 전환
+  const [sectionBgRef, isInView] = useIsInView({
+    threshold: 0.4, // 10%만 보여도 활성화
+    triggerOnce: false, // 스크롤할 때마다 감지
+  });
+  useEffect(() => {
+    console.log('🔍 TransitionSection isInView changed:', isInView);
+    if (isInView) {
+      updateBackgroundMode('gray');
+    }
+  }, [isInView, updateBackgroundMode]);
+
   // StoryContent용 useIsInView 훅
   const [textRef, isTextInView] = useIsInView({
     threshold: 0.9,
@@ -225,14 +241,33 @@ function TechnologySection() {
   );
 
   return (
-    <StickySection
-      image={fabImg}
-      msg={mainMessage}
-      targetScale={0.7}
-      useFadeEffect={true}
-      targetOpacity={0.3}
-    />
+    <Box
+      ref={(node) => {
+        // forwardRef와 useIsInView ref 병합
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+        sectionBgRef.current = node;
+      }}
+      sx={{
+        width: '100%',
+        // backgroundColor: '#F3F4F6',
+        position: 'relative',
+      }}
+    >
+      <StickySection
+        image={fabImg}
+        msg={mainMessage}
+        targetScale={0.7}
+        useFadeEffect={true}
+        targetOpacity={0.3}
+      />
+    </Box>
   );
-}
+});
+
+TechnologySection.displayName = 'TechnologySection';
 
 export default TechnologySection;

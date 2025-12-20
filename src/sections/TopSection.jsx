@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
+import { Box } from '@mui/material';
 import SmoothScroll from '../components/patterns/scroll/SmoothScroll';
 import AnimationLogoSection from './AnimationLogoSection';
 import TransitionSection from './TransitionSection';
@@ -11,18 +12,22 @@ import TransitionSection from './TransitionSection';
  * - TransitionSection: 회사 소개
  *
  * Props:
- * (현재 props 없음)
+ * @param {React.Ref} ref - 섹션 ref [Optional]
  *
  * Example usage:
- * <TopSection />
+ * <TopSection ref={topSectionRef} />
  */
-function TopSection() {
+const TopSection = forwardRef((props, ref) => {
   return (
-    <SmoothScroll duration={1.2} smoothWheel={true}>
-      <AnimationLogoSection />
-      <TransitionSection />
-    </SmoothScroll>
+    <Box ref={ref}>
+      <SmoothScroll duration={1.2} smoothWheel={true}>
+        <AnimationLogoSection />
+        <TransitionSection />
+      </SmoothScroll>
+    </Box>
   );
-}
+});
+
+TopSection.displayName = 'TopSection';
 
 export default TopSection;

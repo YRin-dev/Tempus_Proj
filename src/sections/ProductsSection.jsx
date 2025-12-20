@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Box, Grid, Button } from '@mui/material';
 import ParallaxContainer from '../components/patterns/scroll/ParallaxContainer';
 import ParallaxLayer from '../components/patterns/scroll/ParallaxLayer';
@@ -17,12 +17,12 @@ import { productsContent } from '../data/contentData';
  * - ParallaxLayer의 depth값에 따라 크기 조절 (높을수록 작게, 낮을수록 크게)
  *
  * Props:
- * (현재 props 없음)
+ * @param {React.Ref} ref - 섹션 ref [Optional]
  *
  * Example usage:
- * <ProductsSection />
+ * <ProductsSection ref={productsSectionRef} />
  */
-function ProductsSection() {
+const ProductsSection = forwardRef((props, ref) => {
   const products = getProjectsList();
 
   // depthZ에 따른 스케일 계산 (가장 가까운 depth=1 기준, 멀리 있는 것은 1 이하)
@@ -33,6 +33,7 @@ function ProductsSection() {
 
   return (
     <Box
+      ref={ref}
       sx={{
         width: '100%',
         minHeight: '100vh',
@@ -174,6 +175,8 @@ function ProductsSection() {
       </ParallaxContainer>
     </Box>
   );
-}
+});
+
+ProductsSection.displayName = 'ProductsSection';
 
 export default ProductsSection;

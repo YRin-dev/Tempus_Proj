@@ -1,10 +1,11 @@
 import React from 'react';
+import { useSectionRefs } from '../context/SectionRefsContext';
 import TopSection from '../sections/TopSection';
 import TechnologySection from '../sections/TechnologySection';
-//import TechnologyCardsSection from '../sections/TechnologyCardsSection';
+import TechnologyCardsSection from '../sections/TechnologyCardsSection';
 import ProductsSection from '../sections/ProductsSection';
 import ContactSection from '../sections/ContactSection';
-//import MissionSection from './MissionSection';
+
 /**
  * LandingPage 컴포넌트
  *
@@ -19,13 +20,21 @@ import ContactSection from '../sections/ContactSection';
  * <LandingPage />
  */
 function LandingPage() {
+  const {
+    topSectionRef,
+    technologySectionRef,
+    technologyCardsSectionRef,
+    productsSectionRef,
+    contactSectionRef,
+  } = useSectionRefs();
+
   return (
     <>
-      <TopSection />
-      <TechnologySection />
-      {/* <TechnologyCardsSection /> */}
-      <ProductsSection />
-      <ContactSection />
+      <TopSection ref={topSectionRef} />
+      <TechnologySection ref={technologySectionRef} />
+      <TechnologyCardsSection ref={technologyCardsSectionRef} />
+      <ProductsSection ref={productsSectionRef} />
+      <ContactSection ref={contactSectionRef} />
     </>
   );
 }

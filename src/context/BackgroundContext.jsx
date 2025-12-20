@@ -35,6 +35,9 @@ export function BackgroundProvider({ children }) {
   const backgroundColors = {
     light: '#ffffff',
     dark: '#020202',
+    gray: '#6D7075',
+    blue: '#1E3A8A',
+    lightgray: '#F3F4F6',
   };
 
   /**
@@ -42,7 +45,13 @@ export function BackgroundProvider({ children }) {
    * @param {string} mode - 'light' 또는 'dark'
    */
   const updateBackgroundMode = (mode) => {
-    if (mode === 'light' || mode === 'dark') {
+    if (
+      mode === 'light' ||
+      mode === 'dark' ||
+      mode === 'gray' ||
+      mode === 'blue' ||
+      mode === 'lightgray'
+    ) {
       console.log(`🎨 Background mode change to: ${mode}`);
       setBackgroundMode(mode);
       setCurrentBackgroundColor(backgroundColors[mode]);
