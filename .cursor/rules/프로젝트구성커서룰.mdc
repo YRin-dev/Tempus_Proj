@@ -25,9 +25,8 @@ page 종류:
 /ESG -> esg.jsx
 
 LandingPage 섹션 구성 (실제 구현 대상)
-AnimatedPathLogo.jsx - 회사로고 에니메이션
-TopSection.jsx - 회사 소개
-StorySection.jsx - 기술 소개
+TopSection.jsx - 애니메이션 + 회사 소개
+TechnologySection.jsx - 기술 소개
 ProductsSection.jsx - 핵심제품 소개
 ContactSection.jsx - 연락처 및 강의 배너
 
@@ -35,10 +34,10 @@ ContactSection.jsx - 연락처 및 강의 배너
 
 TopSection 컴포넌트 구성:
 
-- `HorizontalScrollSection` -가로 스크롤 컨테이너
-- `HeroSection` - 첫 번째 회사 소개.
-- `TransitionSection` - 두 번째 연결 화면
-- `MissionSection` - 세 번째 미션 화면
+- `VerticalScrollSection` -가로 스크롤 컨테이너
+- `HeroSection` - animation
+- `TransitionSection` - about tempus
+- `MissionSection` - 응용분야 및 특징
 
 TechnologySection 컴포넌트 구성:
 
@@ -75,12 +74,11 @@ src/data/contentData.js - 모든 섹션의 텍스트 중앙 관리
 섹션별 콘텐츠 데이터 활용:
 
 - `heroContent` - "보이지 않는것을 봅니다" 메인 텍스트, 타이핑 설정
-- `transitionContent` - "ORDINARY" 마스킹 텍스트
-- `missionContent` - "Ordinary Mission" 제목, 브랜드 미션 메시지
-- `storyContent` - 김도연 베이커리 Bloom 스토리, 인용구
-- `projectsContent` - "Ordinary Projects" 섹션 제목
+- `transitionContent` - 회사 technology
+- `missionContent` - 회사 미션 메시지
+- `projectsContent` - 회사 product 설명
 - `contactContent` - "Let's Work Together" 제목, 연락처 정보
-- `siteMetadata` - "Ordinary Design" 브랜드명, 네비게이션 메뉴
+- `siteMetadata` - 네비게이션 메뉴
 
 🌈 특별한 배경 시스템 이해하기
 
@@ -121,7 +119,6 @@ src/data/contentData.js - 모든 섹션의 텍스트 중앙 관리
 "고정된 상단 메뉴" → Header
 
 인터랙션 표현법
-
 "호버하면 살짝 커지는 효과" → 카드 hover 애니메이션
 "스크롤하면 순서대로 나타나는" → stagger 애니메이션
 "클릭하면 해당 섹션으로 이동" → 섹션 네비게이션
