@@ -43,7 +43,7 @@ export const technologyContent = {
     '자체 MEMS Fab 기반 차별화된 적외선센서 기술로',
     ' Physical AI의 새로운 가능성을 열어갑니다',
   ],
-  mainTitle: 'TECHNOLOGY',
+  mainTitle: 'PHYSICAL AI',
   h1Title: '독자적 Micro-Thermopile 기반 MEMS 센서 기술',
   description:
     '마이크로 전자기계시스템(MEMS) 기술을 활용한 초소형,고성능 멀티체널센서를 제공합니다. 자체개발 원천기술에 기반하여 고객요구에 맞춤형으로 대응합니다',

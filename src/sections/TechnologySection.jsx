@@ -1,266 +1,254 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
-import StickySection from '../components/patterns/pageTransition/StickySection';
+import FadeInandOut from '../components/patterns/pageTransition/FadeInandOut';
 import { technologyContent } from '../data/contentData';
 import fabImg from '../assets/photo/fabImg.png';
 import useIsInView from '../hooks/useIsInView';
-import { useBackground } from '../context/BackgroundContext';
 
 /**
  * TechnologySection 컴포넌트
  *
  * 기술 소개 섹션입니다.
- * - StickySection으로 fabImg 이미지 고정 + 축소 효과
- * - StorySection 스타일의 글자 모션 적용
- * - useIsInView를 사용한 텍스트 색상 전환 효과
- * - useBackground를 사용하여 섹션이 10%만 보여도 gray 배경색으로 전환
- * - msg: 메인 메시지 (mainMessage, subMessage)
- * - content: H1 텍스트와 설명 (StorySection의 StoryContent 스타일)
- *
- * Props:
- * @param {React.Ref} ref - 섹션 ref [Optional]
- *
- * Example usage:
- * <TechnologySection ref={technologySectionRef} />
+ * - FadeInandOut으로 fabImg 이미지 fade in/out 효과
+ * - 텍스트는 고정된 위치에서 동적으로 나타남
+ * - 현대적이고 감각적인 reveal 애니메이션
  */
 const TechnologySection = forwardRef((props, ref) => {
-  const { updateBackgroundMode } = useBackground();
-
-  // 배경색 등록용 useIsInView - 섹션이 10%만 보여도 배경색 전환
-  const [sectionBgRef, isInView] = useIsInView({
-    threshold: 0.4, // 10%만 보여도 활성화
-    triggerOnce: false, // 스크롤할 때마다 감지
-  });
-  useEffect(() => {
-    console.log('🔍 TransitionSection isInView changed:', isInView);
-    if (isInView) {
-      updateBackgroundMode('gray');
-    }
-  }, [isInView, updateBackgroundMode]);
-
-  // StoryContent용 useIsInView 훅
-  const [textRef, isTextInView] = useIsInView({
-    threshold: 0.9,
-    rootMargin: '0px',
-    triggerOnce: false, // 스크롤할 때마다 감지
+  // 각 텍스트 요소별 개별 트리거 - threshold 최적화
+  const [labelRef, isLabelInView] = useIsInView({
+    threshold: 0.1, // 더 빠른 트리거를 위해 낮춤
+    triggerOnce: true,
   });
 
-  // mainMessage와 subMessage용 useIsInView 훅 (90% 보일 때 활성화)
   const [messageRef, isMessageInView] = useIsInView({
-    threshold: 0.8, // 90% 이상 보일 때 true (10% 가려지면 false)
-    rootMargin: '0px',
-    triggerOnce: false,
+    threshold: 0.1, // 더 빠른 트리거를 위해 낮춤
+    triggerOnce: true,
   });
 
-  // 메인 메시지 (msg prop으로 전달)
-  const mainMessage = (
-    <Box
-      sx={{
-        position: 'relative',
-        width: '100%',
-        height: '100vh',
-        zIndex: 9,
-      }}
-    >
-      <Stack
-        ref={messageRef}
-        width={'100%'}
-        sx={{
-          position: 'absolute',
-          top: '40%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'white',
-          textShadow: '0px 2px 20px rgba(0,0,0,0.9)',
-          padding: '20px',
-          maxWidth: '80%',
-          zIndex: 2,
-          // 🎨 opacity 전환 효과
-          opacity: isMessageInView ? 1 : 0,
-          transition: 'opacity 0.8s ease-in-out',
-        }}
-      >
-        <Box
-          sx={{
-            textAlign: 'center',
-            marginBottom: 6,
-          }}
-        >
-          <Typography
-            variant="h2"
-            sx={{
-              fontSize: { xs: '2rem', md: '3rem', lg: '4rem' },
-              fontWeight: 700,
-              color: '#ffffff',
-              marginBottom: 2,
-            }}
-          >
-            {technologyContent.mainMessage[0]}
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              fontSize: { xs: '1rem', md: '1.25rem', lg: '1.5rem' },
-              fontWeight: 400,
-              color: '#ffffff',
-              opacity: 0.9,
-              marginBottom: 1,
-            }}
-          >
-            {technologyContent.subMessage[0]}
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              fontSize: { xs: '1rem', md: '1.25rem', lg: '1.5rem' },
-              fontWeight: 400,
-              color: '#ffffff',
-              opacity: 0.9,
-            }}
-          >
-            {technologyContent.subMessage[1]}
-          </Typography>
-        </Box>
-      </Stack>
-
-      {/* TECHNOLOGY 메인 텍스트 (배경) */}
-      <Typography
-        variant="h1"
-        sx={{
-          position: 'absolute',
-          bottom: '5%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          fontSize: { xs: '8rem', md: '12rem', lg: '15rem' },
-          fontWeight: 900,
-          lineHeight: 0.8,
-          color: 'rgba(240, 235, 235, 0.35)',
-          letterSpacing: '-0.02em',
-          fontFamily: 'Arial, sans-serif',
-          zIndex: 0,
-          pointerEvents: 'none',
-        }}
-      >
-        {technologyContent.mainTitle}
-      </Typography>
-
-      {/* StoryContent - mainTitle 밑에 위치 */}
+  // 고정된 위치의 텍스트 콘텐츠 - 메모이제이션으로 불필요한 리렌더링 방지
+  const mainMessage = useMemo(
+    () => (
       <Box
-        ref={textRef}
         sx={{
-          position: 'absolute',
-          bottom: { xs: '5%', md: '-10%', lg: '-68%' },
-          left: '50%',
-          transform: 'translateX(-50%)',
+          position: 'relative',
           width: '100%',
-          maxWidth: '1200px',
-          zIndex: 1,
+          height: '100%',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          padding: { xs: '40px 20px', md: '60px 40px' },
+          paddingTop: { xs: '80px', md: '120px' },
         }}
       >
         <Box
-          width={'100%'}
           sx={{
+            width: '100%',
+            maxWidth: '1400px',
             display: 'flex',
-            justifyContent: 'center',
-            position: 'relative',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: { xs: 4, md: 6 },
           }}
         >
+          {/* 상단 라벨 */}
           <Box
+            ref={labelRef}
             sx={{
-              transform: 'translateY(80px)',
-              animation: 'slideUp 0.8s ease-out 0.2s forwards',
-              opacity: 0,
-              '@keyframes slideUp': {
-                '0%': {
-                  opacity: 0,
-                  transform: 'translateY(80px)',
-                },
-                '100%': {
-                  opacity: 1,
-                  transform: 'translateY(0)',
-                },
-              },
+              opacity: isLabelInView ? 1 : 0,
+              transform: isLabelInView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
+              willChange: 'opacity, transform',
             }}
           >
-            <Stack
-              width={'100%'}
-              spacing={4}
-              alignItems="center"
+            <Box
               sx={{
-                p: 4,
-                borderRadius: 2,
-                backdropFilter: 'blur(5px)',
+                display: 'inline-block',
+                padding: '8px 24px',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '100px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+              }}
+            >
+              {/* <Typography
+                sx={{
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  color: '#ffffff',
+                  textTransform: 'uppercase',
+                }}
+              >
+                Core Technology
+              </Typography> */}
+            </Box>
+          </Box>
+
+          {/* 메인 메시지 */}
+          <Stack
+            spacing={2}
+            alignItems="center"
+            sx={{
+              width: '100%',
+              maxWidth: '900px',
+            }}
+          >
+            <Box
+              ref={messageRef}
+              sx={{
+                overflow: 'hidden',
+                width: '100%',
               }}
             >
               <Typography
-                width={'100%'}
-                textAlign="center"
-                fontWeight={'400'}
+                variant="h2"
                 sx={{
-                  whiteSpace: 'pre-line',
-                  lineHeight: 1.4,
                   fontSize: {
-                    xs: '1.1rem',
-                    sm: '1.3rem',
-                    md: '1.8rem',
-                    lg: '2.2rem',
+                    xs: '2.5rem',
+                    sm: '3.5rem',
+                    md: '4.5rem',
+                    lg: '5.5rem',
                   },
-                  // 🎨 텍스트 색상 전환 효과
-                  color: isTextInView ? '#000000' : 'transparent',
-                  transition: 'color 1.2s ease-in-out',
+                  fontWeight: 800,
+                  color: '#ffffff',
+                  textAlign: 'center',
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                  opacity: isMessageInView ? 1 : 0,
+                  transform: isMessageInView
+                    ? 'translate3d(0, 0, 0)'
+                    : 'translate3d(0, 40px, 0)',
+                  transition: isMessageInView
+                    ? 'none'
+                    : 'opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1) 200ms, transform 1000ms cubic-bezier(0.16, 1, 0.3, 1) 200ms',
+                  ...(isMessageInView
+                    ? {}
+                    : { willChange: 'opacity, transform' }),
                 }}
               >
-                {technologyContent.h1Title}
+                {technologyContent.mainMessage[0]}
               </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                overflow: 'hidden',
+                width: '100%',
+              }}
+            >
               <Typography
-                width={'100%'}
-                fontWeight={'bold'}
-                textAlign="center"
+                variant="h5"
                 sx={{
-                  mt: 2,
-                  fontSize: {
-                    xs: '0.9rem',
-                    sm: '1rem',
-                    md: '1.2rem',
-                    lg: '1.4rem',
-                  },
-                  // 🎨 텍스트 색상 전환 효과
-                  color: isTextInView ? '#000000' : 'transparent',
-                  transition: 'color 1.2s ease-in-out 0.3s', // 약간의 딜레이 추가
+                  fontSize: { xs: '1.1rem', md: '1.4rem', lg: '1.6rem' },
+                  fontWeight: 400,
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  textAlign: 'center',
+                  lineHeight: 1.6,
+                  opacity: isMessageInView ? 1 : 0,
+                  transform: isMessageInView
+                    ? 'translate3d(0, 0, 0)'
+                    : 'translate3d(0, 30px, 0)',
+                  transition: isMessageInView
+                    ? 'none'
+                    : 'opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1) 400ms, transform 1000ms cubic-bezier(0.16, 1, 0.3, 1) 400ms',
+                  ...(isMessageInView
+                    ? {}
+                    : { willChange: 'opacity, transform' }),
                 }}
               >
-                {technologyContent.description}
+                {technologyContent.subMessage[0]}
               </Typography>
-            </Stack>
+            </Box>
+
+            <Box
+              sx={{
+                overflow: 'hidden',
+                width: '100%',
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  fontSize: { xs: '1.1rem', md: '1.4rem', lg: '1.6rem' },
+                  fontWeight: 400,
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  textAlign: 'center',
+                  lineHeight: 1.6,
+                  opacity: isMessageInView ? 1 : 0,
+                  transform: isMessageInView
+                    ? 'translate3d(0, 0, 0)'
+                    : 'translate3d(0, 30px, 0)',
+                  transition:
+                    'opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1) 500ms, transform 1000ms cubic-bezier(0.16, 1, 0.3, 1) 500ms',
+                  willChange: 'opacity, transform',
+                }}
+              >
+                {technologyContent.subMessage[1]}
+              </Typography>
+            </Box>
+          </Stack>
+
+          {/* 장식 라인 */}
+          <Box
+            sx={{
+              width: '80px',
+              height: '2px',
+              backgroundColor: 'rgba(255, 255, 255, 0.3)',
+              opacity: isMessageInView ? 1 : 0,
+              transform: isMessageInView ? 'scaleX(1)' : 'scaleX(0)',
+              transition:
+                'opacity 800ms cubic-bezier(0.16, 1, 0.3, 1) 600ms, transform 800ms cubic-bezier(0.16, 1, 0.3, 1) 600ms',
+              willChange: 'opacity, transform',
+            }}
+          />
+
+          {/* TECHNOLOGY 대형 텍스트 - 이미지 하단에 고정 */}
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              width: '100%',
+              paddingBottom: { xs: '40px', md: '60px' },
+            }}
+          >
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: { xs: '4rem', sm: '6rem', md: '9rem', lg: '14rem' },
+                fontWeight: 900,
+                lineHeight: 0.85,
+                color: 'rgba(255, 255, 255, 0.25)',
+                letterSpacing: '-0.03em',
+                fontFamily: 'Arial, sans-serif',
+                textAlign: 'center',
+                userSelect: 'none',
+                pointerEvents: 'none',
+              }}
+            >
+              {technologyContent.mainTitle}
+            </Typography>
           </Box>
         </Box>
       </Box>
-    </Box>
+    ),
+    [isLabelInView, isMessageInView, labelRef, messageRef]
   );
 
   return (
     <Box
       ref={(node) => {
-        // forwardRef와 useIsInView ref 병합
-        if (typeof ref === 'function') {
-          ref(node);
-        } else if (ref) {
-          ref.current = node;
-        }
-        sectionBgRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
       }}
       sx={{
         width: '100%',
-        // backgroundColor: '#F3F4F6',
         position: 'relative',
       }}
     >
-      <StickySection
+      <FadeInandOut
         image={fabImg}
         msg={mainMessage}
-        targetScale={0.7}
         useFadeEffect={true}
         targetOpacity={0.3}
       />
@@ -269,5 +257,4 @@ const TechnologySection = forwardRef((props, ref) => {
 });
 
 TechnologySection.displayName = 'TechnologySection';
-
 export default TechnologySection;
