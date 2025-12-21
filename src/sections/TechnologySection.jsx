@@ -85,7 +85,7 @@ const TechnologySection = forwardRef((props, ref) => {
 
           {/* 메인 메시지 */}
           <Stack
-            spacing={2}
+            spacing={0}
             alignItems="center"
             sx={{
               width: '100%',
@@ -133,6 +133,7 @@ const TechnologySection = forwardRef((props, ref) => {
               sx={{
                 overflow: 'hidden',
                 width: '100%',
+                marginTop: { xs: '24px', md: '32px' },
               }}
             >
               <Typography
@@ -142,7 +143,7 @@ const TechnologySection = forwardRef((props, ref) => {
                   fontWeight: 400,
                   color: 'rgba(255, 255, 255, 0.85)',
                   textAlign: 'center',
-                  lineHeight: 1.6,
+                  lineHeight: 1.3,
                   opacity: isMessageInView ? 1 : 0,
                   transform: isMessageInView
                     ? 'translate3d(0, 0, 0)'
