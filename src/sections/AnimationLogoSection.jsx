@@ -178,6 +178,7 @@ function AnimationLogoSection() {
         backgroundColor: '#FAFAF7',
         padding: { xs: '20px', md: '40px' },
         paddingBottom: { xs: '20vh', md: '25vh' },
+        // paddingBottom: { xs: '10vh', md: '5vh' },
         overflow: 'hidden',
         position: 'relative',
       }}

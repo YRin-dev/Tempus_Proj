@@ -48,14 +48,15 @@ function ProductDetail() {
         <Typography
           variant="h1"
           sx={{
-            fontFamily: 'Blackout-Midnight, sans-serif',
-            fontWeight: 'normal',
+            fontFamily: '"Pretendard Variable", "Pretendard", sans-serif',
+            fontWeight: 900,
             fontSize: {
               xs: '2.5rem',
               sm: '3.5rem',
               md: '4.5rem',
               lg: '5.5rem',
             },
+            letterSpacing: '-0.02em',
             mb: 3,
             lineHeight: 1.1,
           }}

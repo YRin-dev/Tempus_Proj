@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { transitionContent } from '../data/contentData';
 import useIsInView from '../hooks/useIsInView';
-import { useBackground } from '../context/BackgroundContext';
 import buildingImg from '../assets/photo/buildingImg.jpeg';
 
 /**
@@ -21,23 +20,14 @@ import buildingImg from '../assets/photo/buildingImg.jpeg';
  * <TransitionSection />
  */
 function TransitionSection() {
-  const { updateBackgroundMode } = useBackground();
-  const [ref, isInView] = useIsInView({ threshold: 0.1, triggerOnce: false });
   const [contentRef, isContentInView] = useIsInView({
     threshold: 0.3,
     triggerOnce: true,
   });
 
-  // 뷰포트에 10%만 보여도 light 모드로 전환
-  React.useEffect(() => {
-    if (isInView) {
-      updateBackgroundMode('light');
-    }
-  }, [isInView, updateBackgroundMode]);
-
   return (
     <Box
-      ref={ref}
+      //ref={ref}
       sx={{
         width: '100vw',
         minHeight: '100vh',
@@ -106,10 +96,10 @@ function TransitionSection() {
                 lineHeight: 0.9,
                 color: 'rgba(26, 26, 26, 0.08)',
                 letterSpacing: '-0.03em',
-                fontFamily: 'Arial, sans-serif',
+                fontFamily: '"Pretendard Variable", "Pretendard", sans-serif',
                 position: 'absolute',
-                top: { xs: '-30px', md: '-50px' },
-                left: { xs: '-10px', md: '-20px' },
+                top: { xs: '-80px', md: '-100px' },
+                left: { xs: '-10px', md: '-40px' },
                 zIndex: 0,
                 pointerEvents: 'none',
                 userSelect: 'none',
@@ -119,7 +109,7 @@ function TransitionSection() {
             </Typography>
 
             {/* 작은 라벨 */}
-            <Typography
+            {/* <Typography
               sx={{
                 fontSize: { xs: '0.75rem', md: '0.875rem' },
                 fontWeight: 600,
@@ -137,7 +127,7 @@ function TransitionSection() {
               }}
             >
               Who We Are
-            </Typography>
+            </Typography> */}
 
             {/* 메인 헤딩 */}
             <Typography
@@ -213,21 +203,23 @@ function TransitionSection() {
             }}
           >
             <Button
-              variant="contained"
+              variant="outlined"
               sx={{
-                backgroundColor: '#1a1a1a',
-                color: '#ffffff',
-                padding: { xs: '14px 36px', md: '16px 48px' },
                 fontSize: { xs: '0.95rem', md: '1.05rem' },
                 fontWeight: 600,
-                borderRadius: '4px',
+                borderRadius: '10px',
                 textTransform: 'none',
+                borderWidth: '2px',
+                borderColor: 'rgba(30, 64, 175, 0.04)',
+                backgroundColor: 'rgba(30, 64, 175, 0.04)',
+                color: '#1E40AF',
+                padding: { xs: '14px 36px', md: '16px 48px' },
                 boxShadow: '0 4px 14px rgba(0, 0, 0, 0.15)',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
                 '&:hover': {
-                  backgroundColor: '#2a2a2a',
-                  boxShadow: '0 6px 20px rgba(0, 0, 0, 0.25)',
                   transform: 'translateY(-2px)',
+                  borderWidth: '2px',
+                  borderColor: '#1E40AF',
                 },
                 '&:active': {
                   transform: 'translateY(0)',

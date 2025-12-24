@@ -48,7 +48,9 @@ const ContactSection = forwardRef((props, ref) => {
             variant="h1"
             sx={{
               fontSize: { xs: '2.5rem', md: '4rem', lg: '5rem' },
-              fontWeight: 700,
+              fontWeight: 900,
+              letterSpacing: '-0.02em',
+              fontFamily: '"Pretendard Variable", "Pretendard", sans-serif',
               marginBottom: 2,
             }}
           >

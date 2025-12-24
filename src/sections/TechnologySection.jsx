@@ -221,7 +221,7 @@ const TechnologySection = forwardRef((props, ref) => {
                 lineHeight: 0.85,
                 color: 'rgba(255, 255, 255, 0.25)',
                 letterSpacing: '-0.03em',
-                fontFamily: 'Arial, sans-serif',
+                fontFamily: '"Pretendard Variable", "Pretendard", sans-serif',
                 textAlign: 'center',
                 userSelect: 'none',
                 pointerEvents: 'none',
