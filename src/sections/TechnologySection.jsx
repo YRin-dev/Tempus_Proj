@@ -37,7 +37,7 @@ const TechnologySection = forwardRef((props, ref) => {
           alignItems: 'flex-start',
           justifyContent: 'center',
           padding: { xs: '40px 20px', md: '60px 40px' },
-          paddingTop: { xs: '80px', md: '120px' },
+          paddingTop: { xs: '80px', md: '150px' },
         }}
       >
         <Box
@@ -50,39 +50,6 @@ const TechnologySection = forwardRef((props, ref) => {
             gap: { xs: 4, md: 6 },
           }}
         >
-          {/* 상단 라벨 */}
-          <Box
-            ref={labelRef}
-            sx={{
-              opacity: isLabelInView ? 1 : 0,
-              transform: isLabelInView ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
-              willChange: 'opacity, transform',
-            }}
-          >
-            <Box
-              sx={{
-                display: 'inline-block',
-                padding: '8px 24px',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '100px',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-              }}
-            >
-              {/* <Typography
-                sx={{
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                  fontWeight: 600,
-                  letterSpacing: '0.1em',
-                  color: '#ffffff',
-                  textTransform: 'uppercase',
-                }}
-              >
-                Core Technology
-              </Typography> */}
-            </Box>
-          </Box>
-
           {/* 메인 메시지 */}
           <Stack
             spacing={0}

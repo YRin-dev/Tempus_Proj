@@ -68,110 +68,152 @@ const TechnologyCardsSection = forwardRef((props, ref) => {
         overflow: 'hidden',
       }}
     >
-      {/* 헤더 섹션 - Recognition Rather Than Recall */}
+      {/* 메인 컨테이너 - 왼쪽 Description, 오른쪽 카드들 */}
       <Box
         ref={contentRef}
         sx={{
           width: '100%',
           maxWidth: '1400px',
-          marginBottom: { xs: 5, md: 8 },
-          textAlign: { xs: 'center', md: 'left' },
-          paddingX: { xs: 2, md: 0 },
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          gap: { xs: 5, md: 6, lg: 8 },
+          alignItems: { xs: 'center', md: 'flex-start' },
+          position: 'relative',
         }}
       >
-        {/* 상태 표시 칩 - Visibility of System Status */}
-        {/* <Chip
-          icon={<CheckCircleOutlineIcon sx={{ fontSize: '1rem' }} />}
-          label="핵심 기술 3가지"
+        {/* 왼쪽: Description 섹션 */}
+        <Box
           sx={{
-            marginBottom: 3,
-            backgroundColor: '#1E40AF',
-            color: '#ffffff',
-            fontWeight: 600,
-            fontSize: '0.875rem',
-            height: '36px',
-            opacity: isContentInView ? 1 : 0,
-            transform: isContentInView ? 'translateY(0)' : 'translateY(-10px)',
-            transition: 'all 0.6s ease-out',
-            '& .MuiChip-icon': {
-              color: '#ffffff',
-            },
-          }}
-        /> */}
-
-        {/* 메인 헤딩 - Clear Hierarchy */}
-        <Typography
-          variant="h1"
-          sx={{
-            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5rem' },
-            fontWeight: 800,
-            lineHeight: 1.1,
-            color: '#1a1a1a',
-            letterSpacing: '-0.02em',
-            fontFamily: '"Pretendard Variable", "Pretendard", sans-serif',
-            marginBottom: 2,
-            opacity: isContentInView ? 1 : 0,
-            transform: isContentInView ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'all 0.7s ease-out 0.1s',
+            flex: { xs: '1', md: '0 0 40%' },
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingRight: { xs: 0, md: 4 },
+            paddingTop: { xs: '50px', md: '100px' },
+            textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          Technology
-        </Typography>
+          {/* 메인 헤딩 - Clear Hierarchy */}
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: {
+                xs: '2.5rem',
+                sm: '3.5rem',
+                md: '3.5rem',
+                lg: '4rem',
+              },
+              fontWeight: 800,
+              lineHeight: 1.1,
+              color: '#1a1a1a',
+              letterSpacing: '-0.02em',
+              fontFamily: '"Pretendard Variable", "Pretendard", sans-serif',
+              marginBottom: 3,
+              opacity: isContentInView ? 1 : 0,
+              transform: isContentInView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.7s ease-out 0.1s',
+            }}
+          >
+            Technology
+          </Typography>
 
-        {/* 설명 - Clear Information Architecture */}
-        <Typography
-          variant="body1"
+          {/* 설명 - Clear Information Architecture */}
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: { xs: '1.05rem', md: '1.1rem', lg: '1.2rem' },
+              lineHeight: 1.8,
+              color: '#4a4a4a',
+              opacity: isContentInView ? 1 : 0,
+              transform: isContentInView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.7s ease-out 0.2s',
+            }}
+          >
+            독자적 Micro-thermopile 기반 MEMS 센서 기술 마이크로
+            전자기계시스템(MEMS) 기술을 활용한 초소형, 고성능 멀티채널센서를
+            제공합니다. 자체 개발 원천기술에 기반하여 고객 요구에 맞춤형으로
+            대응합니다.
+          </Typography>
+
+          {/* Footer CTA - Help and Documentation */}
+          <Box
+            sx={{
+              marginTop: { xs: 6, md: 10 },
+              textAlign: 'center',
+              opacity: isContentInView ? 1 : 0,
+              transform: isContentInView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease-out 1s',
+
+              position: 'absolute',
+              left: '11%',
+              bottom: 0,
+            }}
+          >
+            <Typography
+              variant="body2"
+              sx={{
+                fontSize: '0.95rem',
+                color: '#666',
+                marginBottom: 2,
+              }}
+            >
+              더 궁금한 내용이 있으신가요?
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: '#1E40AF',
+                color: '#1E40AF',
+                padding: '12px 32px',
+                fontSize: '1rem',
+                fontWeight: 600,
+                borderRadius: '10px',
+                textTransform: 'none',
+                borderWidth: '2px',
+                '&:hover': {
+                  borderWidth: '2px',
+                  borderColor: '#1E40AF',
+                  backgroundColor: 'rgba(30, 64, 175, 0.04)',
+                },
+              }}
+            >
+              전체 기술 문서 보기
+            </Button>
+          </Box>
+        </Box>
+
+        {/* 오른쪽: 카드 섹션 */}
+        <Box
           sx={{
-            fontSize: { xs: '1.05rem', md: '1.2rem' },
-            lineHeight: 1.7,
-            color: '#4a4a4a',
-            maxWidth: '700px',
-            marginX: { xs: 'auto', md: 0 },
-            opacity: isContentInView ? 1 : 0,
-            transform: isContentInView ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'all 0.7s ease-out 0.2s',
+            flex: { xs: '1', md: '0 0 60%' },
+            display: 'flex',
+            flexDirection: 'column',
+            gap: { xs: 3, md: 4 },
+            width: '100%',
           }}
         >
-          독자적 Micro-thermopile 기반 MEMS 센서 기술 마이크로
-          전자기계시스템(MEMS) 기술을 활용한 초소형, 고성능 멀티채널센서를
-          제공합니다. 자체 개발 원천기술에 기반하여 고객 요구에 맞춤형으로
-          대응합니다.
-        </Typography>
-      </Box>
-
-      {/* 카드 그리드 - Consistency and Standards */}
-      <Grid
-        container
-        spacing={{ xs: 2.5, sm: 3, md: 4 }}
-        sx={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          width: '100%',
-        }}
-      >
-        {technologyContent.cards.map((card, index) => (
-          <Grid key={card.id} item xs={12} sm={6} md={4}>
+          {technologyContent.cards.map((card, index) => (
             <Box
+              key={card.id}
               sx={{
                 backgroundColor: '#ffffff',
-                borderRadius: '20px',
+                borderRadius: '16px',
                 overflow: 'hidden',
-                height: '100%',
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: 'row',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                 border: '1px solid rgba(0, 0, 0, 0.06)',
                 boxShadow: '22px 22px 29px rgba(87, 78, 241, 0.06)',
                 opacity: isContentInView ? 1 : 0,
                 transform: isContentInView
-                  ? 'translateY(0)'
-                  : 'translateY(30px)',
+                  ? 'translateX(0)'
+                  : 'translateX(60px)',
                 transitionDelay: `${0.3 + index * 0.1}s`,
+                height: { xs: 'auto', md: '210px' },
                 // User Control - 명확한 hover 피드백
                 '&:hover': {
                   transform: 'translateY(-8px)',
                   boxShadow: '22px 22px 40px rgba(87, 78, 241, 0.2)',
-
                   '& .card-image': {
                     transform: 'scale(1.05)',
                   },
@@ -183,9 +225,6 @@ const TechnologyCardsSection = forwardRef((props, ref) => {
                     color: '#ffffff',
                     transform: 'translateX(4px)',
                   },
-                  '& .feature-item': {
-                    transform: 'translateX(4px)',
-                  },
                 },
               }}
             >
@@ -193,8 +232,9 @@ const TechnologyCardsSection = forwardRef((props, ref) => {
               <Box
                 sx={{
                   position: 'relative',
-                  width: '100%',
-                  paddingTop: '60%',
+                  width: { xs: '100%', md: '240px' },
+                  minHeight: { xs: '200px', md: 'auto' },
+                  flexShrink: 0,
                   overflow: 'hidden',
                   backgroundColor: '#f8f9fa',
                 }}
@@ -211,9 +251,6 @@ const TechnologyCardsSection = forwardRef((props, ref) => {
                   alt={card.title}
                   className="card-image"
                   sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
@@ -242,50 +279,40 @@ const TechnologyCardsSection = forwardRef((props, ref) => {
               {/* 콘텐츠 섹션 - Information Architecture */}
               <Box
                 sx={{
-                  padding: { xs: 3, sm: 3.5, md: 4 },
+                  padding: { xs: 3, md: 4 },
                   display: 'flex',
                   flexDirection: 'column',
+                  justifyContent: 'space-between',
                   flex: 1,
-                  gap: 2,
                 }}
               >
-                {/* 제목 - Clear Labeling */}
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontSize: { xs: '1.4rem', md: '1.55rem' },
-                    fontWeight: 700,
-                    color: '#1a1a1a',
-                    lineHeight: 1.3,
-                    marginBottom: 1,
-                  }}
-                >
-                  {card.title}
-                </Typography>
+                <Box>
+                  {/* 제목 - Clear Labeling */}
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontSize: { xs: '1.4rem', md: '1.5rem' },
+                      fontWeight: 700,
+                      color: '#1a1a1a',
+                      lineHeight: 1.3,
+                      marginBottom: 1.5,
+                    }}
+                  >
+                    {card.title}
+                  </Typography>
 
-                {/* 설명 - Readability */}
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontSize: { xs: '0.95rem', md: '1rem' },
-                    lineHeight: 1.65,
-                    color: '#5a5a5a',
-                    flex: 1,
-                    marginBottom: 2,
-                  }}
-                >
-                  {card.description}
-                </Typography>
-
-                {/* 구분선 - Visual Separation */}
-                <Box
-                  sx={{
-                    width: '100%',
-                    height: '1px',
-                    backgroundColor: 'rgba(0, 0, 0, 0.08)',
-                    marginY: 1,
-                  }}
-                />
+                  {/* 설명 - Readability */}
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontSize: { xs: '0.95rem', md: '1rem' },
+                      lineHeight: 1.6,
+                      color: '#5a5a5a',
+                    }}
+                  >
+                    {card.description}
+                  </Typography>
+                </Box>
 
                 {/* CTA 버튼 - Clear Action */}
                 <Button
@@ -294,21 +321,23 @@ const TechnologyCardsSection = forwardRef((props, ref) => {
                   endIcon={
                     <ArrowForwardIcon
                       sx={{
-                        fontSize: '1.1rem',
+                        fontSize: '1rem',
                         transition: 'transform 0.3s ease',
                       }}
                     />
                   }
                   sx={{
-                    padding: '14px 24px',
+                    padding: '12px 24px',
                     fontSize: '0.95rem',
                     fontWeight: 600,
                     color: '#1E40AF',
                     textTransform: 'none',
-                    borderRadius: '12px',
-                    justifyContent: 'space-between',
+                    borderRadius: '10px',
+                    justifyContent: 'flex-start',
                     backgroundColor: 'rgba(0, 0, 0, 0.03)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    alignSelf: 'flex-start',
+                    marginTop: 2,
                     '&:hover': {
                       backgroundColor: '#1E40AF',
                     },
@@ -320,50 +349,8 @@ const TechnologyCardsSection = forwardRef((props, ref) => {
                 </Button>
               </Box>
             </Box>
-          </Grid>
-        ))}
-      </Grid>
-
-      {/* Footer CTA - Help and Documentation */}
-      <Box
-        sx={{
-          marginTop: { xs: 6, md: 10 },
-          textAlign: 'center',
-          opacity: isContentInView ? 1 : 0,
-          transform: isContentInView ? 'translateY(0)' : 'translateY(20px)',
-          transition: 'all 0.8s ease-out 1s',
-        }}
-      >
-        <Typography
-          variant="body2"
-          sx={{
-            fontSize: '0.95rem',
-            color: '#666',
-            marginBottom: 2,
-          }}
-        >
-          더 궁금한 내용이 있으신가요?
-        </Typography>
-        <Button
-          variant="outlined"
-          sx={{
-            borderColor: '#1E40AF',
-            color: '#1E40AF',
-            padding: '12px 32px',
-            fontSize: '1rem',
-            fontWeight: 600,
-            borderRadius: '10px',
-            textTransform: 'none',
-            borderWidth: '2px',
-            '&:hover': {
-              borderWidth: '2px',
-              borderColor: '#1E40AF',
-              backgroundColor: 'rgba(30, 64, 175, 0.04)',
-            },
-          }}
-        >
-          전체 기술 문서 보기
-        </Button>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
