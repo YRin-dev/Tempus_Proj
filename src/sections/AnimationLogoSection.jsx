@@ -175,7 +175,8 @@ function AnimationLogoSection() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FAFAF7',
+        backgroundColor: '#F8F9FA',
+
         padding: { xs: '20px', md: '40px' },
         paddingBottom: { xs: '20vh', md: '25vh' },
         // paddingBottom: { xs: '10vh', md: '5vh' },
@@ -184,20 +185,21 @@ function AnimationLogoSection() {
       }}
     >
       {/* 하단 경계선 블러 효과 - TransitionSection으로 자연스럽게 전환 */}
-      <Box
+      {/* <Box
         sx={{
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          height: '150px',
+          height: '100px',
           background:
-            'linear-gradient(to bottom, transparent, rgba(250, 250, 247, 0.8), rgba(250, 250, 247, 1))',
+            'linear-gradient(to bottom, transparent, rgba(248, 249, 250, 0.8), rgba(248, 249, 250, 1))',
           backdropFilter: 'blur(10px)',
           zIndex: 2,
           pointerEvents: 'none',
         }}
-      />
+      /> */}
+
       {/* 버블 효과 배경 Canvas - 성능 최적화: 뷰포트에 보일 때만 렌더링 */}
       {isInView && (
         <Canvas
@@ -219,7 +221,7 @@ function AnimationLogoSection() {
           }}
           camera={{ fov: 60, position: [0, 0, 20], near: 0.1, far: 100 }}
         >
-          <color attach="background" args={['#FAFAF7']} />
+          <color attach="background" args={['#F8F9FA']} />
           <directionalLight
             position={[0, 30, 10]}
             intensity={1.5}
