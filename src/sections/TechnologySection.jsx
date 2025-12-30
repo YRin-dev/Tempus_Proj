@@ -173,7 +173,7 @@ const TechnologySection = forwardRef((props, ref) => {
           <Box
             sx={{
               position: 'absolute',
-              bottom: 0,
+              bottom: '-64px',
               left: 0,
               right: 0,
               width: '100%',
@@ -183,7 +183,7 @@ const TechnologySection = forwardRef((props, ref) => {
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: '4rem', sm: '6rem', md: '9rem', lg: '14rem' },
+                fontSize: { xs: '4rem', sm: '6rem', md: '9rem', lg: '15rem' },
                 fontWeight: 900,
                 lineHeight: 0.85,
                 color: 'rgba(255, 255, 255, 0.25)',
