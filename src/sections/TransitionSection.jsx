@@ -154,8 +154,8 @@ function TransitionSection() {
             flexDirection: 'column',
             justifyContent: 'center',
             paddingLeft: { xs: '20px', md: '120px', lg: '160px' },
-            paddingRight: { xs: '20px', md: '80px' },
-            maxWidth: { xs: '100%', md: '700px' },
+
+            maxWidth: { xs: '100%', md: '800px' },
           }}
         >
           <Typography
@@ -261,7 +261,7 @@ function TransitionSection() {
           top: '45%',
           right: 0,
           transform: 'translateY(-50%)',
-          width: { xs: '50%', md: '40%', lg: '40%' },
+          width: { xs: '50%', md: '40%', lg: '43%' },
           height: { xs: '350px', md: '555px' },
           zIndex: 1,
         }}
@@ -337,7 +337,7 @@ function TransitionSection() {
       <Typography
         sx={{
           position: 'absolute',
-          bottom: '-1%',
+          bottom: '-4%',
           right: '5px',
           fontSize: '8vw',
           fontWeight: 900,
