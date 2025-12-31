@@ -268,62 +268,388 @@
 
 // export default TechnologySection;
 
-import React from 'react';
+//v2
+// import React from 'react';
+// import { Box, Typography, Grid, Container } from '@mui/material';
+// import useIsInView from '../hooks/useIsInView';
+// // 아이콘: 더 정밀한 느낌을 주는 아이콘들
+// import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+// import SensorsIcon from '@mui/icons-material/Sensors';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+// function TechnologySection() {
+//   const [ref, isInView] = useIsInView({ threshold: 0.05, triggerOnce: true });
+
+//   const techData = [
+//     {
+//       id: '01',
+//       title: 'Micro-thermopile 원천기술',
+//       subtitle: 'CORE TECHNOLOGY',
+//       desc: 'in-house MEMS FAB를 통한\n독자적 설계 및 공정 원천기술 확보',
+//       icon: <PrecisionManufacturingIcon sx={{ fontSize: 35 }} />,
+//       color: '#1E40AF',
+//     },
+//     {
+//       id: '02',
+//       title: '코: NDIR/TCD 가스 센서',
+//       subtitle: 'ROBOT OLFACTION',
+//       desc: '로봇의 후각 기능을 구현하는\n비접촉 방식의 초정밀 가스 센싱',
+//       icon: <SensorsIcon sx={{ fontSize: 35 }} />,
+//       color: '#2563EB',
+//     },
+//     {
+//       id: '03',
+//       title: '눈: SWIR/FIR 적외선 센서',
+//       subtitle: 'ROBOT VISION',
+//       desc: '가시광선 너머의 정보를 시각화하여\n환경을 분석하는 차세대 영상 센서',
+//       icon: <VisibilityIcon sx={{ fontSize: 35 }} />,
+//       color: '#3B82F6',
+//     },
+//   ];
+
+//   return (
+//     <Box
+//       ref={ref}
+//       sx={{
+//         width: '100vw',
+//         height: '100vh',
+//         display: 'flex',
+//         alignItems: 'center',
+//         position: 'relative',
+//         backgroundColor: '#F1F4F9', // 배경색을 살짝 눌러 카드를 돋보이게 함
+//         overflow: 'hidden',
+//         // --- 하이테크 도트 패턴 배경 ---
+//         backgroundImage: `radial-gradient(#d1d9e6 1.2px, transparent 0)`,
+//         backgroundSize: '40px 40px',
+//       }}
+//     >
+//       {/* 배경 장식: 대형 워터마크 (배경과 더 조화롭게 배치) */}
+//       <Typography
+//         sx={{
+//           position: 'absolute',
+//           top: '20%',
+//           left: '-5%',
+//           fontSize: '15vw',
+//           fontWeight: 950,
+//           color: 'rgba(30, 64, 175, 0.04)',
+//           lineHeight: 1,
+//           zIndex: 0,
+//           userSelect: 'none',
+//           letterSpacing: '-0.05em',
+//         }}
+//       >
+//         TECH
+//       </Typography>
+
+//       {/* 배경 장식: 대형 워터마크 (배경과 더 조화롭게 배치) */}
+//       {/* <Typography
+//         sx={{
+//           position: 'absolute',
+//           bottom: '8px',
+//           right: '-3%',
+//           fontSize: '15vw',
+//           fontWeight: 950,
+//           color: 'rgba(30, 64, 175, 0.04)',
+//           lineHeight: 1,
+//           zIndex: 0,
+//           userSelect: 'none',
+//           letterSpacing: '-0.05em',
+//         }}
+//       >
+//         NOLOGY
+//       </Typography> */}
+
+//       {/* 배경 장식: 우측 하단 기하학적 면 (최적화: 하드웨어 가속) */}
+//       <Box
+//         sx={{
+//           position: 'absolute',
+//           bottom: '-10%',
+//           right: '-5%',
+//           width: '45vw',
+//           height: '45vw',
+//           backgroundColor: '#E2E8F0',
+//           borderRadius: '100px',
+//           transform: 'rotate(-15deg)',
+//           zIndex: 0,
+//           opacity: 0.5,
+//           pointerEvents: 'none',
+//           willChange: 'transform',
+//         }}
+//       />
+
+//       <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
+//         <Grid container spacing={4} alignItems="center">
+//           {/* 왼쪽: 헤더 섹션 (밀도 있는 타이포그래피) */}
+//           <Grid item xs={12} lg={4}>
+//             <Box sx={{ mb: { xs: 4, lg: 0 }, pl: { md: 4 } }}>
+//               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+//                 <Box
+//                   sx={{
+//                     width: 40,
+//                     height: 2,
+//                     backgroundColor: '#1E40AF',
+//                     mr: 2,
+//                   }}
+//                 />
+//                 <Typography
+//                   sx={{
+//                     fontSize: '1rem',
+//                     fontWeight: 800,
+//                     color: '#1E40AF',
+//                     letterSpacing: '0.3em',
+//                   }}
+//                 >
+//                   TECHNOLOGY
+//                 </Typography>
+//               </Box>
+
+//               <Typography
+//                 variant="h2"
+//                 sx={{
+//                   fontSize: { xs: '2.2rem', md: '3.2rem' },
+//                   fontWeight: 900,
+//                   color: '#0F172A',
+//                   lineHeight: 1.1,
+//                   mb: 3,
+//                   wordBreak: 'keep-all',
+//                 }}
+//               >
+//                 독자적 기반의
+//                 <br />
+//                 <Box component="span" sx={{ color: '#1E40AF' }}>
+//                   MEMS 센서 솔루션
+//                 </Box>
+//               </Typography>
+
+//               <Typography
+//                 sx={{
+//                   fontSize: '1.1rem',
+//                   color: '#475569',
+//                   lineHeight: 1.8,
+//                   wordBreak: 'keep-all',
+//                   maxWidth: '380px',
+//                 }}
+//               >
+//                 자체 개발 원천기술을 바탕으로 고객 요구에 최적화된 맞춤형
+//                 마이크로 센서 기술을 설계하고 공급합니다.
+//               </Typography>
+//             </Box>
+//           </Grid>
+
+//           {/* 오른쪽: 기술 카드 (더 선명하고 임팩트 있는 디자인) */}
+//           <Grid item xs={12} lg={8}>
+//             <Grid container spacing={3}>
+//               {techData.map((tech, index) => (
+//                 <Grid item xs={12} md={4} key={tech.id}>
+//                   <Box
+//                     sx={{
+//                       position: 'relative',
+//                       backgroundColor: '#FFFFFF',
+//                       borderRadius: '24px',
+//                       padding: '50px 35px',
+//                       height: '100%',
+//                       minHeight: '420px',
+//                       display: 'flex',
+//                       flexDirection: 'column',
+//                       border: '1px solid rgba(30, 64, 175, 0.1)',
+//                       boxShadow: '0 10px 30px rgba(0, 0, 0, 0.03)',
+//                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+//                       opacity: isInView ? 1 : 0,
+//                       transform: isInView
+//                         ? 'translateY(0)'
+//                         : 'translateY(60px)',
+//                       transitionDelay: `${0.4 + index * 0.15}s`,
+//                       overflow: 'hidden',
+//                       '&:hover': {
+//                         transform: 'translateY(-20px)',
+//                         // 진해진 그림자 색상 (브랜드 컬러 틴트 포함)
+//                         boxShadow: `0 40px 70px rgba(30, 64, 175, 0.25)`,
+//                         '& .accent-bar': { height: '8px' },
+//                         '& .hover-arrow': {
+//                           transform: 'translateX(5px)',
+//                           opacity: 1,
+//                         },
+//                       },
+//                     }}
+//                   >
+//                     {/* 아이콘: 더 진한 색감과 배경 */}
+//                     <Box
+//                       sx={{
+//                         width: '70px',
+//                         height: '70px',
+//                         borderRadius: '18px',
+//                         backgroundColor: `${tech.color}10`, // 10% 투명도
+//                         color: tech.color,
+//                         display: 'flex',
+//                         alignItems: 'center',
+//                         justifyContent: 'center',
+//                         mb: 4,
+//                         border: `1px solid ${tech.color}20`,
+//                       }}
+//                     >
+//                       {tech.icon}
+//                     </Box>
+
+//                     <Typography
+//                       sx={{
+//                         fontSize: '0.8rem',
+//                         fontWeight: 800,
+//                         color: tech.color,
+//                         mb: 1.5,
+//                         letterSpacing: '0.1em',
+//                       }}
+//                     >
+//                       {tech.subtitle}
+//                     </Typography>
+
+//                     <Typography
+//                       variant="h5"
+//                       sx={{
+//                         fontWeight: 850,
+//                         color: '#0F172A',
+//                         mb: 2.5,
+//                         fontSize: '1.4rem',
+//                         lineHeight: 1.3,
+//                       }}
+//                     >
+//                       {tech.title}
+//                     </Typography>
+
+//                     <Typography
+//                       sx={{
+//                         fontSize: '0.95rem',
+//                         color: '#64748B',
+//                         lineHeight: 1.7,
+//                         whiteSpace: 'pre-line',
+//                         flexGrow: 1,
+//                       }}
+//                     >
+//                       {tech.desc}
+//                     </Typography>
+
+//                     {/* 하단 버튼: 현대적인 링크 스타일 */}
+//                     <Box
+//                       sx={{
+//                         mt: 4,
+//                         display: 'flex',
+//                         alignItems: 'center',
+//                         gap: 1,
+//                         color: '#0F172A',
+//                         fontWeight: 700,
+//                         cursor: 'pointer',
+//                         '&:hover': { color: tech.color },
+//                       }}
+//                     >
+//                       <Typography sx={{ fontSize: '0.9rem', fontWeight: 800 }}>
+//                         READ DETAILS
+//                       </Typography>
+//                       <ArrowForwardIcon
+//                         className="hover-arrow"
+//                         sx={{
+//                           fontSize: 18,
+//                           opacity: 0.7,
+//                           transition: 'all 0.3s ease',
+//                         }}
+//                       />
+//                     </Box>
+//                   </Box>
+//                 </Grid>
+//               ))}
+//             </Grid>
+//           </Grid>
+//         </Grid>
+//       </Container>
+//     </Box>
+//   );
+// }
+
+// export default TechnologySection;
+
+//v03
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Box, Typography, Grid, Container } from '@mui/material';
-import useIsInView from '../hooks/useIsInView';
-// 아이콘: 더 정밀한 느낌을 주는 아이콘들
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function TechnologySection() {
-  const [ref, isInView] = useIsInView({ threshold: 0.2, triggerOnce: true });
+  const [isVisible, setIsVisible] = useState(false);
+  const domRef = useRef();
 
-  const techData = [
-    {
-      id: '01',
-      title: 'Micro-thermopile 원천기술',
-      subtitle: 'CORE TECHNOLOGY',
-      desc: 'in-house MEMS FAB를 통한\n독자적 설계 및 공정 원천기술 확보',
-      icon: <PrecisionManufacturingIcon sx={{ fontSize: 35 }} />,
-      color: '#1E40AF',
-    },
-    {
-      id: '02',
-      title: '코: NDIR/TCD 가스 센서',
-      subtitle: 'ROBOT OLFACTION',
-      desc: '로봇의 후각 기능을 구현하는\n비접촉 방식의 초정밀 가스 센싱',
-      icon: <SensorsIcon sx={{ fontSize: 35 }} />,
-      color: '#2563EB',
-    },
-    {
-      id: '03',
-      title: '눈: SWIR/FIR 적외선 센서',
-      subtitle: 'ROBOT VISION',
-      desc: '가시광선 너머의 정보를 시각화하여\n환경을 분석하는 차세대 영상 센서',
-      icon: <VisibilityIcon sx={{ fontSize: 35 }} />,
-      color: '#3B82F6',
-    },
-  ];
+  // 1. 관찰자(Intersection Observer) 직접 설정
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // 요소가 화면에 5%만 보여도 true로 변경
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(domRef.current); // 한 번 보이면 관찰 중단 (triggerOnce)
+        }
+      },
+      {
+        threshold: 0.05, // 아주 살짝만 걸쳐도 나타나게 설정
+        rootMargin: '0px 0px -50px 0px', // 화면 하단보다 50px 먼저 감지 시작
+      }
+    );
+
+    const currentRef = domRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, []);
+
+  const techData = useMemo(
+    () => [
+      {
+        id: '01',
+        title: 'Micro-thermopile 원천기술',
+        subtitle: 'CORE TECHNOLOGY',
+        desc: 'in-house MEMS FAB를 통한\n독자적 설계 및 공정 원천기술 확보',
+        icon: <PrecisionManufacturingIcon sx={{ fontSize: 35 }} />,
+        color: '#1E40AF',
+      },
+      {
+        id: '02',
+        title: '코: NDIR/TCD 가스 센서',
+        subtitle: 'ROBOT OLFACTION',
+        desc: '로봇의 후각 기능을 구현하는\n비접촉 방식의 초정밀 가스 센싱',
+        icon: <SensorsIcon sx={{ fontSize: 35 }} />,
+        color: '#2563EB',
+      },
+      {
+        id: '03',
+        title: '눈: SWIR/FIR 적외선 센서',
+        subtitle: 'ROBOT VISION',
+        desc: '가시광선 너머의 정보를 시각화하여\n환경을 분석하는 차세대 영상 센서',
+        icon: <VisibilityIcon sx={{ fontSize: 35 }} />,
+        color: '#3B82F6',
+      },
+    ],
+    []
+  );
 
   return (
     <Box
-      ref={ref}
+      ref={domRef}
       sx={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        backgroundColor: '#F1F4F9', // 배경색을 살짝 눌러 카드를 돋보이게 함
+        backgroundColor: '#F1F4F9',
         overflow: 'hidden',
-        // --- 하이테크 도트 패턴 배경 ---
         backgroundImage: `radial-gradient(#d1d9e6 1.2px, transparent 0)`,
         backgroundSize: '40px 40px',
       }}
     >
-      {/* 배경 장식: 대형 워터마크 (배경과 더 조화롭게 배치) */}
+      {/* 배경 장식 최적화: pointerEvents: 'none' (매우 중요) */}
       <Typography
         sx={{
           position: 'absolute',
@@ -332,34 +658,15 @@ function TechnologySection() {
           fontSize: '15vw',
           fontWeight: 950,
           color: 'rgba(30, 64, 175, 0.04)',
-          lineHeight: 1,
           zIndex: 0,
           userSelect: 'none',
+          pointerEvents: 'none',
           letterSpacing: '-0.05em',
         }}
       >
         TECH
       </Typography>
 
-      {/* 배경 장식: 대형 워터마크 (배경과 더 조화롭게 배치) */}
-      {/* <Typography
-        sx={{
-          position: 'absolute',
-          bottom: '8px',
-          right: '-3%',
-          fontSize: '15vw',
-          fontWeight: 950,
-          color: 'rgba(30, 64, 175, 0.04)',
-          lineHeight: 1,
-          zIndex: 0,
-          userSelect: 'none',
-          letterSpacing: '-0.05em',
-        }}
-      >
-        NOLOGY
-      </Typography> */}
-
-      {/* 배경 장식: 우측 하단 기하학적 면 분할 */}
       <Box
         sx={{
           position: 'absolute',
@@ -372,14 +679,23 @@ function TechnologySection() {
           transform: 'rotate(-15deg)',
           zIndex: 0,
           opacity: 0.5,
+          pointerEvents: 'none',
         }}
       />
 
       <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
         <Grid container spacing={4} alignItems="center">
-          {/* 왼쪽: 헤더 섹션 (밀도 있는 타이포그래피) */}
+          {/* 왼쪽 설명 영역 */}
           <Grid item xs={12} lg={4}>
-            <Box sx={{ mb: { xs: 4, lg: 0 }, pl: { md: 4 } }}>
+            <Box
+              sx={{
+                mb: { xs: 4, lg: 0 },
+                pl: { md: 4 },
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'none' : 'translateY(30px)',
+                transition: 'all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)',
+              }}
+            >
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Box
                   sx={{
@@ -400,7 +716,6 @@ function TechnologySection() {
                   TECHNOLOGY
                 </Typography>
               </Box>
-
               <Typography
                 variant="h2"
                 sx={{
@@ -409,7 +724,6 @@ function TechnologySection() {
                   color: '#0F172A',
                   lineHeight: 1.1,
                   mb: 3,
-                  wordBreak: 'keep-all',
                 }}
               >
                 독자적 기반의
@@ -418,13 +732,11 @@ function TechnologySection() {
                   MEMS 센서 솔루션
                 </Box>
               </Typography>
-
               <Typography
                 sx={{
                   fontSize: '1.1rem',
                   color: '#475569',
                   lineHeight: 1.8,
-                  wordBreak: 'keep-all',
                   maxWidth: '380px',
                 }}
               >
@@ -434,7 +746,7 @@ function TechnologySection() {
             </Box>
           </Grid>
 
-          {/* 오른쪽: 기술 카드 (더 선명하고 임팩트 있는 디자인) */}
+          {/* 오른쪽 카드 영역 */}
           <Grid item xs={12} lg={8}>
             <Grid container spacing={3}>
               {techData.map((tech, index) => (
@@ -451,18 +763,18 @@ function TechnologySection() {
                       flexDirection: 'column',
                       border: '1px solid rgba(30, 64, 175, 0.1)',
                       boxShadow: '0 10px 30px rgba(0, 0, 0, 0.03)',
-                      transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                      opacity: isInView ? 1 : 0,
-                      transform: isInView
+                      // --- 애니메이션 핵심 ---
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible
                         ? 'translateY(0)'
                         : 'translateY(60px)',
-                      transitionDelay: `${0.4 + index * 0.15}s`,
+                      transition: `opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease`,
+                      transitionDelay: `${0.3 + index * 0.1}s`,
+                      // -------------------
                       overflow: 'hidden',
                       '&:hover': {
-                        transform: 'translateY(-20px)',
-                        // 진해진 그림자 색상 (브랜드 컬러 틴트 포함)
-                        boxShadow: `0 40px 70px rgba(30, 64, 175, 0.25)`,
-                        '& .accent-bar': { height: '8px' },
+                        transform: 'translateY(-15px)',
+                        boxShadow: `0 30px 60px rgba(30, 64, 175, 0.15)`,
                         '& .hover-arrow': {
                           transform: 'translateX(5px)',
                           opacity: 1,
@@ -470,13 +782,12 @@ function TechnologySection() {
                       },
                     }}
                   >
-                    {/* 아이콘: 더 진한 색감과 배경 */}
                     <Box
                       sx={{
                         width: '70px',
                         height: '70px',
                         borderRadius: '18px',
-                        backgroundColor: `${tech.color}10`, // 10% 투명도
+                        backgroundColor: `${tech.color}10`,
                         color: tech.color,
                         display: 'flex',
                         alignItems: 'center',
@@ -487,7 +798,6 @@ function TechnologySection() {
                     >
                       {tech.icon}
                     </Box>
-
                     <Typography
                       sx={{
                         fontSize: '0.8rem',
@@ -499,7 +809,6 @@ function TechnologySection() {
                     >
                       {tech.subtitle}
                     </Typography>
-
                     <Typography
                       variant="h5"
                       sx={{
@@ -512,20 +821,16 @@ function TechnologySection() {
                     >
                       {tech.title}
                     </Typography>
-
                     <Typography
                       sx={{
                         fontSize: '0.95rem',
                         color: '#64748B',
                         lineHeight: 1.7,
-                        whiteSpace: 'pre-line',
                         flexGrow: 1,
                       }}
                     >
                       {tech.desc}
                     </Typography>
-
-                    {/* 하단 버튼: 현대적인 링크 스타일 */}
                     <Box
                       sx={{
                         mt: 4,
