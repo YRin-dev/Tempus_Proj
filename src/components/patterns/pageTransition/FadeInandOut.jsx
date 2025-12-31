@@ -250,7 +250,7 @@ function FadeInandOut({
             zIndex: 0,
           }}
         >
-          {/* 베이스 배경색 레이어 - fade in 효과 */}
+          {/* 베이스 이미지 레이어 - 항상 보임 */}
           {image && (
             <Box
               sx={{
@@ -259,43 +259,67 @@ function FadeInandOut({
                 left: 0,
                 width: '100%',
                 height: '100%',
-                backgroundColor: '#6D7075',
-                opacity: 1 - fadeOutOpacity, // 이미지가 fade out될 때 배경색이 fade in
-                transition: 'opacity 0.1s ease-out',
-                willChange: 'opacity',
+                backgroundImage: `url(${image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
                 zIndex: 1,
               }}
             />
           )}
 
-          {/* 배경 컨텐츠 박스 - opacity만 변화 */}
-          <Box
-            sx={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              ...(backgroundComponent
-                ? {} // backgroundComponent가 제공되면 이 Box는 컨테이너 역할
-                : image
-                ? {
-                    backgroundImage: `url(${image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                  }
-                : { backgroundColor: backgroundColor }),
-              overflow: 'hidden',
-              position: 'relative',
-              opacity: finalOpacity,
-              transition: 'opacity 0.1s ease-out',
-              willChange: 'opacity',
-              zIndex: 2,
-            }}
-          >
-            {backgroundComponent && renderBackground()}
-          </Box>
+          {/* 검은 배경 레이어 - 스크롤에 따라 진해짐 */}
+          {image && (
+            <Box
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                backgroundColor: '#000000',
+                opacity: 1 - fadeOutOpacity, // 스크롤할수록 진해짐
+                transition: 'opacity 0.1s ease-out',
+                willChange: 'opacity',
+                zIndex: 2,
+                '&::after': {
+                  // 이미지 위에 어두운 그라데이션 오버레이 (가독성 확보)
+                  content: '""',
+                  position: 'absolute',
+                  inset: 0,
+                  background:
+                    'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)',
+                },
+              }}
+            />
+          )}
+
+          {/* 배경 컨텐츠 박스 - backgroundComponent용 */}
+          {backgroundComponent && (
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden',
+                position: 'relative',
+                zIndex: 3,
+              }}
+            >
+              {renderBackground()}
+            </Box>
+          )}
+
+          {/* image나 backgroundComponent 없을 때 기본 배경색 */}
+          {!image && !backgroundComponent && (
+            <Box
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                backgroundColor: backgroundColor,
+                zIndex: 1,
+              }}
+            />
+          )}
         </Box>
 
         {/* 메인 메시지/컨텐츠 영역 - 위로 이동하지 않음 */}

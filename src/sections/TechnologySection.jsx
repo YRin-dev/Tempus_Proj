@@ -79,11 +79,11 @@ const TechnologySection = forwardRef((props, ref) => {
                   color: '#ffffff',
                   textAlign: 'center',
                   lineHeight: 1.1,
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.03em',
                   opacity: isMessageInView ? 1 : 0,
                   transform: isMessageInView
                     ? 'translate3d(0, 0, 0)'
-                    : 'translate3d(0, 40px, 0)',
+                    : 'translate3d(0, 50px, 0)',
                   transition: isMessageInView
                     ? 'none'
                     : 'opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1) 200ms, transform 1000ms cubic-bezier(0.16, 1, 0.3, 1) 200ms',
@@ -93,6 +93,13 @@ const TechnologySection = forwardRef((props, ref) => {
                 }}
               >
                 {technologyContent.mainMessage[0]}
+
+                <br />
+                <Box component="span" sx={{ color: '#93C5FD' }}>
+                  코와 눈
+                </Box>
+
+                {technologyContent.mainMessage[1]}
               </Typography>
             </Box>
 
@@ -106,11 +113,11 @@ const TechnologySection = forwardRef((props, ref) => {
               <Typography
                 variant="h5"
                 sx={{
-                  fontSize: { xs: '1.1rem', md: '1.4rem', lg: '1.6rem' },
+                  fontSize: { xs: '1.1rem', md: '1.4rem', lg: '1.5rem' },
                   fontWeight: 400,
                   color: 'rgba(255, 255, 255, 0.85)',
                   textAlign: 'center',
-                  lineHeight: 1.3,
+                  lineHeight: 1.5,
                   opacity: isMessageInView ? 1 : 0,
                   transform: isMessageInView
                     ? 'translate3d(0, 0, 0)'
@@ -124,32 +131,7 @@ const TechnologySection = forwardRef((props, ref) => {
                 }}
               >
                 {technologyContent.subMessage[0]}
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                overflow: 'hidden',
-                width: '100%',
-              }}
-            >
-              <Typography
-                variant="h5"
-                sx={{
-                  fontSize: { xs: '1.1rem', md: '1.4rem', lg: '1.6rem' },
-                  fontWeight: 400,
-                  color: 'rgba(255, 255, 255, 0.85)',
-                  textAlign: 'center',
-                  lineHeight: 1.6,
-                  opacity: isMessageInView ? 1 : 0,
-                  transform: isMessageInView
-                    ? 'translate3d(0, 0, 0)'
-                    : 'translate3d(0, 30px, 0)',
-                  transition:
-                    'opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1) 500ms, transform 1000ms cubic-bezier(0.16, 1, 0.3, 1) 500ms',
-                  willChange: 'opacity, transform',
-                }}
-              >
+                <br />
                 {technologyContent.subMessage[1]}
               </Typography>
             </Box>
@@ -168,7 +150,35 @@ const TechnologySection = forwardRef((props, ref) => {
               willChange: 'opacity, transform',
             }}
           />
-
+          {/* 우측 하단 장식: 스크롤 유도 레이블 */}
+          <Box
+            sx={{
+              position: 'absolute',
+              right: '5%',
+              bottom: '5%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 2,
+              opacity: isMessageInView ? 0.6 : 0,
+              transition: '1s ease 2s',
+            }}
+          >
+            <Box
+              sx={{ width: '1px', height: '80px', backgroundColor: '#FFF' }}
+            />
+            <Typography
+              sx={{
+                color: '#FFF',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                writingMode: 'vertical-rl',
+                letterSpacing: '0.2em',
+              }}
+            >
+              SCROLL TO EXPLORE
+            </Typography>
+          </Box>
           {/* TECHNOLOGY 대형 텍스트 - 이미지 하단에 고정 */}
           <Box
             sx={{
