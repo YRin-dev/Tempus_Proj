@@ -52,6 +52,7 @@ function TransitionSection() {
             'linear-gradient(135deg, rgba(30, 64, 175, 0.08) 0%, rgba(162, 172, 184, 0.03) 100%)',
           backgroundColor: '#ECF4F9',
           backdropFilter: 'blur(40px)',
+
           opacity: isContentInView ? 1 : 0,
           transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
           transitionDelay: '0.1s', // 첫 번째

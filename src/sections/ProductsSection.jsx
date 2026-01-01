@@ -260,19 +260,840 @@
 // export default ProductsSection;
 
 //v02
+// import React, { forwardRef } from 'react';
+// import {
+//   Box,
+//   Typography,
+//   Grid,
+//   Container,
+//   Stack,
+//   Divider,
+// } from '@mui/material';
+// import { getProjectsList } from '../data/productData';
+// import { productsContent } from '../data/contentData';
+// import useIsInView from '../hooks/useIsInView';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+// const ProductsSection = forwardRef((props, ref) => {
+//   const products = getProjectsList();
+//   const [headerRef, isHeaderInView] = useIsInView({
+//     threshold: 0.2,
+//     triggerOnce: true,
+//   });
+
+//   return (
+//     <Box
+//       ref={ref}
+//       sx={{
+//         width: '100%',
+//         backgroundColor: '#ffffff',
+//         py: { xs: 15, md: 25 }, // 충분한 여백으로 고급스러움 강조
+//         overflow: 'hidden',
+//       }}
+//     >
+//       <Container maxWidth="lg">
+//         {/* --- 섹션 헤더: 정갈한 정렬 --- */}
+//         <Box
+//           ref={headerRef}
+//           sx={{
+//             mb: { xs: 12, md: 20 },
+//             opacity: isHeaderInView ? 1 : 0,
+//             transform: isHeaderInView ? 'none' : 'translateY(30px)',
+//             transition: 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+//           }}
+//         >
+//           <Typography
+//             sx={{
+//               fontSize: '0.75rem',
+//               fontWeight: 800,
+//               color: '#3B82F6',
+//               letterSpacing: '0.4em',
+//               mb: 3,
+//               display: 'flex',
+//               alignItems: 'center',
+//               gap: 2,
+//             }}
+//           >
+//             <Box
+//               component="span"
+//               sx={{ width: 40, height: '1px', bgcolor: '#3B82F6' }}
+//             />
+//             OUR SOLUTIONS
+//           </Typography>
+//           <Typography
+//             variant="h2"
+//             sx={{
+//               fontSize: { xs: '2.4rem', md: '4rem' },
+//               fontWeight: 900,
+//               color: '#0F172A',
+//               lineHeight: 1.1,
+//               letterSpacing: '-0.04em',
+//             }}
+//           >
+//             {productsContent.title || 'Precision Technology.'}
+//           </Typography>
+//         </Box>
+
+//         {/* --- 제품 리스트 (고급스러운 지그재그) --- */}
+//         <Stack spacing={{ xs: 15, md: 25 }}>
+//           {products.map((product, index) => (
+//             <ProductItem key={product.id} product={product} index={index} />
+//           ))}
+//         </Stack>
+//       </Container>
+//     </Box>
+//   );
+// });
+
+// // 개별 제품 아이템
+// const ProductItem = ({ product, index }) => {
+//   const [itemRef, isInView] = useIsInView({
+//     threshold: 0.2,
+//     triggerOnce: true,
+//   });
+//   const isReversed = index % 2 !== 0;
+
+//   return (
+//     <Grid
+//       ref={itemRef}
+//       container
+//       spacing={{ xs: 4, md: 10 }}
+//       alignItems="center"
+//       direction={isReversed ? 'row-reverse' : 'row'}
+//     >
+//       {/* 이미지 섹션: 플로팅 효과 */}
+//       <Grid item xs={12} md={7}>
+//         <Box
+//           sx={{
+//             position: 'relative',
+//             opacity: isInView ? 1 : 0,
+//             transform: isInView
+//               ? 'none'
+//               : isReversed
+//               ? 'translateX(50px)'
+//               : 'translateX(-50px)',
+//             transition: 'all 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s',
+//           }}
+//         >
+//           <Box
+//             sx={{
+//               position: 'relative',
+//               borderRadius: '4px', // 너무 둥글지 않은 세련된 모서리
+//               overflow: 'hidden',
+//               backgroundColor: '#f8fafc',
+//               '&::after': {
+//                 // 이미지 보호막 효과
+//                 content: '""',
+//                 position: 'absolute',
+//                 inset: 0,
+//                 background:
+//                   'linear-gradient(45deg, rgba(15,23,42,0.05) 0%, transparent 100%)',
+//               },
+//             }}
+//           >
+//             <Box
+//               component="img"
+//               src={product.img}
+//               alt={product.title}
+//               sx={{
+//                 width: '100%',
+//                 height: 'auto',
+//                 display: 'block',
+//                 transition: 'transform 1s ease',
+//                 '&:hover': { transform: 'scale(1.03)' },
+//               }}
+//             />
+//           </Box>
+//           {/* 이미지 배경 장식 요소 */}
+//           <Box
+//             sx={{
+//               position: 'absolute',
+//               top: -20,
+//               [isReversed ? 'right' : 'left']: -20,
+//               width: '100px',
+//               height: '100px',
+//               borderLeft: !isReversed ? '1px solid #e2e8f0' : 'none',
+//               borderTop: '1px solid #e2e8f0',
+//               borderRight: isReversed ? '1px solid #e2e8f0' : 'none',
+//               zIndex: -1,
+//             }}
+//           />
+//         </Box>
+//       </Grid>
+
+//       {/* 텍스트 섹션: 에디토리얼 스타일 */}
+//       <Grid item xs={12} md={5}>
+//         <Box
+//           sx={{
+//             pl: isReversed ? 0 : { md: 4 },
+//             pr: isReversed ? { md: 4 } : 0,
+//             opacity: isInView ? 1 : 0,
+//             transition: 'all 1.2s ease 0.4s',
+//           }}
+//         >
+//           {/* 제품 번호와 카테고리 */}
+//           <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
+//             <Typography
+//               sx={{
+//                 fontSize: '1.2rem',
+//                 fontWeight: 900,
+//                 color: '#e2e8f0',
+//                 fontFamily: 'serif',
+//               }}
+//             >
+//               {String(index + 1).padStart(2, '0')}
+//             </Typography>
+//             <Typography
+//               sx={{
+//                 fontSize: '0.75rem',
+//                 fontWeight: 700,
+//                 color: '#3B82F6',
+//                 letterSpacing: '0.1em',
+//               }}
+//             >
+//               {product.exp}
+//             </Typography>
+//           </Stack>
+
+//           <Typography
+//             variant="h3"
+//             sx={{
+//               fontSize: { xs: '1.8rem', md: '2.4rem' },
+//               fontWeight: 800,
+//               color: '#0F172A',
+//               mb: 3,
+//               letterSpacing: '-0.02em',
+//               wordBreak: 'keep-all',
+//             }}
+//           >
+//             {product.title}
+//           </Typography>
+
+//           <Divider
+//             sx={{
+//               width: 40,
+//               height: 2,
+//               bgcolor: '#0F172A',
+//               mb: 4,
+//               border: 'none',
+//             }}
+//           />
+
+//           <Typography
+//             sx={{
+//               fontSize: '1.05rem',
+//               color: '#64748b',
+//               lineHeight: 1.8,
+//               mb: 5,
+//               wordBreak: 'keep-all',
+//               fontWeight: 400,
+//             }}
+//           >
+//             {product.description}
+//           </Typography>
+
+//           {/* 세련된 텍스트 버튼 */}
+//           <Box
+//             component="button"
+//             sx={{
+//               display: 'flex',
+//               alignItems: 'center',
+//               gap: 2,
+//               padding: 0,
+//               background: 'none',
+//               border: 'none',
+//               cursor: 'pointer',
+//               color: '#0F172A',
+//               fontWeight: 700,
+//               fontSize: '0.9rem',
+//               transition: 'all 0.3s ease',
+//               '&:hover': {
+//                 gap: 3,
+//                 color: '#3B82F6',
+//               },
+//             }}
+//           >
+//             VIEW CASE STUDY
+//             <ArrowForwardIcon sx={{ fontSize: 18 }} />
+//           </Box>
+//         </Box>
+//       </Grid>
+//     </Grid>
+//   );
+// };
+
+// ProductsSection.displayName = 'ProductsSection';
+
+// export default ProductsSection;
+
+//v03
+// import React, { forwardRef } from 'react';
+// import {
+//   Box,
+//   Typography,
+//   Grid,
+//   Container,
+//   Stack,
+//   Divider,
+//   alpha,
+// } from '@mui/material';
+// import { getProjectsList } from '../data/productData';
+// import { productsContent } from '../data/contentData';
+// import useIsInView from '../hooks/useIsInView';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+// const ProductsSection = forwardRef((props, ref) => {
+//   const products = getProjectsList();
+//   const [headerRef, isHeaderInView] = useIsInView({
+//     threshold: 0.2,
+//     triggerOnce: true,
+//   });
+
+//   return (
+//     <Box
+//       ref={ref}
+//       sx={{
+//         width: '100%',
+//         position: 'relative',
+//         // --- 현대적인 메쉬 그라데이션 배경 ---
+//         backgroundColor: '#ffffff',
+//         backgroundImage: `
+//           radial-gradient(at 0% 0%, hsla(210,100%,98%,1) 0, transparent 50%),
+//           radial-gradient(at 100% 0%, hsla(220,100%,97%,1) 0, transparent 50%),
+//           radial-gradient(at 100% 100%, hsla(210,100%,98%,1) 0, transparent 50%),
+//           radial-gradient(at 0% 100%, hsla(220,100%,97%,1) 0, transparent 50%)
+//         `,
+//         py: { xs: 15, md: 25 },
+//         overflow: 'hidden',
+//       }}
+//     >
+//       {/* 배경 장식: 세로 그리드 라인 (비어보임 방지) */}
+//       <Box
+//         sx={{
+//           position: 'absolute',
+//           inset: 0,
+//           zIndex: 0,
+//           opacity: 0.4,
+//           pointerEvents: 'none',
+//           backgroundImage:
+//             'linear-gradient(to right, #f1f5f9 1px, transparent 1px)',
+//           backgroundSize: '25% 100%',
+//         }}
+//       />
+
+//       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+//         {/* --- 섹션 헤더 --- */}
+//         <Box
+//           ref={headerRef}
+//           sx={{
+//             mb: { xs: 15, md: 25 },
+//             textAlign: 'center',
+//             opacity: isHeaderInView ? 1 : 0,
+//             transform: isHeaderInView ? 'none' : 'translateY(40px)',
+//             transition: 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+//           }}
+//         >
+//           <Typography
+//             sx={{
+//               fontSize: '0.85rem',
+//               fontWeight: 800,
+//               color: '#3B82F6',
+//               letterSpacing: '0.5em',
+//               mb: 3,
+//               textTransform: 'uppercase',
+//             }}
+//           >
+//             Our Advanced Solutions
+//           </Typography>
+//           <Typography
+//             variant="h2"
+//             sx={{
+//               fontSize: { xs: '2.8rem', md: '4.5rem' },
+//               fontWeight: 900,
+//               color: '#0F172A',
+//               lineHeight: 1,
+//               letterSpacing: '-0.05em',
+//               mb: 4,
+//             }}
+//           >
+//             {productsContent.title || 'Precision.\nPerformance.'}
+//           </Typography>
+//           <Box
+//             sx={{
+//               width: 60,
+//               height: 4,
+//               bgcolor: '#0F172A',
+//               mx: 'auto',
+//               borderRadius: 2,
+//             }}
+//           />
+//         </Box>
+
+//         {/* --- 제품 리스트 --- */}
+//         <Stack spacing={{ xs: 20, md: 35 }}>
+//           {products.map((product, index) => (
+//             <ProductItem key={product.id} product={product} index={index} />
+//           ))}
+//         </Stack>
+//       </Container>
+//     </Box>
+//   );
+// });
+
+// const ProductItem = ({ product, index }) => {
+//   const [itemRef, isInView] = useIsInView({
+//     threshold: 0.2,
+//     triggerOnce: true,
+//   });
+//   const isReversed = index % 2 !== 0;
+
+//   return (
+//     <Grid
+//       ref={itemRef}
+//       container
+//       spacing={{ xs: 6, md: 12 }}
+//       alignItems="center"
+//       direction={isReversed ? 'row-reverse' : 'row'}
+//       sx={{ position: 'relative' }}
+//     >
+//       {/* 배경 큰 숫자 장식 (공간감 확보) */}
+//       <Typography
+//         sx={{
+//           position: 'absolute',
+//           top: '-10%',
+//           [isReversed ? 'left' : 'right']: '0',
+//           fontSize: { xs: '10rem', md: '20rem' },
+//           fontWeight: 900,
+//           color: alpha('#e2e8f0', 0.3),
+//           zIndex: -1,
+//           lineHeight: 1,
+//           userSelect: 'none',
+//         }}
+//       >
+//         {String(index + 1).padStart(2, '0')}
+//       </Typography>
+
+//       {/* 이미지 섹션: 입체적인 카드 스타일 */}
+//       <Grid item xs={12} md={7}>
+//         <Box
+//           sx={{
+//             position: 'relative',
+//             perspective: '1500px', // 3D 느낌 추가
+//             opacity: isInView ? 1 : 0,
+//             transform: isInView ? 'none' : `translateY(60px) rotateX(5deg)`,
+//             transition: 'all 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s',
+//           }}
+//         >
+//           <Box
+//             sx={{
+//               position: 'relative',
+//               borderRadius: '12px',
+//               overflow: 'hidden',
+//               boxShadow: `0 30px 60px ${alpha('#0f172a', 0.12)}`,
+//               backgroundColor: '#ffffff',
+//               border: `1px solid ${alpha('#f1f5f9', 0.8)}`,
+//               '&:hover img': { transform: 'scale(1.05)' },
+//             }}
+//           >
+//             <Box
+//               component="img"
+//               src={product.img}
+//               alt={product.title}
+//               sx={{
+//                 width: '100%',
+//                 height: 'auto',
+//                 display: 'block',
+//                 transition: 'transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
+//               }}
+//             />
+//           </Box>
+//         </Box>
+//       </Grid>
+
+//       {/* 텍스트 섹션 */}
+//       <Grid item xs={12} md={5}>
+//         <Box
+//           sx={{
+//             opacity: isInView ? 1 : 0,
+//             transform: isInView ? 'none' : 'translateY(30px)',
+//             transition: 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s',
+//           }}
+//         >
+//           <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
+//             <Box
+//               sx={{
+//                 px: 1.5,
+//                 py: 0.5,
+//                 bgcolor: alpha('#3B82F6', 0.1),
+//                 borderRadius: 1,
+//               }}
+//             >
+//               <Typography
+//                 sx={{ fontSize: '0.75rem', fontWeight: 800, color: '#3B82F6' }}
+//               >
+//                 {product.exp}
+//               </Typography>
+//             </Box>
+//             <Divider sx={{ flexGrow: 1, opacity: 0.5 }} />
+//           </Stack>
+
+//           <Typography
+//             variant="h3"
+//             sx={{
+//               fontSize: { xs: '2.2rem', md: '3rem' },
+//               fontWeight: 850,
+//               color: '#0F172A',
+//               mb: 3,
+//               lineHeight: 1.1,
+//               letterSpacing: '-0.03em',
+//             }}
+//           >
+//             {product.title}
+//           </Typography>
+
+//           <Typography
+//             sx={{
+//               fontSize: '1.1rem',
+//               color: '#475569',
+//               lineHeight: 1.7,
+//               mb: 6,
+//               wordBreak: 'keep-all',
+//               fontWeight: 450,
+//             }}
+//           >
+//             {product.description}
+//           </Typography>
+
+//           <Box
+//             component="button"
+//             sx={{
+//               display: 'inline-flex',
+//               alignItems: 'center',
+//               gap: 2,
+//               px: 4,
+//               py: 2,
+//               backgroundColor: '#0F172A',
+//               borderRadius: '50px',
+//               border: 'none',
+//               cursor: 'pointer',
+//               color: '#ffffff',
+//               fontWeight: 600,
+//               fontSize: '0.9rem',
+//               transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+//               '&:hover': {
+//                 backgroundColor: '#3B82F6',
+//                 transform: 'translateY(-4px)',
+//                 boxShadow: `0 10px 20px ${alpha('#3B82F6', 0.3)}`,
+//               },
+//             }}
+//           >
+//             Discover More
+//             <ArrowForwardIcon sx={{ fontSize: 18 }} />
+//           </Box>
+//         </Box>
+//       </Grid>
+//     </Grid>
+//   );
+// };
+
+// ProductsSection.displayName = 'ProductsSection';
+
+// export default ProductsSection;
+
+//v04
+// import React, { forwardRef } from 'react';
+// import { Box, Typography, Grid, Container, Stack, alpha } from '@mui/material';
+// import { getProjectsList } from '../data/productData';
+// import { productsContent } from '../data/contentData';
+// import useIsInView from '../hooks/useIsInView';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+// const ProductsSection = forwardRef((props, ref) => {
+//   const products = getProjectsList();
+//   const [headerRef, isHeaderInView] = useIsInView({
+//     threshold: 0.2,
+//     triggerOnce: true,
+//   });
+
+//   return (
+//     <Box
+//       ref={ref}
+//       sx={{
+//         width: '100%',
+//         position: 'relative',
+//         // --- 현대적인 메쉬 그라데이션 배경 ---
+//         backgroundColor: '#ffffff',
+//         backgroundImage: `
+//           radial-gradient(at 0% 0%, hsla(210,100%,98%,1) 0, transparent 50%),
+//           radial-gradient(at 100% 0%, hsla(220,100%,97%,1) 0, transparent 50%),
+//           radial-gradient(at 100% 100%, hsla(210,100%,98%,1) 0, transparent 50%),
+//           radial-gradient(at 0% 100%, hsla(220,100%,97%,1) 0, transparent 50%)
+//         `,
+//         py: { xs: 15, md: 25 },
+//         overflow: 'hidden',
+//       }}
+//     >
+//       {/* 배경 장식: 컬러 조명(Glow) 효과 - 비어있는 공간을 색으로 채움 */}
+//       <Box
+//         sx={{
+//           position: 'absolute',
+//           top: '10%',
+//           left: '10%',
+//           width: '40vw',
+//           height: '40vw',
+//           background:
+//             'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)',
+//           filter: 'blur(80px)',
+//           zIndex: 0,
+//         }}
+//       />
+//       <Box
+//         sx={{
+//           position: 'absolute',
+//           bottom: '10%',
+//           right: '0%',
+//           width: '50vw',
+//           height: '50vw',
+//           background:
+//             'radial-gradient(circle, rgba(30,64,175,0.1) 0%, transparent 70%)',
+//           filter: 'blur(100px)',
+//           zIndex: 0,
+//         }}
+//       />
+
+//       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+//         {/* --- 섹션 헤더: 고대비 타이포그래피 --- */}
+//         <Box
+//           ref={headerRef}
+//           sx={{
+//             mb: { xs: 15, md: 25 },
+//             opacity: isHeaderInView ? 1 : 0,
+//             transform: isHeaderInView ? 'none' : 'translateY(40px)',
+//             transition: 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+//           }}
+//         >
+//           <Typography
+//             sx={{
+//               fontSize: '0.9rem',
+//               fontWeight: 800,
+//               color: '#60A5FA', // 밝은 블루로 포인트
+//               letterSpacing: '0.6em',
+//               mb: 2,
+//               textTransform: 'uppercase',
+//             }}
+//           >
+//             Core Technology
+//           </Typography>
+//           <Typography
+//             variant="h2"
+//             sx={{
+//               fontSize: { xs: '3rem', md: '5rem' },
+//               fontWeight: 950,
+//               lineHeight: 0.9,
+//               letterSpacing: '-0.06em',
+//               background: 'linear-gradient(to bottom, #ffffff, #94a3b8)',
+//               WebkitBackgroundClip: 'text',
+//               WebkitTextFillColor: 'transparent',
+//             }}
+//           >
+//             {productsContent.title || 'Future\nInnovation.'}
+//           </Typography>
+//         </Box>
+
+//         {/* --- 제품 리스트 --- */}
+//         <Stack spacing={{ xs: 20, md: 40 }}>
+//           {products.map((product, index) => (
+//             <ProductItem key={product.id} product={product} index={index} />
+//           ))}
+//         </Stack>
+//       </Container>
+//     </Box>
+//   );
+// });
+
+// const ProductItem = ({ product, index }) => {
+//   const [itemRef, isInView] = useIsInView({
+//     threshold: 0.2,
+//     triggerOnce: true,
+//   });
+//   const isReversed = index % 2 !== 0;
+
+//   return (
+//     <Grid
+//       ref={itemRef}
+//       container
+//       spacing={{ xs: 6, md: 15 }}
+//       alignItems="center"
+//       direction={isReversed ? 'row-reverse' : 'row'}
+//     >
+//       {/* 이미지 섹션: 카드 없이 이미지만 강조 (그림자와 광택 효과만 추가) */}
+//       <Grid item xs={12} md={7}>
+//         <Box
+//           sx={{
+//             position: 'relative',
+//             opacity: isInView ? 1 : 0,
+//             transform: isInView ? 'none' : `scale(0.9) translateY(40px)`,
+//             transition: 'all 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
+//           }}
+//         >
+//           {/* 이미지 뒤 은은한 후광 효과 */}
+//           <Box
+//             sx={{
+//               position: 'absolute',
+//               inset: '-10%',
+//               background: `radial-gradient(circle, ${alpha(
+//                 '#3B82F6',
+//                 0.1
+//               )} 0%, transparent 70%)`,
+//               zIndex: -1,
+//             }}
+//           />
+
+//           <Box
+//             component="img"
+//             src={product.img}
+//             alt={product.title}
+//             sx={{
+//               width: '100%',
+//               height: 'auto',
+//               display: 'block',
+//               borderRadius: '8px', // 아주 살짝만 둥글게
+//               filter: 'drop-shadow(0 30px 50px rgba(0,0,0,0.5))', // 카드가 아닌 이미지 자체에 그림자
+//               transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+//               '&:hover': { transform: 'translateY(-10px) scale(1.02)' },
+//             }}
+//           />
+//         </Box>
+//       </Grid>
+
+//       {/* 텍스트 섹션: 가시성을 높인 디자인 */}
+//       <Grid item xs={12} md={5}>
+//         <Box
+//           sx={{
+//             opacity: isInView ? 1 : 0,
+//             transform: isInView ? 'none' : 'translateY(20px)',
+//             transition: 'all 1.2s ease 0.3s',
+//           }}
+//         >
+//           <Typography
+//             sx={{
+//               fontSize: '4rem',
+//               fontWeight: 900,
+//               color: alpha('#ffffff', 0.05), // 배경에 은은하게 깔리는 숫자
+//               fontFamily: 'Orbitron, sans-serif',
+//               lineHeight: 1,
+//               mb: -4,
+//               ml: -1,
+//             }}
+//           >
+//             {String(index + 1).padStart(2, '0')}
+//           </Typography>
+
+//           <Typography
+//             sx={{
+//               fontSize: '0.8rem',
+//               fontWeight: 700,
+//               color: '#60A5FA',
+//               mb: 2,
+//               letterSpacing: '0.2em',
+//             }}
+//           >
+//             {product.exp}
+//           </Typography>
+
+//           <Typography
+//             variant="h3"
+//             sx={{
+//               fontSize: { xs: '2.4rem', md: '3.2rem' },
+//               fontWeight: 900,
+//               mb: 3,
+//               letterSpacing: '-0.04em',
+//               lineHeight: 1.1,
+//             }}
+//           >
+//             {product.title}
+//           </Typography>
+
+//           <Typography
+//             sx={{
+//               fontSize: '1.15rem',
+//               color: '#94a3b8',
+//               lineHeight: 1.8,
+//               mb: 6,
+//               wordBreak: 'keep-all',
+//               fontWeight: 400,
+//             }}
+//           >
+//             {product.description}
+//           </Typography>
+
+//           <Box
+//             component="button"
+//             sx={{
+//               display: 'inline-flex',
+//               alignItems: 'center',
+//               gap: 2,
+//               px: 4,
+//               py: 2,
+//               backgroundColor: '#0F172A',
+//               borderRadius: '50px',
+//               border: 'none',
+//               cursor: 'pointer',
+//               color: '#ffffff',
+//               fontWeight: 600,
+//               fontSize: '0.9rem',
+//               transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+//               '&:hover': {
+//                 backgroundColor: '#3B82F6',
+//                 transform: 'translateY(-4px)',
+//                 boxShadow: `0 10px 20px ${alpha('#3B82F6', 0.3)}`,
+//               },
+//             }}
+//           >
+//             Discover More
+//             <ArrowForwardIcon sx={{ fontSize: 18 }} />
+//           </Box>
+//         </Box>
+//       </Grid>
+//     </Grid>
+//   );
+// };
+
+// ProductsSection.displayName = 'ProductsSection';
+
+// export default ProductsSection;
+
 import React, { forwardRef } from 'react';
-import {
-  Box,
-  Typography,
-  Grid,
-  Container,
-  Stack,
-  Divider,
-} from '@mui/material';
+import { Box, Typography, Grid, Container, alpha } from '@mui/material';
 import { getProjectsList } from '../data/productData';
 import { productsContent } from '../data/contentData';
 import useIsInView from '../hooks/useIsInView';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+// 배경 장식용 컴포넌트 (사이즈 축소)
+const DecorationShape = ({ top, left, right, bottom, size, color, delay }) => (
+  <Box
+    sx={{
+      position: 'absolute',
+      top,
+      left,
+      right,
+      bottom,
+      width: size,
+      height: size,
+      borderRadius: '50%',
+      backgroundColor: color,
+      opacity: 0.3,
+      zIndex: 0,
+      animation: 'float 8s ease-in-out infinite',
+      animationDelay: delay,
+      '@keyframes float': {
+        '0%, 100%': { transform: 'translateY(0)' },
+        '50%': { transform: 'translateY(-20px)' },
+      },
+    }}
+  />
+);
 
 const ProductsSection = forwardRef((props, ref) => {
   const products = getProjectsList();
@@ -281,244 +1102,224 @@ const ProductsSection = forwardRef((props, ref) => {
     triggerOnce: true,
   });
 
+  const colorPresets = [
+    {
+      bg: 'linear-gradient(135deg, #00F260 0%, #0575E6 100%)',
+      text: '#FFFFFF',
+      accent: '#00F260',
+    },
+    { bg: '#F1F7FF', text: '#0F172A', accent: '#3B82F6' },
+    {
+      bg: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
+      text: '#FFFFFF',
+      accent: '#60A5FA',
+    },
+    { bg: '#0F172A', text: '#FFFFFF', accent: '#3B82F6' },
+  ];
+
   return (
     <Box
       ref={ref}
-      sx={{
-        width: '100%',
-        backgroundColor: '#ffffff',
-        py: { xs: 15, md: 25 }, // 충분한 여백으로 고급스러움 강조
-        overflow: 'hidden',
-      }}
+      sx={{ width: '100%', backgroundColor: '#ffffff', overflow: 'hidden' }}
     >
-      <Container maxWidth="lg">
-        {/* --- 섹션 헤더: 정갈한 정렬 --- */}
-        <Box
-          ref={headerRef}
+      {/* --- 섹션 헤더 --- */}
+      <Box
+        ref={headerRef}
+        sx={{
+          pt: { xs: 10, md: 15 },
+          pb: { xs: 5, md: 8 },
+          textAlign: 'center',
+          opacity: isHeaderInView ? 1 : 0,
+          transform: isHeaderInView ? 'none' : 'translateY(30px)',
+          transition: 'all 1.2s ease',
+        }}
+      >
+        <Typography
           sx={{
-            mb: { xs: 12, md: 20 },
-            opacity: isHeaderInView ? 1 : 0,
-            transform: isHeaderInView ? 'none' : 'translateY(30px)',
-            transition: 'all 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+            fontSize: '0.8rem',
+            fontWeight: 800,
+            color: '#3B82F6',
+            letterSpacing: '0.4em',
+            mb: 1.5,
           }}
         >
-          <Typography
-            sx={{
-              fontSize: '0.75rem',
-              fontWeight: 800,
-              color: '#3B82F6',
-              letterSpacing: '0.4em',
-              mb: 3,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-            }}
-          >
-            <Box
-              component="span"
-              sx={{ width: 40, height: '1px', bgcolor: '#3B82F6' }}
-            />
-            OUR SOLUTIONS
-          </Typography>
-          <Typography
-            variant="h2"
-            sx={{
-              fontSize: { xs: '2.4rem', md: '4rem' },
-              fontWeight: 900,
-              color: '#0F172A',
-              lineHeight: 1.1,
-              letterSpacing: '-0.04em',
-            }}
-          >
-            {productsContent.title || 'Precision Technology.'}
-          </Typography>
-        </Box>
+          OUR SOLUTIONS
+        </Typography>
+        <Typography
+          variant="h2"
+          sx={{
+            fontSize: { xs: '2rem', md: '3.2rem' },
+            fontWeight: 950,
+            color: '#0F172A',
+          }}
+        >
+          {productsContent.title || 'Innovation In Action.'}
+        </Typography>
+      </Box>
 
-        {/* --- 제품 리스트 (고급스러운 지그재그) --- */}
-        <Stack spacing={{ xs: 15, md: 25 }}>
-          {products.map((product, index) => (
-            <ProductItem key={product.id} product={product} index={index} />
-          ))}
-        </Stack>
-      </Container>
+      {/* --- 제품 리스트 --- */}
+      <Box>
+        {products.map((product, index) => (
+          <ProductItem
+            key={product.id}
+            product={product}
+            index={index}
+            stylePreset={colorPresets[index % colorPresets.length]}
+          />
+        ))}
+      </Box>
     </Box>
   );
 });
 
-// 개별 제품 아이템
-const ProductItem = ({ product, index }) => {
+const ProductItem = ({ product, index, stylePreset }) => {
   const [itemRef, isInView] = useIsInView({
-    threshold: 0.2,
+    threshold: 0.1,
     triggerOnce: true,
   });
   const isReversed = index % 2 !== 0;
 
   return (
-    <Grid
+    <Box
       ref={itemRef}
-      container
-      spacing={{ xs: 4, md: 10 }}
-      alignItems="center"
-      direction={isReversed ? 'row-reverse' : 'row'}
+      sx={{
+        position: 'relative',
+        width: '100%',
+        // 한 화면에 두 개가 보이도록 높이 조절 (50vh)
+        minHeight: { xs: 'auto', md: '50vh' },
+        display: 'flex',
+        alignItems: 'center',
+        background: stylePreset.bg,
+        color: stylePreset.text,
+        py: { xs: 8, md: 10 },
+        // 사선 각도를 조금 더 완만하게 조정하여 촘촘한 배치 대응
+        clipPath: {
+          md:
+            index % 2 === 0
+              ? 'polygon(0 0, 100% 10%, 100% 100%, 0 90%)'
+              : 'polygon(0 10%, 100% 0, 100% 90%, 0 100%)',
+          xs: 'none',
+        },
+        // 섹션 간 간격 좁힘
+        mt: index === 0 ? 0 : { md: -8 },
+        zIndex: 10 - index,
+      }}
     >
-      {/* 이미지 섹션: 플로팅 효과 */}
-      <Grid item xs={12} md={7}>
-        <Box
-          sx={{
-            position: 'relative',
-            opacity: isInView ? 1 : 0,
-            transform: isInView
-              ? 'none'
-              : isReversed
-              ? 'translateX(50px)'
-              : 'translateX(-50px)',
-            transition: 'all 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s',
-          }}
+      <DecorationShape
+        top="10%"
+        left="5%"
+        size={30}
+        color={alpha(stylePreset.text, 0.1)}
+        delay="0s"
+      />
+
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        <Grid
+          container
+          spacing={{ xs: 4, md: 8 }}
+          alignItems="center"
+          direction={isReversed ? 'row-reverse' : 'row'}
         >
-          <Box
-            sx={{
-              position: 'relative',
-              borderRadius: '4px', // 너무 둥글지 않은 세련된 모서리
-              overflow: 'hidden',
-              backgroundColor: '#f8fafc',
-              '&::after': {
-                // 이미지 보호막 효과
-                content: '""',
-                position: 'absolute',
-                inset: 0,
-                background:
-                  'linear-gradient(45deg, rgba(15,23,42,0.05) 0%, transparent 100%)',
-              },
-            }}
-          >
+          {/* 이미지 영역: 크기 최적화 */}
+          <Grid item xs={12} md={6}>
             <Box
-              component="img"
-              src={product.img}
-              alt={product.title}
               sx={{
-                width: '100%',
-                height: 'auto',
-                display: 'block',
-                transition: 'transform 1s ease',
-                '&:hover': { transform: 'scale(1.03)' },
-              }}
-            />
-          </Box>
-          {/* 이미지 배경 장식 요소 */}
-          <Box
-            sx={{
-              position: 'absolute',
-              top: -20,
-              [isReversed ? 'right' : 'left']: -20,
-              width: '100px',
-              height: '100px',
-              borderLeft: !isReversed ? '1px solid #e2e8f0' : 'none',
-              borderTop: '1px solid #e2e8f0',
-              borderRight: isReversed ? '1px solid #e2e8f0' : 'none',
-              zIndex: -1,
-            }}
-          />
-        </Box>
-      </Grid>
-
-      {/* 텍스트 섹션: 에디토리얼 스타일 */}
-      <Grid item xs={12} md={5}>
-        <Box
-          sx={{
-            pl: isReversed ? 0 : { md: 4 },
-            pr: isReversed ? { md: 4 } : 0,
-            opacity: isInView ? 1 : 0,
-            transition: 'all 1.2s ease 0.4s',
-          }}
-        >
-          {/* 제품 번호와 카테고리 */}
-          <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
-            <Typography
-              sx={{
-                fontSize: '1.2rem',
-                fontWeight: 900,
-                color: '#e2e8f0',
-                fontFamily: 'serif',
+                position: 'relative',
+                opacity: isInView ? 1 : 0,
+                transform: isInView ? 'none' : `scale(0.9) translateY(20px)`,
+                transition: 'all 1s ease 0.1s',
+                textAlign: 'center',
               }}
             >
-              {String(index + 1).padStart(2, '0')}
-            </Typography>
-            <Typography
+              <Box
+                component="img"
+                src={product.img}
+                alt={product.title}
+                sx={{
+                  width: '100%',
+                  maxWidth: '480px', // 너무 커지지 않게 제한
+                  height: 'auto',
+                  borderRadius: '8px',
+                  filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.2))',
+                }}
+              />
+            </Box>
+          </Grid>
+
+          {/* 텍스트 영역: 컴팩트한 레이아웃 */}
+          <Grid item xs={12} md={6}>
+            <Box
               sx={{
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                color: '#3B82F6',
-                letterSpacing: '0.1em',
+                opacity: isInView ? 1 : 0,
+                transform: isInView ? 'none' : 'translateY(20px)',
+                transition: 'all 1s ease 0.2s',
+                pl: !isReversed ? { md: 4 } : 0,
+                pr: isReversed ? { md: 4 } : 0,
               }}
             >
-              {product.exp}
-            </Typography>
-          </Stack>
+              <Typography
+                sx={{
+                  fontSize: '0.75rem',
+                  fontWeight: 800,
+                  mb: 1,
+                  letterSpacing: '0.15em',
+                  opacity: 0.8,
+                }}
+              >
+                {product.exp}
+              </Typography>
 
-          <Typography
-            variant="h3"
-            sx={{
-              fontSize: { xs: '1.8rem', md: '2.4rem' },
-              fontWeight: 800,
-              color: '#0F172A',
-              mb: 3,
-              letterSpacing: '-0.02em',
-              wordBreak: 'keep-all',
-            }}
-          >
-            {product.title}
-          </Typography>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontSize: { xs: '1.8rem', md: '2.5rem' }, // 제목 크기 축소
+                  fontWeight: 900,
+                  mb: 2,
+                  lineHeight: 1.2,
+                }}
+              >
+                {product.title}
+              </Typography>
 
-          <Divider
-            sx={{
-              width: 40,
-              height: 2,
-              bgcolor: '#0F172A',
-              mb: 4,
-              border: 'none',
-            }}
-          />
+              <Typography
+                sx={{
+                  fontSize: '0.95rem', // 설명 크기 축소
+                  lineHeight: 1.6,
+                  mb: 4,
+                  opacity: 0.8,
+                  wordBreak: 'keep-all',
+                }}
+              >
+                {product.description}
+              </Typography>
 
-          <Typography
-            sx={{
-              fontSize: '1.05rem',
-              color: '#64748b',
-              lineHeight: 1.8,
-              mb: 5,
-              wordBreak: 'keep-all',
-              fontWeight: 400,
-            }}
-          >
-            {product.description}
-          </Typography>
-
-          {/* 세련된 텍스트 버튼 */}
-          <Box
-            component="button"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              padding: 0,
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: '#0F172A',
-              fontWeight: 700,
-              fontSize: '0.9rem',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                gap: 3,
-                color: '#3B82F6',
-              },
-            }}
-          >
-            VIEW CASE STUDY
-            <ArrowForwardIcon sx={{ fontSize: 18 }} />
-          </Box>
-        </Box>
-      </Grid>
-    </Grid>
+              <Box
+                component="button"
+                sx={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 1.5,
+                  px: 3.5,
+                  py: 1.4,
+                  backgroundColor: stylePreset.text,
+                  color: stylePreset.text === '#FFFFFF' ? '#0F172A' : '#FFFFFF',
+                  borderRadius: '50px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontWeight: 800,
+                  fontSize: '0.85rem',
+                  transition: '0.3s',
+                  '&:hover': { transform: 'translateY(-3px)' },
+                }}
+              >
+                DETAILS
+                <ArrowForwardIcon sx={{ fontSize: 16 }} />
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

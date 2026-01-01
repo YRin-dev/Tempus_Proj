@@ -78,32 +78,25 @@ function useIsInView(options = {}) {
     };
 
     // Intersection Observer 생성
-    // 성능 최적화: threshold 배열을 필요한 값만 포함하도록 최적화
-    const thresholdArray = triggerOnce
-      ? [threshold] // triggerOnce가 true면 threshold 값만 사용
-      : [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]; // triggerOnce가 false면 세밀한 배열 사용
-
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const reallyInView = checkRealViewport(entry);
 
           if (reallyInView && (!triggerOnce || !hasTriggered)) {
+            // console.log('✅ Triggering animation - element is really in view');
             setIsInView(true);
             if (triggerOnce) {
               setHasTriggered(true);
-              // triggerOnce가 true면 한 번 트리거 후 observer 해제
-              if (observerRef.current) {
-                observerRef.current.disconnect();
-              }
             }
           } else if (!triggerOnce && !reallyInView) {
+            // console.log('❌ Hiding animation - element is out of view');
             setIsInView(false);
           }
         });
       },
       {
-        threshold: thresholdArray,
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], // 🔧 더 세밀한 threshold 배열
         rootMargin,
       }
     );
