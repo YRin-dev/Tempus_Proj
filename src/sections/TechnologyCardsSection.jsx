@@ -773,8 +773,9 @@ function TechnologySection() {
                       // -------------------
                       overflow: 'hidden',
                       '&:hover': {
-                        transform: 'translateY(-15px)',
+                        transform: 'translateY(-20px)',
                         boxShadow: `0 30px 60px rgba(30, 64, 175, 0.15)`,
+                        '& .accent-bar': { height: '8px' },
                         '& .hover-arrow': {
                           transform: 'translateX(5px)',
                           opacity: 1,
@@ -793,7 +794,6 @@ function TechnologySection() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         mb: 4,
-                        border: `1px solid ${tech.color}20`,
                       }}
                     >
                       {tech.icon}
