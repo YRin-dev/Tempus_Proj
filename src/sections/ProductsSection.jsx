@@ -1066,11 +1066,9 @@
 import React, { forwardRef } from 'react';
 import { Box, Typography, Grid, Container, alpha } from '@mui/material';
 import { getProjectsList } from '../data/productData';
-import { productsContent } from '../data/contentData';
 import useIsInView from '../hooks/useIsInView';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-// 배경 장식용 컴포넌트 (사이즈 축소)
 const DecorationShape = ({ top, left, right, bottom, size, color, delay }) => (
   <Box
     sx={{
@@ -1083,13 +1081,13 @@ const DecorationShape = ({ top, left, right, bottom, size, color, delay }) => (
       height: size,
       borderRadius: '50%',
       backgroundColor: color,
-      opacity: 0.3,
+      opacity: 0.4,
       zIndex: 0,
       animation: 'float 8s ease-in-out infinite',
       animationDelay: delay,
       '@keyframes float': {
-        '0%, 100%': { transform: 'translateY(0)' },
-        '50%': { transform: 'translateY(-20px)' },
+        '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+        '50%': { transform: 'translateY(-30px) rotate(15deg)' },
       },
     }}
   />
@@ -1104,7 +1102,7 @@ const ProductsSection = forwardRef((props, ref) => {
 
   const colorPresets = [
     {
-      bg: 'linear-gradient(135deg, #00F260 0%, #0575E6 100%)',
+      bg: 'linear-gradient(45deg, #2193B0 0%, #6DD5ED 100%)',
       text: '#FFFFFF',
       accent: '#00F260',
     },
@@ -1153,7 +1151,7 @@ const ProductsSection = forwardRef((props, ref) => {
             color: '#0F172A',
           }}
         >
-          {productsContent.title || 'Innovation In Action.'}
+          PRODUCTS
         </Typography>
       </Box>
 
@@ -1205,12 +1203,20 @@ const ProductItem = ({ product, index, stylePreset }) => {
         zIndex: 10 - index,
       }}
     >
+      {/* 장식 요소들 */}
       <DecorationShape
-        top="10%"
-        left="5%"
-        size={30}
+        top="23%"
+        left="10%"
+        size={40}
         color={alpha(stylePreset.text, 0.1)}
         delay="0s"
+      />
+      <DecorationShape
+        bottom="15%"
+        right="5%"
+        size={80}
+        color={alpha(stylePreset.text, 0.05)}
+        delay="2s"
       />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
