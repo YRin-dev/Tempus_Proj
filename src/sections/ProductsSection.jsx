@@ -1102,17 +1102,41 @@ const ProductsSection = forwardRef((props, ref) => {
 
   const colorPresets = [
     {
-      bg: 'linear-gradient(45deg, #2193B0 0%, #6DD5ED 100%)',
+      bg: 'linear-gradient(45deg,rgb(33, 112, 176) 0%, #6DD5ED 100%)',
       text: '#FFFFFF',
-      accent: '#00F260',
+      accent: '#A6E0F7',
     },
+    // {
+    //   // 1번: 은은한 블루-그레이 (Steel & Cloud)
+    //   bg: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+    //   text: '#0F172A', // 배경이 밝으므로 다크 텍스트 사용
+    //   accent: '#3B82F6',
+    // },
     { bg: '#F1F7FF', text: '#0F172A', accent: '#3B82F6' },
     {
       bg: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
       text: '#FFFFFF',
       accent: '#60A5FA',
     },
-    { bg: '#0F172A', text: '#FFFFFF', accent: '#3B82F6' },
+    { bg: '#0F172A', text: '#FFFFFF', accent: '#60A5FA' },
+    {
+      // 3번: 신뢰감을 주는 중간 톤 블루 그라데이션
+      bg: 'linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)',
+      text: '#0F172A',
+      accent: '#3B82F6',
+    },
+    {
+      // 1번: 은은한 블루-그레이 (Steel & Cloud)
+      bg: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+      text: '#0F172A', // 배경이 밝으므로 다크 텍스트 사용
+      accent: '#3B82F6',
+    },
+    {
+      // 2번: 매우 연한 파스텔 블루
+      bg: '#F8FAFC',
+      text: '#0F172A',
+      accent: '#3B82F6',
+    },
   ];
 
   return (
@@ -1245,8 +1269,11 @@ const ProductItem = ({ product, index, stylePreset }) => {
                   width: '100%',
                   maxWidth: '480px', // 너무 커지지 않게 제한
                   height: 'auto',
-                  borderRadius: '8px',
-                  filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.2))',
+                  borderRadius: '12px',
+                  filter:
+                    stylePreset.text === '#FFFFFF'
+                      ? 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))'
+                      : 'drop-shadow(0 20px 40px rgba(15,23,42,0.1))',
                 }}
               />
             </Box>
@@ -1269,7 +1296,7 @@ const ProductItem = ({ product, index, stylePreset }) => {
                   fontWeight: 800,
                   mb: 1,
                   letterSpacing: '0.15em',
-                  opacity: 0.8,
+                  color: stylePreset.accent,
                 }}
               >
                 {product.exp}
