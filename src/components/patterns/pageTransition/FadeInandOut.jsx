@@ -292,21 +292,21 @@ function FadeInandOut({
 
           {/* 배경 컨텐츠 박스 - backgroundComponent용 */}
           {backgroundComponent && (
-            <Box
-              sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                overflow: 'hidden',
-                position: 'relative',
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              overflow: 'hidden',
+              position: 'relative',
                 zIndex: 3,
-              }}
-            >
+            }}
+          >
               {renderBackground()}
-            </Box>
+          </Box>
           )}
 
           {/* image나 backgroundComponent 없을 때 기본 배경색 */}
@@ -347,9 +347,9 @@ function FadeInandOut({
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-            }}
-          >
-            {msg || children}
+          }}
+        >
+          {msg || children}
           </Box>
         </Box>
 

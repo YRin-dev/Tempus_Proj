@@ -6,12 +6,12 @@ import buildingImg from '../assets/photo/buildingImg.jpeg';
 
 function TransitionSection() {
   const [contentRef, isContentInView] = useIsInView({
-    threshold: 0.3,
+    threshold: 0.2,
     triggerOnce: true,
   });
 
   const [statsRef, isStatsInView] = useIsInView({
-    threshold: 0.4,
+    threshold: 0.3,
     triggerOnce: true,
   });
 
