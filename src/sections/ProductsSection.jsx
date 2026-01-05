@@ -1,4 +1,3 @@
-// //mostly perfect
 // import React, { forwardRef } from 'react';
 // import { Box, Typography, Grid, Container, alpha } from '@mui/material';
 // import { getProjectsList } from '../data/productData';
@@ -42,37 +41,24 @@
 //       text: '#FFFFFF',
 //       accent: '#A6E0F7',
 //     },
-//     // {
-//     //   // 1번: 은은한 블루-그레이 (Steel & Cloud)
-//     //   bg: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-//     //   text: '#0F172A', // 배경이 밝으므로 다크 텍스트 사용
-//     //   accent: '#3B82F6',
-//     // },
 //     { bg: '#F1F7FF', text: '#0F172A', accent: '#3B82F6' },
 //     {
 //       bg: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
 //       text: '#FFFFFF',
-//       accent: '#60A5FA',
+//       accent: '#BED7F7',
 //     },
 //     { bg: '#0F172A', text: '#FFFFFF', accent: '#60A5FA' },
 //     {
-//       // 3번: 신뢰감을 주는 중간 톤 블루 그라데이션
 //       bg: 'linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)',
 //       text: '#0F172A',
 //       accent: '#3B82F6',
 //     },
 //     {
-//       // 1번: 은은한 블루-그레이 (Steel & Cloud)
 //       bg: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-//       text: '#0F172A', // 배경이 밝으므로 다크 텍스트 사용
-//       accent: '#3B82F6',
-//     },
-//     {
-//       // 2번: 매우 연한 파스텔 블루
-//       bg: '#F8FAFC',
 //       text: '#0F172A',
 //       accent: '#3B82F6',
 //     },
+//     { bg: '#F8FAFC', text: '#0F172A', accent: '#3B82F6' },
 //   ];
 
 //   return (
@@ -88,8 +74,8 @@
 //           pb: { xs: 5, md: 8 },
 //           textAlign: 'center',
 //           opacity: isHeaderInView ? 1 : 0,
-//           transform: isHeaderInView ? 'none' : 'translateY(30px)',
-//           transition: 'all 1.2s ease',
+//           transform: isHeaderInView ? 'none' : 'translateY(40px)',
+//           transition: 'all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
 //         }}
 //       >
 //         <Typography
@@ -132,7 +118,7 @@
 
 // const ProductItem = ({ product, index, stylePreset }) => {
 //   const [itemRef, isInView] = useIsInView({
-//     threshold: 0.1,
+//     threshold: 1,
 //     triggerOnce: true,
 //   });
 //   const isReversed = index % 2 !== 0;
@@ -143,14 +129,12 @@
 //       sx={{
 //         position: 'relative',
 //         width: '100%',
-//         // 한 화면에 두 개가 보이도록 높이 조절 (50vh)
 //         minHeight: { xs: 'auto', md: '50vh' },
 //         display: 'flex',
 //         alignItems: 'center',
 //         background: stylePreset.bg,
 //         color: stylePreset.text,
 //         py: { xs: 8, md: 10 },
-//         // 사선 각도를 조금 더 완만하게 조정하여 촘촘한 배치 대응
 //         clipPath: {
 //           md:
 //             index % 2 === 0
@@ -158,12 +142,19 @@
 //               : 'polygon(0 10%, 100% 0, 100% 90%, 0 100%)',
 //           xs: 'none',
 //         },
-//         // 섹션 간 간격 좁힘
 //         mt: index === 0 ? 0 : { md: -8 },
 //         zIndex: 10 - index,
+//         // 지그재그 애니메이션 추가
+//         opacity: isInView ? 1 : 0,
+//         transform: isInView
+//           ? 'translateY(0)'
+//           : {
+//               xs: 'translateY(40px)',
+//               md: index % 2 === 0 ? 'translateY(-80px)' : 'translateY(80px)',
+//             },
+//         transition: 'all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
 //       }}
 //     >
-//       {/* 장식 요소들 */}
 //       <DecorationShape
 //         top="23%"
 //         left="10%"
@@ -180,46 +171,49 @@
 //       />
 
 //       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+//         {/* 배경 숫자 애니메이션: 좌우 지그재그 (Horizontal Zig-zag) */}
+//         <Typography
+//           sx={{
+//             position: 'absolute',
+//             top: '10%',
+//             right: isReversed ? 'auto' : '-1%',
+//             left: isReversed ? '-1%' : 'auto',
+//             fontSize: { xs: '8rem', md: '15rem' },
+//             fontWeight: 900,
+//             color: alpha(stylePreset.text, 0.05),
+//             zIndex: -1,
+//             lineHeight: 1,
+//             userSelect: 'none',
+//             // 애니메이션: 나타날 때 지그재그로 슬라이드
+//             opacity: isInView ? 1 : 0,
+//             transform: isInView
+//               ? 'translateX(0)'
+//               : `translateX(${isReversed ? '-150px' : '150px'})`, // 방향 교차
+//             transition: 'all 1.8s cubic-bezier(0.16, 1, 0.3, 1)',
+//           }}
+//         >
+//           {String(index + 1).padStart(2, '0')}
+//         </Typography>
+
 //         <Grid
 //           container
 //           spacing={{ xs: 4, md: 8 }}
 //           alignItems="center"
 //           direction={isReversed ? 'row-reverse' : 'row'}
-//           sx={{
-//             // 홀수 번째(0,2,4...)는 왼쪽으로, 짝수 번째(1,3,5...)는 오른쪽으로 이동
-//             transform: {
-//               md: index % 2 === 0 ? 'translateX(-40px)' : 'translateX(40px)',
-//             },
-//           }}
+//           sx={
+//             {
+//               // 전체 그리드 고정 위치 유지를 위해 기존 transform 제거 후 개별 요소 애니메이션 적용
+//             }
+//           }
 //         >
-//           {/* 배경 큰 숫자 장식 (공간감 확보) */}
-//           <Typography
-//             sx={{
-//               position: 'absolute',
-//               top: '10%',
-//               //[isReversed ? 'left' : 'right']: '0',
-//               right: isReversed ? 'auto' : '-1%',
-//               left: isReversed ? '-1%' : 'auto',
-//               fontSize: { xs: '8rem', md: '15rem' },
-//               fontWeight: 900,
-//               //color: alpha('#e2e8f0', 0.3),
-//               color: alpha(stylePreset.text, 0.05),
-//               zIndex: -1,
-//               lineHeight: 1,
-//               userSelect: 'none',
-//             }}
-//           >
-//             {String(index + 1).padStart(2, '0')}
-//           </Typography>
-
-//           {/* 이미지 영역: 크기 최적화 */}
+//           {/* 이미지 영역: 아래에서 위로 (Vertical Slide Up) */}
 //           <Grid item xs={12} md={6}>
 //             <Box
 //               sx={{
 //                 position: 'relative',
 //                 opacity: isInView ? 1 : 0,
-//                 transform: isInView ? 'none' : `scale(0.9) translateY(20px)`,
-//                 transition: 'all 1s ease 0.1s',
+//                 transform: isInView ? 'none' : `translateY(60px) scale(0.95)`,
+//                 transition: 'all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s', // 약간의 딜레이
 //                 textAlign: 'center',
 //               }}
 //             >
@@ -230,8 +224,8 @@
 //                 sx={{
 //                   width: '100%',
 //                   maxWidth: '300px',
-//                   height: { xs: '280px', md: '300px' }, // 고정 높이
-//                   objectFit: 'contain', // 이미지 비율 유지하며 컨테이너에 맞춤
+//                   height: { xs: '280px', md: '300px' },
+//                   objectFit: 'contain',
 //                   borderRadius: '12px',
 //                   filter:
 //                     stylePreset.text === '#FFFFFF'
@@ -242,18 +236,17 @@
 //             </Box>
 //           </Grid>
 
-//           {/* 텍스트 영역: 컴팩트한 레이아웃 */}
+//           {/* 텍스트 영역: 아래에서 위로 (Vertical Slide Up) */}
 //           <Grid item xs={12} md={6}>
 //             <Box
 //               sx={{
 //                 opacity: isInView ? 1 : 0,
-//                 transform: isInView ? 'none' : 'translateY(20px)',
-//                 transition: 'all 1s ease 0.2s',
+//                 transform: isInView ? 'none' : 'translateY(80px)', // 이미지보다 더 아래에서 시작하여 깊이감 부여
+//                 transition: 'all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s', // 이미지 다음 순차적으로 등장
 //                 pl: !isReversed ? { md: 4 } : 0,
 //                 pr: isReversed ? { md: 4 } : 0,
 //               }}
 //             >
-//               {/* 카테고리 & 라인 포인트 */}
 //               <Box
 //                 sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}
 //               >
@@ -276,7 +269,7 @@
 //               <Typography
 //                 variant="h3"
 //                 sx={{
-//                   fontSize: { xs: '1.8rem', md: '2.5rem' }, // 제목 크기 축소
+//                   fontSize: { xs: '1.8rem', md: '2.5rem' },
 //                   fontWeight: 900,
 //                   mb: 2,
 //                   lineHeight: 1.2,
@@ -284,18 +277,6 @@
 //               >
 //                 {product.title}
 //               </Typography>
-//               {/*
-//               <Typography
-//                 sx={{
-//                   fontSize: '0.95rem', // 설명 크기 축소
-//                   lineHeight: 1.6,
-//                   mb: 4,
-//                   opacity: 0.8,
-//                   wordBreak: 'keep-all',
-//                 }}
-//               >
-//                 {product.description}
-//               </Typography> */}
 
 //               <Typography
 //                 sx={{
@@ -318,15 +299,26 @@
 //                   gap: 1.5,
 //                   px: 3.5,
 //                   py: 1.4,
-//                   backgroundColor: stylePreset.text,
-//                   color: stylePreset.text === '#FFFFFF' ? '#0F172A' : '#FFFFFF',
+//                   backgroundColor: 'transparent',
+//                   color:
+//                     index === 3
+//                       ? '#FFFFFF'
+//                       : stylePreset.text === '#FFFFFF'
+//                       ? '#ffffff'
+//                       : '#0F172A',
 //                   borderRadius: '50px',
-//                   border: 'none',
+//                   border: `1px solid ${stylePreset.text}`,
 //                   cursor: 'pointer',
 //                   fontWeight: 800,
 //                   fontSize: '0.85rem',
-//                   transition: '0.3s',
-//                   '&:hover': { transform: 'translateY(-3px)' },
+//                   transition: '0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
+//                   '&:hover': {
+//                     transform: 'translateY(-5px)',
+//                     boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+//                     color: stylePreset.accent,
+//                     border: `1px solid ${stylePreset.accent}`,
+//                     backgroundColor: alpha(stylePreset.accent, 0.05),
+//                   },
 //                 }}
 //               >
 //                 DETAILS
@@ -391,7 +383,7 @@ const ProductsSection = forwardRef((props, ref) => {
     {
       bg: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
       text: '#FFFFFF',
-      accent: '#60A5FA',
+      accent: '#E8F1FC',
     },
     { bg: '#0F172A', text: '#FFFFFF', accent: '#60A5FA' },
     {
@@ -412,7 +404,6 @@ const ProductsSection = forwardRef((props, ref) => {
       ref={ref}
       sx={{ width: '100%', backgroundColor: '#ffffff', overflow: 'hidden' }}
     >
-      {/* --- 섹션 헤더 --- */}
       <Box
         ref={headerRef}
         sx={{
@@ -447,7 +438,6 @@ const ProductsSection = forwardRef((props, ref) => {
         </Typography>
       </Box>
 
-      {/* --- 제품 리스트 --- */}
       <Box>
         {products.map((product, index) => (
           <ProductItem
@@ -464,7 +454,7 @@ const ProductsSection = forwardRef((props, ref) => {
 
 const ProductItem = ({ product, index, stylePreset }) => {
   const [itemRef, isInView] = useIsInView({
-    threshold: 1,
+    threshold: 0.2, // threshold를 약간 낮추어 자연스럽게 트리거되도록 조정
     triggerOnce: true,
   });
   const isReversed = index % 2 !== 0;
@@ -490,7 +480,6 @@ const ProductItem = ({ product, index, stylePreset }) => {
         },
         mt: index === 0 ? 0 : { md: -8 },
         zIndex: 10 - index,
-        // 지그재그 애니메이션 추가
         opacity: isInView ? 1 : 0,
         transform: isInView
           ? 'translateY(0)'
@@ -517,7 +506,6 @@ const ProductItem = ({ product, index, stylePreset }) => {
       />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-        {/* 배경 숫자 애니메이션: 좌우 지그재그 (Horizontal Zig-zag) */}
         <Typography
           sx={{
             position: 'absolute',
@@ -530,11 +518,10 @@ const ProductItem = ({ product, index, stylePreset }) => {
             zIndex: -1,
             lineHeight: 1,
             userSelect: 'none',
-            // 애니메이션: 나타날 때 지그재그로 슬라이드
             opacity: isInView ? 1 : 0,
             transform: isInView
               ? 'translateX(0)'
-              : `translateX(${isReversed ? '-150px' : '150px'})`, // 방향 교차
+              : `translateX(${isReversed ? '-150px' : '150px'})`,
             transition: 'all 1.8s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
@@ -546,20 +533,14 @@ const ProductItem = ({ product, index, stylePreset }) => {
           spacing={{ xs: 4, md: 8 }}
           alignItems="center"
           direction={isReversed ? 'row-reverse' : 'row'}
-          sx={
-            {
-              // 전체 그리드 고정 위치 유지를 위해 기존 transform 제거 후 개별 요소 애니메이션 적용
-            }
-          }
         >
-          {/* 이미지 영역: 아래에서 위로 (Vertical Slide Up) */}
           <Grid item xs={12} md={6}>
             <Box
               sx={{
                 position: 'relative',
                 opacity: isInView ? 1 : 0,
                 transform: isInView ? 'none' : `translateY(60px) scale(0.95)`,
-                transition: 'all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s', // 약간의 딜레이
+                transition: 'all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s',
                 textAlign: 'center',
               }}
             >
@@ -582,13 +563,12 @@ const ProductItem = ({ product, index, stylePreset }) => {
             </Box>
           </Grid>
 
-          {/* 텍스트 영역: 아래에서 위로 (Vertical Slide Up) */}
           <Grid item xs={12} md={6}>
             <Box
               sx={{
                 opacity: isInView ? 1 : 0,
-                transform: isInView ? 'none' : 'translateY(80px)', // 이미지보다 더 아래에서 시작하여 깊이감 부여
-                transition: 'all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s', // 이미지 다음 순차적으로 등장
+                transform: isInView ? 'none' : 'translateY(80px)',
+                transition: 'all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s',
                 pl: !isReversed ? { md: 4 } : 0,
                 pr: isReversed ? { md: 4 } : 0,
               }}
@@ -637,30 +617,49 @@ const ProductItem = ({ product, index, stylePreset }) => {
                 {product.description}
               </Typography>
 
+              {/* 수정된 DETAILS 버튼 애니메이션 */}
               <Box
                 component="button"
                 sx={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 1.5,
-                  px: 3.5,
-                  py: 1.4,
-                  backgroundColor: stylePreset.text,
-                  color: stylePreset.text === '#FFFFFF' ? '#0F172A' : '#FFFFFF',
+                  px: 4, // 패딩을 조금 넓혀 안정감 부여
+                  py: 1.6,
+                  backgroundColor: 'transparent',
+                  color: stylePreset.text,
                   borderRadius: '50px',
-                  border: 'none',
+                  border: `1px solid ${alpha(stylePreset.text, 0.3)}`, // 초기 경계선은 은은하게
                   cursor: 'pointer',
                   fontWeight: 800,
                   fontSize: '0.85rem',
-                  transition: '0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                  letterSpacing: '0.1em',
+                  transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)', // 모든 속성에 부드러운 전환 적용
+                  position: 'relative',
+                  overflow: 'hidden',
                   '&:hover': {
-                    transform: 'translateY(-5px)',
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+                    transform: 'translateY(-4px)', // 위로 살짝 떠오름
+                    borderColor: stylePreset.accent, // 강조색으로 경계선 변경
+                    color: stylePreset.accent, // 텍스트 색상 변경
+                    backgroundColor: alpha(stylePreset.accent, 0.05), // 아주 은은한 배경색 추가
+                    boxShadow: `0 10px 20px ${alpha(stylePreset.accent, 0.2)}`, // 강조색 그림자
+                    '& .arrow-icon': {
+                      transform: 'translateX(5px)', // 화살표만 오른쪽으로 밀려남
+                    },
+                  },
+                  '&:active': {
+                    transform: 'translateY(-1px)', // 클릭 시 눌리는 효과
                   },
                 }}
               >
                 DETAILS
-                <ArrowForwardIcon sx={{ fontSize: 16 }} />
+                <ArrowForwardIcon
+                  className="arrow-icon" // 클래스명 부여하여 hover 시 선택 가능하게 함
+                  sx={{
+                    fontSize: 18,
+                    transition: 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)', // 화살표 전용 트랜지션
+                  }}
+                />
               </Box>
             </Box>
           </Grid>
@@ -672,4 +671,4 @@ const ProductItem = ({ product, index, stylePreset }) => {
 
 ProductsSection.displayName = 'ProductsSection';
 
-export default ProductsSection;
+export default ProductItem;

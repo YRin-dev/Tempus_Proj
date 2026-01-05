@@ -354,7 +354,7 @@ function TechnologySection() {
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        backgroundColor: '#F1F4F9',
+        backgroundColor: '#F8FAFC',
         overflow: 'hidden',
       }}
     >
@@ -369,7 +369,7 @@ function TechnologySection() {
           left: '-5%',
           width: '50vw',
           maxWidth: '800px',
-          opacity: 0.04,
+          opacity: 0.03,
           filter: 'blur(0.2px)',
           zIndex: 0,
           userSelect: 'none',
