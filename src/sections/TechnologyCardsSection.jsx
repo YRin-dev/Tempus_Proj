@@ -350,47 +350,14 @@ function TechnologySection() {
       ref={ref}
       sx={{
         width: '100%', // ✅ 100vw → 100% (가로 오버플로우/줄바꿈 이슈 방지)
-        minHeight: '100dvh', // ✅ 모바일 주소창 포함 안정적인 높이
+        minHeight: '98dvh', // ✅ 모바일 주소창 포함 안정적인 높이
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        backgroundColor: '#F1F4F9', // 연한색 #F8FAFC
+        backgroundColor: '#C0D5F0', // 연한색 #F8FAFC
         overflow: 'hidden',
       }}
     >
-      {/* Shape Divider - 상단 대각선 효과 */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          overflow: 'hidden',
-          lineHeight: 0,
-          zIndex: 10,
-        }}
-      >
-        <svg
-          data-name="Layer 1"
-          s
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          style={{
-            position: 'relative',
-            display: 'block',
-            width: 'calc(100% + 1.3px)',
-            height: '200px',
-          }}
-        >
-          <path
-            d="M1200 120L0 16.48 0 0 1200 0 1200 120z"
-            fill="#FFFFFF"
-            fillOpacity="1"
-          />
-        </svg>
-      </Box>
-
       {/* --- 배경 로고 워터마크 --- */}
       <Box
         component="img"
@@ -404,13 +371,31 @@ function TechnologySection() {
           maxWidth: '800px',
           opacity: 0.03,
           filter: 'blur(0.2px)',
-          zIndex: 0,
+          zIndex: 1,
           userSelect: 'none',
           pointerEvents: 'none',
           transform: isInView
             ? 'rotate(-10deg) scale(1)'
             : 'rotate(-20deg) scale(1.1)',
           transition: 'all 2.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+        }}
+      />
+
+      {/* 2. 도형 (두 번째) 회색 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          zIndex: 0,
+          top: '0',
+          right: '0',
+          width: '97%',
+          height: '680px',
+          backgroundColor: '#E8F1FA', //F1F4F9
+          borderRadius: '0 0 0 250px',
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? 'translateX(0)' : 'translateX(100px)',
+          transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
+          transitionDelay: '0.3s', // 두 번째
         }}
       />
 
@@ -505,6 +490,8 @@ function TechnologySection() {
                   lineHeight: 1.75,
                   wordBreak: 'keep-all',
                   maxWidth: '360px',
+                  marginBottom: '100px',
+                  marginLeft: '10px',
                   pt: 1,
                 }}
               >
