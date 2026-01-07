@@ -4,7 +4,8 @@ import TopSection from '../sections/TopSection';
 import TechnologySection from '../sections/TechnologySection';
 import TechnologyCardsSection from '../sections/TechnologyCardsSection';
 import ProductsSection from '../sections/ProductsSection';
-import ContactSection from '../sections/ContactSection';
+//import ContactSection from '../sections/ContactSection';
+import CareerSection from '../sections/CareerSection';
 
 /**
  * LandingPage 컴포넌트
@@ -25,7 +26,8 @@ function LandingPage() {
     technologySectionRef,
     technologyCardsSectionRef,
     productsSectionRef,
-    contactSectionRef,
+    careerSectionRef,
+    // contactSectionRef,
   } = useSectionRefs();
 
   return (
@@ -34,7 +36,8 @@ function LandingPage() {
       <TechnologySection ref={technologySectionRef} />
       <TechnologyCardsSection ref={technologyCardsSectionRef} />
       <ProductsSection ref={productsSectionRef} />
-      <ContactSection ref={contactSectionRef} />
+      <CareerSection ref={careerSectionRef} />
+      {/* <ContactSection ref={contactSectionRef} /> */}
     </>
   );
 }
