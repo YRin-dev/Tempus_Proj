@@ -17,11 +17,12 @@ export const SectionRefsProvider = ({ children }) => {
   const technologySectionRef = useRef(null);
   const technologyCardsSectionRef = useRef(null);
   const productsSectionRef = useRef(null);
+  const careerSectionRef = useRef(null);
   const contactSectionRef = useRef(null);
 
   /**
    * 특정 섹션으로 부드럽게 스크롤 이동
-   * @param {string} sectionName - 이동할 섹션 이름 ('top', 'technology', 'technologyCards', 'products', 'contact')
+   * @param {string} sectionName - 이동할 섹션 이름 ('top', 'technology', 'technologyCards', 'products', 'career', 'contact')
    */
   const scrollToSection = (sectionName) => {
     const refs = {
@@ -29,6 +30,7 @@ export const SectionRefsProvider = ({ children }) => {
       technology: technologySectionRef,
       technologyCards: technologyCardsSectionRef,
       products: productsSectionRef,
+      career: careerSectionRef,
       contact: contactSectionRef,
     };
 
@@ -70,8 +72,8 @@ export const SectionRefsProvider = ({ children }) => {
     technologySectionRef,
     technologyCardsSectionRef,
     productsSectionRef,
+    careerSectionRef,
     contactSectionRef,
-
     // 스크롤 이동 함수
     scrollToSection,
   };

@@ -4,7 +4,7 @@ import TopSection from '../sections/TopSection';
 import TechnologySection from '../sections/TechnologySection';
 import TechnologyCardsSection from '../sections/TechnologyCardsSection';
 import ProductsSection from '../sections/ProductsSection';
-//import ContactSection from '../sections/ContactSection';
+import ContactSection from '../sections/ContactSection';
 import CareerSection from '../sections/CareerSection';
 
 /**
@@ -27,7 +27,7 @@ function LandingPage() {
     technologyCardsSectionRef,
     productsSectionRef,
     careerSectionRef,
-    // contactSectionRef,
+    contactSectionRef,
   } = useSectionRefs();
 
   return (
@@ -37,7 +37,7 @@ function LandingPage() {
       <TechnologyCardsSection ref={technologyCardsSectionRef} />
       <ProductsSection ref={productsSectionRef} />
       <CareerSection ref={careerSectionRef} />
-      {/* <ContactSection ref={contactSectionRef} /> */}
+      <ContactSection ref={contactSectionRef} />
     </>
   );
 }
