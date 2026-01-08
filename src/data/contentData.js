@@ -113,7 +113,8 @@ export const EngineeringCareerContent = {
   title: ['제품응용팀'],
   subtitle: ['연구소 엔지니어'],
   description: [
-    '제품 응용 기술 개발 및 연구 업무를 수행할 엔지니어를 모집합니다',
+    '제품 응용 기술 개발 및 연구 업무를 수행할',
+    '연구소 엔지니어를 모집합니다',
   ],
 };
 
