@@ -289,6 +289,7 @@ import { Box, Typography, Button, Container, Grid } from '@mui/material';
 import FullPageSection from '../components/commons/container/FullPageSection';
 import useIsInView from '../hooks/useIsInView';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   contactContent,
   qualityManagementCareerContent,
@@ -370,7 +371,7 @@ const CareerSection = forwardRef((props, ref) => {
             left: '200px',
             width: '340px',
             height: '280px',
-            backgroundColor: '#ECF4F9',
+            backgroundColor: '#FAF6E8',
             borderRadius: '20px 20px 20px 150px',
             opacity: isInView ? 1 : 0,
             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
@@ -559,22 +560,26 @@ const CareerSection = forwardRef((props, ref) => {
                       </Typography>
                     ))}
                   </Box>
-
-                  <Typography
+                  {/* <Box
                     sx={{
-                      fontWeight: 800,
-                      fontSize: '0.9rem',
-                      color: '#0F172A',
+                      mt: 3,
                       display: 'flex',
                       alignItems: 'center',
                       gap: 1,
+                      color: '#0F172A',
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      '&:hover': '#3B82F6',
                     }}
                   >
-                    DETAILS{' '}
-                    <Box component="span" sx={{ fontSize: '1.2rem' }}>
-                      →
-                    </Box>
-                  </Typography>
+                    <Typography sx={{ fontSize: '0.9rem' }}>
+                      READ DETAILS
+                    </Typography>
+                    <ArrowForwardIcon
+                      className="hover-arrow"
+                      sx={{ fontSize: 18, opacity: 0.7, transition: '0.3s' }}
+                    />
+                  </Box> */}
                 </Box>
               </Grid>
             ))}
