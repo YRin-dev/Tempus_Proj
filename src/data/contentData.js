@@ -102,16 +102,16 @@ export const contactContent = {
 
 // CareertactSection 콘텐츠
 export const qualityManagementCareerContent = {
-  title: ['품질팀'],
-  subtitle: ['일본어 가능자'],
+  title: ['센서 품질관리 정규직 채용 (일본어 가능자)'],
+  subtitle: ['품질팀'],
   description: [
     '품질 관리 및 개선 업무를 담당할 인재를 모집합니다',
     ' 일본어 소통이 가능한 분을 우대합니다',
   ],
 };
 export const EngineeringCareerContent = {
-  title: ['제품응용팀'],
-  subtitle: ['연구소 엔지니어'],
+  title: ['센서 응용개발 펌웨어 Engineer'],
+  subtitle: ['제품응용팀'],
   description: [
     '제품 응용 기술 개발 및 연구 업무를 수행할',
     '연구소 엔지니어를 모집합니다',

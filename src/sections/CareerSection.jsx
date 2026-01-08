@@ -1,978 +1,19 @@
-// import React, { forwardRef } from 'react';
-// import { Box, Typography, Button, Container, Grid } from '@mui/material';
-// import FullPageSection from '../components/commons/container/FullPageSection';
-// import useIsInView from '../hooks/useIsInView';
-// import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-// import {
-//   contactContent,
-//   qualityManagementCareerContent,
-//   EngineeringCareerContent,
-// } from '../data/contentData';
-
-// const CareerSection = forwardRef((props, ref) => {
-//   const [viewRef, isInView] = useIsInView({
-//     threshold: 0.2,
-//     triggerOnce: true,
-//   });
-
-//   const careerPosts = [
-//     qualityManagementCareerContent,
-//     EngineeringCareerContent,
-//   ];
-
-//   const getAnimatedStyle = (delay) => ({
-//     opacity: isInView ? 1 : 0,
-//     transform: isInView ? 'translateY(0)' : 'translateY(40px)',
-//     transition: `all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`,
-//   });
-
-//   return (
-//     <FullPageSection ref={ref}>
-//       <Box
-//         ref={viewRef}
-//         sx={{
-//           width: '100%',
-//           minHeight: '100vh',
-//           display: 'flex',
-//           alignItems: 'center',
-//           position: 'relative',
-//           backgroundColor: '#F8FAFC',
-//           overflow: 'hidden',
-//           py: { xs: 10, md: 0 },
-//         }}
-//       >
-//         {/* --- 배경 장식 도형 --- */}
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '60%',
-//             left: '0',
-//             width: '8%',
-//             height: '140px',
-//             backgroundColor: '#ECF4F9',
-//             borderRadius: '0 250px 250px 0',
-//             opacity: isInView ? 1 : 0,
-//             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
-//             transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-//             transitionDelay: '0.3s',
-//           }}
-//         />
-
-//         <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2 }}>
-//           {/* 1. 상단 타이틀 섹션 (중앙 정렬 유지) */}
-//           <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 10 } }}>
-//             <Typography
-//               variant="h2"
-//               sx={{
-//                 fontSize: { xs: '2.5rem', md: '4rem' },
-//                 fontWeight: 900,
-//                 color: '#0F172A',
-//                 lineHeight: 1.1,
-//                 letterSpacing: '-0.03em',
-//                 ...getAnimatedStyle(0.3),
-//               }}
-//             >
-//               {contactContent.title[0]} <br />
-//               <Box component="span" sx={{ color: '#3B82F6' }}>
-//                 {contactContent.title[1]}
-//               </Box>
-//             </Typography>
-
-//             <Typography
-//               sx={{
-//                 fontSize: { xs: '1.1rem', md: '1.25rem' },
-
-//                 color: '#64748B',
-
-//                 lineHeight: 1.8,
-
-//                 maxWidth: '700px',
-
-//                 mx: 'auto',
-
-//                 wordBreak: 'keep-all',
-//                 marginTop: '20px',
-
-//                 ...getAnimatedStyle(0.5),
-//               }}
-//             >
-//               {contactContent.subtitle[0]} {contactContent.subtitle[1]}
-//             </Typography>
-//           </Box>
-
-//           {/* 2. 하단 콘텐츠 섹션 (가로 한 줄 배치: 설명 + 카드1 + 카드2) */}
-//           <Grid container spacing={3} alignItems="stretch">
-//             {/* 왼쪽: 설명 문구 및 버튼 */}
-//             <Grid item xs={12} lg={4}>
-//               <Box
-//                 sx={{
-//                   height: '100%',
-//                   display: 'flex',
-//                   flexDirection: 'column',
-//                   justifyContent: 'center',
-//                   pr: { lg: 4 },
-//                 }}
-//               >
-//                 <Typography
-//                   sx={{
-//                     fontSize: '1.2rem',
-//                     color: '#475569',
-//                     lineHeight: 1.7,
-//                     mb: 4,
-//                     wordBreak: 'keep-all',
-//                     fontWeight: 500,
-//                     ...getAnimatedStyle(0.5),
-//                   }}
-//                 >
-//                   혁신적인 기술로 세상을 연결하는 여정에 <br />
-//                   여러분의 열정을 더해주세요.
-//                 </Typography>
-
-//                 <Box sx={getAnimatedStyle(0.6)}>
-//                   <Button
-//                     variant="outlined"
-//                     sx={{
-//                       borderColor: '#0F172A',
-//                       color: '#0F172A',
-//                       padding: '14px 36px',
-//                       borderRadius: '100px',
-//                       fontSize: '0.95rem',
-//                       fontWeight: 700,
-//                       borderWidth: '2px',
-//                       transition: 'all 0.3s',
-//                       '&:hover': {
-//                         borderWidth: '2px',
-//                         backgroundColor: '#0F172A',
-//                         color: '#FFF',
-//                       },
-//                     }}
-//                   >
-//                     기업 문화 알아보기
-//                   </Button>
-//                 </Box>
-//               </Box>
-//             </Grid>
-
-//             {/* 오른쪽: 카드들 (한 줄에 나란히) */}
-//             {careerPosts.map((post, index) => (
-//               <Grid item xs={12} md={6} lg={4} key={index}>
-//                 <Box
-//                   sx={{
-//                     height: '100%',
-//                     backgroundColor: 'rgba(255, 255, 255, 0.75)',
-//                     backdropFilter: 'blur(12px)',
-//                     borderRadius: '32px',
-//                     padding: { xs: 4, md: 5 },
-//                     border: '1px solid rgba(255, 255, 255, 0.5)',
-//                     display: 'flex',
-//                     flexDirection: 'column',
-//                     transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
-//                     cursor: 'pointer',
-//                     ...getAnimatedStyle(0.7 + index * 0.1),
-//                     '&:hover': {
-//                       backgroundColor: '#FFFFFF',
-//                       transform: 'translateY(-15px)',
-//                       boxShadow: '0 40px 80px rgba(15, 23, 42, 0.08)',
-//                       '& .arrow-icon': {
-//                         transform: 'translateX(5px)',
-//                         color: '#3B82F6',
-//                       },
-//                     },
-//                   }}
-//                 >
-//                   <Box
-//                     sx={{
-//                       display: 'flex',
-//                       justifyContent: 'space-between',
-//                       mb: 3,
-//                     }}
-//                   >
-//                     <Box>
-//                       <Typography
-//                         sx={{
-//                           fontSize: '0.8rem',
-//                           color: '#3B82F6',
-//                           fontWeight: 800,
-//                           mb: 1,
-//                           textTransform: 'uppercase',
-//                         }}
-//                       >
-//                         {post.subtitle[0]}
-//                       </Typography>
-//                       <Typography
-//                         variant="h5"
-//                         sx={{
-//                           fontWeight: 850,
-//                           color: '#0F172A',
-//                           fontSize: '1.5rem',
-//                           lineHeight: 1.2,
-//                         }}
-//                       >
-//                         {post.title[0]}
-//                       </Typography>
-//                     </Box>
-//                     <ArrowForwardIosIcon
-//                       className="arrow-icon"
-//                       sx={{
-//                         fontSize: 18,
-//                         color: '#CBD5E1',
-//                         mt: 1,
-//                         transition: '0.3s',
-//                       }}
-//                     />
-//                   </Box>
-
-//                   <Box sx={{ flexGrow: 1, mb: 4 }}>
-//                     {post.description.map((desc, i) => (
-//                       <Typography
-//                         key={i}
-//                         sx={{
-//                           color: '#475569',
-//                           lineHeight: 1.6,
-//                           fontSize: '0.95rem',
-//                           mb: 0.5,
-//                         }}
-//                       >
-//                         • {desc}
-//                       </Typography>
-//                     ))}
-//                   </Box>
-
-//                   <Typography
-//                     sx={{
-//                       fontWeight: 800,
-//                       fontSize: '0.9rem',
-//                       color: '#0F172A',
-//                       display: 'flex',
-//                       alignItems: 'center',
-//                       gap: 1,
-//                     }}
-//                   >
-//                     DETAILS{' '}
-//                     <Box component="span" sx={{ fontSize: '1.2rem' }}>
-//                       →
-//                     </Box>
-//                   </Typography>
-//                 </Box>
-//               </Grid>
-//             ))}
-//           </Grid>
-//         </Container>
-
-//         {/* 배경 워터마크 */}
-//         <Typography
-//           sx={{
-//             position: 'absolute',
-//             bottom: '2%',
-//             right: '2%',
-//             fontSize: '12vw',
-//             fontWeight: 900,
-//             color: 'rgba(15, 23, 42, 0.02)',
-//             zIndex: 0,
-//             userSelect: 'none',
-//           }}
-//         >
-//           JOIN US
-//         </Typography>
-//       </Box>
-//     </FullPageSection>
-//   );
-// });
-
-// CareerSection.displayName = 'CareerSection';
-
-// export default CareerSection;
-
-// import React, { forwardRef } from 'react';
-// import { Box, Typography, Button, Container, Grid } from '@mui/material';
-// import FullPageSection from '../components/commons/container/FullPageSection';
-// import useIsInView from '../hooks/useIsInView';
-// import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-// import {
-//   contactContent,
-//   qualityManagementCareerContent,
-//   EngineeringCareerContent,
-// } from '../data/contentData';
-
-// const CareerSection = forwardRef((props, ref) => {
-//   const [viewRef, isInView] = useIsInView({
-//     threshold: 0.2,
-//     triggerOnce: true,
-//   });
-
-//   const careerPosts = [
-//     qualityManagementCareerContent,
-//     EngineeringCareerContent,
-//   ];
-
-//   const getAnimatedStyle = (delay) => ({
-//     opacity: isInView ? 1 : 0,
-//     transform: isInView ? 'translateY(0)' : 'translateY(40px)',
-//     transition: `all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`,
-//   });
-
-//   return (
-//     <FullPageSection ref={ref}>
-//       <Box
-//         ref={viewRef}
-//         sx={{
-//           width: '100%',
-//           minHeight: '100vh',
-//           display: 'flex',
-//           alignItems: 'center',
-//           position: 'relative',
-//           backgroundColor: '#F8FAFC', //
-//           overflow: 'hidden',
-//           py: { xs: 10, md: 0 },
-//         }}
-//       >
-//         {/* --- 배경 장식 도형 top --- */}
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '13%',
-//             right: '550px',
-//             width: '600px',
-//             height: '300px',
-//             backgroundColor: '#ECF4F9',
-//             borderRadius: '20px 250px 20px 250px',
-//             opacity: isInView ? 1 : 0,
-//             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
-//             transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-//             transitionDelay: '0.3s',
-//           }}
-//         />
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '13%',
-//             right: '150px',
-//             width: '340px',
-//             height: '280px',
-//             backgroundColor: '#ECF4F9',
-//             borderRadius: '250px 20px 250px 20px',
-//             opacity: isInView ? 1 : 0,
-//             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
-//             transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-//             transitionDelay: '0.3s',
-//           }}
-//         />
-
-//         {/* --- 배경 장식 도형 --- 아래 회분 */}
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '50%',
-//             left: '200px',
-//             width: '340px',
-//             height: '280px',
-//             backgroundColor: '#FAF6E8',
-//             borderRadius: '20px 20px 20px 150px',
-//             opacity: isInView ? 1 : 0,
-//             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
-//             transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-//             transitionDelay: '0.3s',
-//           }}
-//         />
-
-//         <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2 }}>
-//           {/* 1. 상단 타이틀 섹션 (중앙 정렬 유지) */}
-//           <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 10 } }}>
-//             <Typography
-//               variant="h2"
-//               sx={{
-//                 fontSize: { xs: '2.5rem', md: '4rem' },
-//                 fontWeight: 900,
-//                 color: '#0F172A',
-//                 lineHeight: 1.1,
-//                 letterSpacing: '-0.03em',
-//                 ...getAnimatedStyle(0.3),
-//               }}
-//             >
-//               {contactContent.title[0]} <br />
-//               <Box component="span" sx={{ color: '#3B82F6' }}>
-//                 {contactContent.title[1]}
-//               </Box>
-//             </Typography>
-
-//             <Typography
-//               sx={{
-//                 fontSize: { xs: '1.1rem', md: '1.25rem' },
-//                 color: '#64748B',
-//                 lineHeight: 1.8,
-//                 maxWidth: '700px',
-//                 mx: 'auto',
-//                 wordBreak: 'keep-all',
-//                 marginTop: '20px',
-//                 ...getAnimatedStyle(0.5),
-//               }}
-//             >
-//               {contactContent.subtitle[0]} {contactContent.subtitle[1]}
-//             </Typography>
-//           </Box>
-
-//           {/* 2. 하단 콘텐츠 섹션 (가로 한 줄 배치: 설명 + 카드1 + 카드2) - justifyContent="center" 추가 */}
-//           <Grid
-//             container
-//             spacing={3}
-//             alignItems="stretch"
-//             justifyContent="center"
-//           >
-//             {/* 왼쪽: 설명 문구 및 버튼 */}
-//             <Grid item xs={12} lg={4}>
-//               <Box
-//                 sx={{
-//                   height: '100%',
-//                   display: 'flex',
-//                   flexDirection: 'column',
-//                   justifyContent: 'center',
-//                   px: { lg: 2 }, // 양옆 균형을 위해 padding 조정
-//                 }}
-//               >
-//                 <Typography
-//                   sx={{
-//                     fontSize: '1.2rem',
-//                     color: '#475569',
-//                     lineHeight: 1.7,
-//                     mb: 4,
-//                     wordBreak: 'keep-all',
-//                     fontWeight: 500,
-//                     ...getAnimatedStyle(0.5),
-//                   }}
-//                 >
-//                   혁신적인 기술로 세상을 연결하는 여정에 <br />
-//                   여러분의 열정을 더해주세요.
-//                 </Typography>
-
-//                 <Box sx={getAnimatedStyle(0.6)}>
-//                   <Button
-//                     variant="outlined"
-//                     sx={{
-//                       borderColor: '#0F172A',
-//                       color: '#0F172A',
-//                       padding: '14px 36px',
-//                       marginLeft: '50px',
-//                       borderRadius: '100px',
-//                       fontSize: '0.95rem',
-//                       fontWeight: 700,
-//                       borderWidth: '2px',
-//                       transition: 'all 0.3s',
-//                       '&:hover': {
-//                         borderWidth: '2px',
-//                         backgroundColor: '#0F172A',
-//                         color: '#FFF',
-//                       },
-//                     }}
-//                   >
-//                     기업 문화 알아보기
-//                   </Button>
-//                 </Box>
-//               </Box>
-//             </Grid>
-
-//             {/* 오른쪽: 카드들 (한 줄에 나란히) */}
-//             {careerPosts.map((post, index) => (
-//               <Grid item xs={12} md={6} lg={4} key={index}>
-//                 <Box
-//                   sx={{
-//                     height: '280px',
-
-//                     backgroundColor: 'rgba(255, 255, 255, 0.75)',
-//                     backdropFilter: 'blur(12px)',
-//                     borderRadius: '32px',
-//                     padding: { xs: 4, md: 5 },
-//                     border: '1px solid rgba(255, 255, 255, 0.5)',
-//                     display: 'flex',
-//                     flexDirection: 'column',
-//                     transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
-//                     cursor: 'pointer',
-//                     ...getAnimatedStyle(0.7 + index * 0.1),
-//                     '&:hover': {
-//                       backgroundColor: '#FFFFFF',
-//                       transform: 'translateY(-15px)',
-//                       boxShadow: '0 40px 80px rgba(15, 23, 42, 0.08)',
-//                       '& .arrow-icon': {
-//                         transform: 'translateX(5px)',
-//                         color: '#3B82F6',
-//                       },
-//                     },
-//                   }}
-//                 >
-//                   <Box
-//                     sx={{
-//                       display: 'flex',
-//                       justifyContent: 'space-between',
-//                       mb: 3,
-//                     }}
-//                   >
-//                     <Box>
-//                       <Typography
-//                         sx={{
-//                           fontSize: '0.8rem',
-//                           color: '#3B82F6',
-//                           fontWeight: 800,
-//                           mb: 1,
-//                           textTransform: 'uppercase',
-//                         }}
-//                       >
-//                         {post.subtitle[0]}
-//                       </Typography>
-//                       <Typography
-//                         variant="h5"
-//                         sx={{
-//                           fontWeight: 850,
-//                           color: '#0F172A',
-//                           fontSize: '1.5rem',
-//                           lineHeight: 1.2,
-//                         }}
-//                       >
-//                         {post.title[0]}
-//                       </Typography>
-//                     </Box>
-//                     <ArrowForwardIosIcon
-//                       className="arrow-icon"
-//                       sx={{
-//                         fontSize: 18,
-//                         color: '#CBD5E1',
-//                         mt: 1,
-//                         transition: '0.3s',
-//                       }}
-//                     />
-//                   </Box>
-
-//                   <Box sx={{ flexGrow: 1, mb: 4 }}>
-//                     {post.description.map((desc, i) => (
-//                       <Typography
-//                         key={i}
-//                         sx={{
-//                           color: '#475569',
-//                           lineHeight: 1.6,
-//                           fontSize: '0.95rem',
-//                           mb: 0.5,
-//                         }}
-//                       >
-//                         • {desc}
-//                       </Typography>
-//                     ))}
-//                   </Box>
-//                   {/* <Box
-//                     sx={{
-//                       mt: 3,
-//                       display: 'flex',
-//                       alignItems: 'center',
-//                       gap: 1,
-//                       color: '#0F172A',
-//                       fontWeight: 800,
-//                       cursor: 'pointer',
-//                       '&:hover': '#3B82F6',
-//                     }}
-//                   >
-//                     <Typography sx={{ fontSize: '0.9rem' }}>
-//                       READ DETAILS
-//                     </Typography>
-//                     <ArrowForwardIcon
-//                       className="hover-arrow"
-//                       sx={{ fontSize: 18, opacity: 0.7, transition: '0.3s' }}
-//                     />
-//                   </Box> */}
-//                 </Box>
-//               </Grid>
-//             ))}
-//           </Grid>
-//         </Container>
-
-//         {/* 배경 워터마크 */}
-//         {/* <Typography
-//           sx={{
-//             position: 'absolute',
-//             bottom: '2%',
-//             right: '2%',
-//             fontSize: '12vw',
-//             fontWeight: 900,
-//             color: 'rgba(15, 23, 42, 0.02)',
-//             zIndex: 0,
-//             userSelect: 'none',
-//           }}
-//         >
-//           JOIN US
-//         </Typography> */}
-//       </Box>
-//     </FullPageSection>
-//   );
-// });
-
-// CareerSection.displayName = 'CareerSection';
-
-// export default CareerSection;
-
-//화분 느낌
-// import React, { forwardRef } from 'react';
-// import { Box, Typography, Button, Container, Grid } from '@mui/material';
-// import FullPageSection from '../components/commons/container/FullPageSection';
-// import useIsInView from '../hooks/useIsInView';
-// import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-// import {
-//   contactContent,
-//   qualityManagementCareerContent,
-//   EngineeringCareerContent,
-// } from '../data/contentData';
-
-// const CareerSection = forwardRef((props, ref) => {
-//   const [viewRef, isInView] = useIsInView({
-//     threshold: 0.2,
-//     triggerOnce: true,
-//   });
-
-//   const careerPosts = [
-//     qualityManagementCareerContent,
-//     EngineeringCareerContent,
-//   ];
-
-//   const getAnimatedStyle = (delay) => ({
-//     opacity: isInView ? 1 : 0,
-//     transform: isInView ? 'translateY(0)' : 'translateY(40px)',
-//     transition: `all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`,
-//   });
-
-//   return (
-//     <FullPageSection ref={ref}>
-//       <Box
-//         ref={viewRef}
-//         sx={{
-//           width: '100%',
-//           minHeight: '100vh',
-//           display: 'flex',
-//           alignItems: 'center',
-//           position: 'relative',
-//           backgroundColor: '#FDFDFB', // 따뜻하고 깨끗한 오프화이트 (종이 질감 느낌)
-//           overflow: 'hidden',
-//           py: { xs: 10, md: 0 },
-//         }}
-//       >
-//         {/* --- 배경 장식 도형 (새싹 테마: Sage Green) --- */}
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '5%',
-//             left: '15%',
-//             width: '450px',
-//             height: '450px',
-//             backgroundColor: '#E8F2EE', // 매우 연한 세이지 그린 (새싹의 생명력)
-//             borderRadius: '40% 60% 40% 60% / 60% 40% 60% 40%', // 유기적인 잎사귀 형태
-//             filter: 'blur(40px)',
-//             opacity: isInView ? 0.6 : 0,
-//             transform: isInView
-//               ? 'rotate(0deg) scale(1)'
-//               : 'rotate(-15deg) scale(0.8)',
-//             transition: 'all 1.5s cubic-bezier(0.22, 1, 0.36, 1)',
-//           }}
-//         />
-
-//         {/* --- 배경 장식: '새싹'의 유기적 형태 (Blue 톤으로 변경) --- */}
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '5%',
-//             right: '10%',
-//             width: '450px',
-//             height: '450px',
-//             backgroundColor: '#EFF6FF', // 매우 연한 블루
-//             borderRadius: '40% 60% 40% 60% / 60% 40% 60% 40%',
-//             filter: 'blur(60px)',
-//             opacity: isInView ? 0.8 : 0,
-//             transform: isInView
-//               ? 'rotate(0deg) scale(1)'
-//               : 'rotate(-20deg) scale(0.8)',
-//             transition: 'all 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
-//           }}
-//         />
-
-//         {/* --- 배경 장식 도형 top --- */}
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '13%',
-//             right: '550px',
-//             width: '600px',
-//             height: '300px',
-//             backgroundColor: '#ECF4F9',
-//             borderRadius: '20px 250px 20px 250px',
-//             opacity: isInView ? 1 : 0,
-//             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
-//             transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-//             transitionDelay: '0.3s',
-//           }}
-//         />
-//         {/* <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '13%',
-//             right: '150px',
-//             width: '340px',
-//             height: '280px',
-//             backgroundColor: '#ECF4F9',
-//             borderRadius: '250px 20px 250px 20px',
-//             opacity: isInView ? 1 : 0,
-//             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
-//             transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-//             transitionDelay: '0.3s',
-//           }}
-//         /> */}
-
-//         {/* --- 배경 장식 도형 (화분 테마: Muted Sand) --- */}
-//         <Box
-//           sx={{
-//             position: 'absolute',
-//             zIndex: 1,
-//             top: '50%',
-//             right: '200px',
-//             width: '340px',
-//             height: '280px',
-//             backgroundColor: '#F5F0E8', // 부드러운 샌드 베이지 (토양과 화분의 안정감)
-//             borderRadius: '100px 100px 300px 100px',
-//             opacity: isInView ? 0.7 : 0,
-//             transform: isInView ? 'translateX(0)' : 'translateX(-100px)',
-//             transition: 'all 1.2s cubic-bezier(0.22, 1, 0.36, 1)',
-//             transitionDelay: '0.2s',
-//           }}
-//         />
-
-//         <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2 }}>
-//           {/* 1. 상단 타이틀 섹션 */}
-//           <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 10 } }}>
-//             <Typography
-//               variant="h2"
-//               sx={{
-//                 fontSize: { xs: '2.5rem', md: '3.8rem' },
-//                 fontWeight: 900,
-//                 color: '#2C3333', // 깊이감 있는 다크 차콜 그린
-//                 lineHeight: 1.1,
-//                 letterSpacing: '-0.03em',
-//                 ...getAnimatedStyle(0.3),
-//               }}
-//             >
-//               {contactContent.title[0]} <br />
-//               <Box component="span" sx={{ color: '#3B82F6' }}>
-//                 {' '}
-//                 {/* 성장과 신뢰의 그린 컬러 */}
-//                 {contactContent.title[1]}
-//               </Box>
-//             </Typography>
-
-//             <Typography
-//               sx={{
-//                 fontSize: { xs: '1.1rem', md: '1.2rem' },
-//                 color: '#707772',
-//                 lineHeight: 1.8,
-//                 maxWidth: '650px',
-//                 mx: 'auto',
-//                 wordBreak: 'keep-all',
-//                 marginTop: '24px',
-//                 ...getAnimatedStyle(0.5),
-//               }}
-//             >
-//               {contactContent.subtitle[0]} {contactContent.subtitle[1]}
-//             </Typography>
-//           </Box>
-
-//           {/* 2. 하단 콘텐츠 섹션 */}
-//           <Grid
-//             container
-//             spacing={4}
-//             alignItems="stretch"
-//             justifyContent="center"
-//           >
-//             {/* 오른쪽: 채용 카드 */}
-//             {careerPosts.map((post, index) => (
-//               <Grid item xs={12} md={6} lg={4} key={index}>
-//                 <Box
-//                   sx={{
-//                     height: '280px',
-//                     backgroundColor: 'rgba(255, 255, 255, 0.6)',
-//                     backdropFilter: 'blur(20px)',
-//                     borderRadius: '24px',
-//                     padding: { xs: 4, md: 5 },
-//                     border: '1px solid rgba(255, 255, 255, 0.8)',
-//                     boxShadow: '0 20px 40px rgba(0, 0, 0, 0.03)',
-//                     display: 'flex',
-//                     flexDirection: 'column',
-//                     transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
-//                     cursor: 'pointer',
-//                     ...getAnimatedStyle(0.7 + index * 0.1),
-//                     '&:hover': {
-//                       backgroundColor: '#FFFFFF',
-//                       transform: 'translateY(-12px)',
-//                       boxShadow: '0 30px 60px rgba(95, 141, 78, 0.12)', // 은은한 그린 쉐도우
-//                       '& .arrow-icon': {
-//                         transform: 'rotate(-45deg)', // 대각선 위로 향하는 화살표 (성장 의미)
-//                         color: '#5F8D4E',
-//                       },
-//                     },
-//                   }}
-//                 >
-//                   <Box
-//                     sx={{
-//                       display: 'flex',
-//                       justifyContent: 'space-between',
-//                       mb: 3,
-//                     }}
-//                   >
-//                     <Box>
-//                       <Typography
-//                         sx={{
-//                           fontSize: '0.75rem',
-//                           color: '#3B82F6',
-//                           fontWeight: 700,
-//                           mb: 1,
-//                           letterSpacing: '0.1em',
-//                           textTransform: 'uppercase',
-//                         }}
-//                       >
-//                         {post.subtitle[0]}
-//                       </Typography>
-//                       <Typography
-//                         variant="h5"
-//                         sx={{
-//                           fontWeight: 800,
-//                           color: '#2C3333',
-//                           fontSize: '1.4rem',
-//                           lineHeight: 1.3,
-//                         }}
-//                       >
-//                         {post.title[0]}
-//                       </Typography>
-//                     </Box>
-//                     <ArrowForwardIosIcon
-//                       className="arrow-icon"
-//                       sx={{
-//                         fontSize: 16,
-//                         color: '#A5ADAA',
-//                         transition: '0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
-//                       }}
-//                     />
-//                   </Box>
-
-//                   <Box sx={{ flexGrow: 1 }}>
-//                     {post.description.map((desc, i) => (
-//                       <Typography
-//                         key={i}
-//                         sx={{
-//                           color: '#606C66',
-//                           lineHeight: 1.7,
-//                           fontSize: '0.95rem',
-//                           mb: 0.5,
-//                         }}
-//                       >
-//                         • {desc}
-//                       </Typography>
-//                     ))}
-//                   </Box>
-
-//                   <Typography
-//                     sx={{
-//                       fontWeight: 700,
-//                       fontSize: '0.85rem',
-//                       color: '#2C3333',
-//                       display: 'flex',
-//                       alignItems: 'center',
-//                       gap: 0.5,
-//                       mt: 2,
-//                       '&::after': {
-//                         content: '""',
-//                         width: '0px',
-//                         height: '2px',
-//                         backgroundColor: '#3B82F6',
-//                         transition: '0.3s',
-//                       },
-//                       '&:hover::after': {
-//                         width: '20px',
-//                       },
-//                     }}
-//                   >
-//                     자세히 보기
-//                   </Typography>
-//                 </Box>
-//               </Grid>
-//             ))}
-
-//             {/* 왼쪽: 설명 문구 및 버튼 */}
-//             <Grid item xs={12} lg={4}>
-//               <Box
-//                 sx={{
-//                   height: '100%',
-//                   display: 'flex',
-//                   flexDirection: 'column',
-//                   justifyContent: 'center',
-//                   px: { lg: 3 },
-//                 }}
-//               >
-//                 <Typography
-//                   sx={{
-//                     fontSize: '1.15rem',
-//                     color: '#4A504C',
-//                     lineHeight: 1.7,
-//                     mb: 5,
-//                     wordBreak: 'keep-all',
-//                     fontWeight: 500,
-//                     ...getAnimatedStyle(0.5),
-//                   }}
-//                 >
-//                   혁신적인 기술로 세상을 연결하는 여정에 <br />
-//                   여러분의 열정을 더해주세요.
-//                 </Typography>
-
-//                 <Box sx={getAnimatedStyle(0.6)}>
-//                   <Button
-//                     variant="outlined"
-//                     sx={{
-//                       borderColor: '#2C3333',
-//                       color: '#2C3333',
-//                       padding: '12px 40px',
-//                       borderRadius: '12px', // 둥글지만 너무 원형은 아니게 (세련미)
-//                       fontSize: '0.95rem',
-//                       fontWeight: 700,
-//                       borderWidth: '1.5px',
-//                       transition: 'all 0.3s ease',
-//                       '&:hover': {
-//                         borderWidth: '1.5px',
-//                         backgroundColor: '#2C3333',
-//                         color: '#FFF',
-//                         transform: 'translateY(-3px)',
-//                         boxShadow: '0 10px 20px rgba(44, 51, 51, 0.15)',
-//                       },
-//                     }}
-//                   >
-//                     기업 문화 알아보기
-//                   </Button>
-//                 </Box>
-//               </Box>
-//             </Grid>
-//           </Grid>
-//         </Container>
-//       </Box>
-//     </FullPageSection>
-//   );
-// });
-
-// CareerSection.displayName = 'CareerSection';
-
-// export default CareerSection;
-
 import React, { forwardRef } from 'react';
-import { Box, Typography, Button, Container, Grid, alpha } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Container,
+  Grid,
+  alpha,
+  Stack,
+} from '@mui/material';
 import FullPageSection from '../components/commons/container/FullPageSection';
 import useIsInView from '../hooks/useIsInView';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import AssignmentIndOutlineIcon from '@mui/icons-material/AssignmentIndOutlined';
 import {
   contactContent,
   qualityManagementCareerContent,
@@ -1126,130 +167,168 @@ const CareerSection = forwardRef((props, ref) => {
             justifyContent="center"
           >
             {/* 3. 오른쪽: 채용 카드 */}
-            {careerPosts.map((post, index) => (
-              <Grid
-                item
-                xs={12}
-                md={6}
-                lg={4}
-                key={index}
-                sx={{ display: 'flex' }}
-              >
-                <Box
-                  sx={{
-                    width: '400px',
-                    height: '300px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                    backdropFilter: 'blur(12px)',
-                    borderRadius: '32px',
-                    padding: { xs: 4, md: 5 },
-                    border: '1px solid rgba(255, 255, 255, 0.5)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
-                    cursor: 'pointer',
-                    ...getAnimatedStyle(0.7 + index * 0.1),
-                    '&:hover': {
-                      backgroundColor: '#FFFFFF',
-                      transform: 'translateY(-15px)',
-                      //boxShadow: '0 40px 80px rgba(15, 23, 42, 0.08)',
-                      boxShadow: `0 30px 60px ${alpha('#3B82F6', 0.15)}`,
-                      borderColor: '#3B82F6', // 호버 시 테두리 블루
-                      '& .arrow-icon': {
-                        transform: 'translate(4px, -4px) rotate(-45deg)', // 대각선 위로 이동 및 회전
-                        color: '#3B82F6',
-                      },
-                      '& .detail-text': {
-                        color: '#3B82F6',
-                      },
-                      '& .hover-arrow': {
-                        transform: 'translateX(5px)',
-                        opacity: 1,
-                      },
-                    },
-                  }}
+            {careerPosts.map((post, index) => {
+              // 카드별 링크 URL
+              const cardUrls = [
+                'https://www.saramin.co.kr/zf_user/jobs/relay/view?isMypage=no&rec_idx=52727141&recommend_ids=eJxVjcsRwzAQQqvJfT%2BgXc4uxP134UgzkZXjGx7AYFui73b%2F1MUYUBRuWSwkbXCcqUp%2F6LNrC8sEjN0dsDn1kytc9R5N2WvLsE5wp9GNfn8pt%2BTRJZQb8yvbIaeUCx%2Flzy%2F%2F&view_type=list&gz=1&t_ref_content=ing_recruit&t_ref=company_info_view&relayNonce=075d05502916b2ba06ae&immediately_apply_layer_open=n#seq=0',
+                'https://www.saramin.co.kr/zf_user/jobs/relay/view?isMypage=no&rec_idx=52727159&recommend_ids=eJxNjrkRwEAIA6txzo%2BIXYj778Kcx8NduKykwSUKYH3AfOXtElaS9hTJjwkcNk3kwApTaqQPk7rGJxrnTDm6ntNd1mLbcFMZ607hMVP9VWWdTxZjh0Fq2GHty%2BryC9%2B4L%2Fw%3D&view_type=list&gz=1&t_ref_content=ing_recruit&t_ref=company_info_view&relayNonce=8d78861cb284921852a9&immediately_apply_layer_open=n#seq=0',
+              ];
+              const cardUrl = cardUrls[index] || null;
+
+              const handleCardClick = () => {
+                if (cardUrl) {
+                  window.open(cardUrl, '_blank', 'noopener,noreferrer');
+                }
+              };
+
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  lg={4}
+                  key={index}
+                  sx={{ display: 'flex' }}
                 >
                   <Box
+                    onClick={cardUrl ? handleCardClick : undefined}
                     sx={{
+                      width: '400px',
+                      height: '300px',
+                      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                      backdropFilter: 'blur(12px)',
+                      borderRadius: '32px',
+                      padding: { xs: 4, md: 5 },
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
                       display: 'flex',
-                      justifyContent: 'space-between',
-                      mb: 3,
-                    }}
-                  >
-                    <Box>
-                      <Typography
-                        sx={{
-                          fontSize: '0.8rem',
+                      flexDirection: 'column',
+                      transition: 'all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                      cursor: cardUrl ? 'pointer' : 'default',
+                      ...getAnimatedStyle(0.7 + index * 0.1),
+                      '&:hover': {
+                        backgroundColor: '#FFFFFF',
+                        transform: 'translateY(-15px)',
+                        //boxShadow: '0 40px 80px rgba(15, 23, 42, 0.08)',
+                        boxShadow: `0 30px 60px ${alpha('#3B82F6', 0.15)}`,
+                        borderColor: '#3B82F6', // 호버 시 테두리 블루
+                        '& .arrow-icon': {
+                          transform: 'translate(4px, -4px) rotate(-45deg)', // 대각선 위로 이동 및 회전
                           color: '#3B82F6',
-                          fontWeight: 800,
-                          mb: 1,
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        {post.subtitle[0]}
-                      </Typography>
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontWeight: 850,
-                          color: '#0F172A',
-                          fontSize: '1.5rem',
-                          lineHeight: 1.2,
-                          mb: 1,
-                        }}
-                      >
-                        {post.title[0]}
-                      </Typography>
-                    </Box>
-                    <ArrowForwardIosIcon
-                      className="arrow-icon"
-                      sx={{
-                        fontSize: 18,
-                        color: '#CBD5E1',
-                        mt: 1,
-                        transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
-                      }}
-                    />
-                  </Box>
-
-                  <Box sx={{ flexGrow: 1, mb: 4 }}>
-                    {post.description.map((desc, i) => (
-                      <Typography
-                        key={i}
-                        sx={{
-                          color: '#475569',
-                          lineHeight: 1.6,
-                          fontSize: '0.95rem',
-                          mb: 0.5,
-                        }}
-                      >
-                        {index === 1 ? desc : `• ${desc}`}
-                      </Typography>
-                    ))}
-                  </Box>
-                  {/* <Box
-                    sx={{
-                      mt: 3,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 1,
-                      color: '#0F172A',
-                      fontWeight: 800,
-                      cursor: 'pointer',
-                      '&:hover': '#639CF8',
+                        },
+                        '& .detail-text': {
+                          color: '#3B82F6',
+                        },
+                        '& .hover-arrow': {
+                          transform: 'translateX(5px)',
+                          opacity: 1,
+                        },
+                      },
                     }}
                   >
-                    <Typography sx={{ fontSize: '0.9rem' }}>
-                      READ DETAILS
-                    </Typography>
-                    <ArrowForwardIcon
-                      className="hover-arrow"
-                      sx={{ fontSize: 18, opacity: 0.7, transition: '0.3s' }}
-                    />
-                  </Box> */}
-                </Box>
-              </Grid>
-            ))}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        mb: 2,
+                      }}
+                    >
+                      <Box>
+                        <Typography
+                          sx={{
+                            fontSize: '0.8rem',
+                            color: '#3B82F6',
+                            fontWeight: 800,
+                            mb: 1,
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          {post.subtitle[0]}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            fontWeight: 850,
+                            color: '#0F172A',
+                            fontSize: '1.5rem',
+                            lineHeight: 1.2,
+                            mb: 1.7,
+                          }}
+                        >
+                          {post.title[0]}
+                        </Typography>
+                        <Stack direction="row" spacing={1.5} sx={{ mb: 2 }}>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 0.5,
+                            }}
+                          >
+                            <WorkOutlineIcon
+                              sx={{ fontSize: '0.9rem', color: '#64748B' }}
+                            />
+                            <Typography
+                              sx={{
+                                fontSize: '0.85rem',
+                                color: '#64748B',
+                                fontWeight: 600,
+                              }}
+                            >
+                              신입 · 경력
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 0.5,
+                            }}
+                          >
+                            <AssignmentIndOutlineIcon
+                              sx={{ fontSize: '0.9rem', color: '#64748B' }}
+                            />
+                            <Typography
+                              sx={{
+                                fontSize: '0.85rem',
+                                color: '#64748B',
+                                fontWeight: 600,
+                              }}
+                            >
+                              정규직
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </Box>
+                      <ArrowForwardIosIcon
+                        className="arrow-icon"
+                        sx={{
+                          fontSize: 18,
+                          color: '#CBD5E1',
+                          mt: 1,
+                          transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                        }}
+                      />
+                    </Box>
+
+                    <Box sx={{ flexGrow: 1, mb: 4 }}>
+                      {post.description.map((desc, i) => (
+                        <Typography
+                          key={i}
+                          sx={{
+                            color: '#475569',
+                            lineHeight: 1.6,
+                            fontSize: '0.95rem',
+                            mb: 0.5,
+                          }}
+                        >
+                          {index === 1 ? desc : `• ${desc}`}
+                        </Typography>
+                      ))}
+                    </Box>
+                  </Box>
+                </Grid>
+              );
+            })}
 
             {/* 2. 오른쪽: 설명 및 버튼 */}
             <Grid item xs={12} lg={4}>
@@ -1276,31 +355,6 @@ const CareerSection = forwardRef((props, ref) => {
                   혁신적인 기술로 세상을 연결하는 여정에 <br />
                   여러분의 열정을 더해주세요.
                 </Typography>
-
-                {/* <Box sx={getAnimatedStyle(0.6)}>
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      borderColor: '#0F172A',
-                      color: '#0F172A',
-                      padding: '14px 40px',
-                      borderRadius: '100px',
-                      fontSize: '1rem',
-                      fontWeight: 700,
-                      borderWidth: '2px',
-                      transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
-                      '&:hover': {
-                        borderColor: '#3B82F6',
-                        backgroundColor: '#3B82F6',
-                        color: '#FFF',
-                        transform: 'translateY(-5px)',
-                        boxShadow: '0 15px 30px rgba(59, 130, 246, 0.2)',
-                      },
-                    }}
-                  >
-                    기업 문화 알아보기
-                  </Button>
-                </Box> */}
 
                 <Box
                   component="button"
