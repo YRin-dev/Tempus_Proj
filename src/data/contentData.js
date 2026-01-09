@@ -5,7 +5,7 @@
 
 // HeroSection 콘텐츠
 export const heroContent = {
-  mainText: '보이지 않는것을 봅니다',
+  mainText: '보이지 않는 것을 봅니다',
   typingSpeed: 60,
   deleteSpeed: 30,
   startDelay: 300,
@@ -18,8 +18,7 @@ export const transitionContent = {
   description: [
     "템퍼스는 '가격 경쟁력이 있는 IR 멀티밴드 분광 센서'에",
     '중점을 두고, 높은 노이즈 대비 감도( SNR) 및 넓은',
-    '감지파장 (WDR)을 가진 마이크로써모파일을 성공적으로',
-    '개발하였습니다.',
+    '감지파장 (WDR)을 가진 마이크로써모파일을 성공적으로 개발하였습니다.',
     '34개의 특허와 13년 기술력을 바탕으로 차별화된 적외선 센서 솔루션을 제공합니다',
   ],
 };
@@ -38,12 +37,12 @@ export const missionContent = {
 
 // TechnologySection 기술소개
 export const technologyContent = {
-  mainMessage: ['당신의 시스템에 적합한 코와 눈을 제공합니다'],
+  mainMessage: ['당신의 시스템에 적합한', '을 제공합니다'],
   subMessage: [
     '자체 MEMS Fab 기반 차별화된 적외선센서 기술로',
     ' Physical AI의 새로운 가능성을 열어갑니다',
   ],
-  mainTitle: 'TECHNOLOGY',
+  mainTitle: 'PHYSICAL AI',
   h1Title: '독자적 Micro-Thermopile 기반 MEMS 센서 기술',
   description:
     '마이크로 전자기계시스템(MEMS) 기술을 활용한 초소형,고성능 멀티체널센서를 제공합니다. 자체개발 원천기술에 기반하여 고객요구에 맞춤형으로 대응합니다',
@@ -103,18 +102,19 @@ export const contactContent = {
 
 // CareertactSection 콘텐츠
 export const qualityManagementCareerContent = {
-  title: ['품질팀'],
-  subtitle: ['일본어 가능자'],
+  title: ['센서 품질관리 정규직 채용 (일본어 가능자)'],
+  subtitle: ['품질팀'],
   description: [
     '품질 관리 및 개선 업무를 담당할 인재를 모집합니다',
     ' 일본어 소통이 가능한 분을 우대합니다',
   ],
 };
 export const EngineeringCareerContent = {
-  title: ['제품응용팀'],
-  subtitle: ['연구소 엔지니어'],
+  title: ['센서 응용개발 펌웨어 Engineer'],
+  subtitle: ['제품응용팀'],
   description: [
-    '제품 응용 기술 개발 및 연구 업무를 수행할 엔지니어를 모집합니다',
+    '제품 응용 기술 개발 및 연구 업무를 수행할',
+    '연구소 엔지니어를 모집합니다',
   ],
 };
 

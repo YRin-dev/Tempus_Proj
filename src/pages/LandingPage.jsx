@@ -5,6 +5,7 @@ import TechnologySection from '../sections/TechnologySection';
 import TechnologyCardsSection from '../sections/TechnologyCardsSection';
 import ProductsSection from '../sections/ProductsSection';
 import ContactSection from '../sections/ContactSection';
+import CareerSection from '../sections/CareerSection';
 
 /**
  * LandingPage 컴포넌트
@@ -25,6 +26,7 @@ function LandingPage() {
     technologySectionRef,
     technologyCardsSectionRef,
     productsSectionRef,
+    careerSectionRef,
     contactSectionRef,
   } = useSectionRefs();
 
@@ -34,6 +36,7 @@ function LandingPage() {
       <TechnologySection ref={technologySectionRef} />
       <TechnologyCardsSection ref={technologyCardsSectionRef} />
       <ProductsSection ref={productsSectionRef} />
+      <CareerSection ref={careerSectionRef} />
       <ContactSection ref={contactSectionRef} />
     </>
   );

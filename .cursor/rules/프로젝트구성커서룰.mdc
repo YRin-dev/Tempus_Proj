@@ -74,8 +74,8 @@ src/data/contentData.js - 모든 섹션의 텍스트 중앙 관리
 섹션별 콘텐츠 데이터 활용:
 
 - `heroContent` - "보이지 않는것을 봅니다" 메인 텍스트, 타이핑 설정
-- `transitionContent` - 회사 technology
-- `missionContent` - 회사 미션 메시지
+- `transitionContent` - 회사 소개
+- `technologyContent` - 회사 기술
 - `projectsContent` - 회사 product 설명
 - `contactContent` - "Let's Work Together" 제목, 연락처 정보
 - `siteMetadata` - 네비게이션 메뉴
