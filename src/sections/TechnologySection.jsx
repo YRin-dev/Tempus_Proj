@@ -2,7 +2,7 @@ import React, { forwardRef, useMemo } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
 import FadeInandOut from '../components/patterns/pageTransition/FadeInandOut';
 import { technologyContent } from '../data/contentData';
-import fabImg from '../assets/photo/fabImg.png';
+import fabImg from '../assets/photo/멤스팹.png';
 import useIsInView from '../hooks/useIsInView';
 
 /**

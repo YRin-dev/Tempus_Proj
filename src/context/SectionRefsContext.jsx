@@ -8,7 +8,7 @@ const SectionRefsContext = createContext();
 
 /**
  * SectionRefsProvider 컴포넌트
- *
+ * 
  * @param {React.ReactNode} children - 자식 컴포넌트들
  */
 export const SectionRefsProvider = ({ children }) => {
@@ -35,19 +35,19 @@ export const SectionRefsProvider = ({ children }) => {
     };
 
     const targetRef = refs[sectionName];
-
+    
     if (targetRef?.current) {
       console.log(`🎯 [SectionRefs] ${sectionName} 섹션으로 스크롤 이동`);
-
+      
       // Lenis 부드러운 스크롤 사용 (가능한 경우)
       if (window.lenis) {
         const targetTop =
           targetRef.current.getBoundingClientRect().top +
-          (window.pageYOffset || document.documentElement.scrollTop);
-
+                         (window.pageYOffset || document.documentElement.scrollTop);
+        
         // 헤더 높이만큼 여백 추가 (약 80px)
         const offsetTop = targetTop - 80;
-
+        
         window.lenis.scrollTo(offsetTop, {
           duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -91,12 +91,12 @@ export const SectionRefsProvider = ({ children }) => {
  */
 export const useSectionRefs = () => {
   const context = useContext(SectionRefsContext);
-
+  
   if (!context) {
     throw new Error(
       'useSectionRefs는 SectionRefsProvider 내에서 사용되어야 합니다'
     );
   }
-
+  
   return context;
-};
+}; 

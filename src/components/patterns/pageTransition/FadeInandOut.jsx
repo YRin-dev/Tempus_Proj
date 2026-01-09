@@ -35,7 +35,7 @@ function FadeInandOut({
   targetOpacity = 0.5,
 }) {
   // 상태 관리 - opacity만 관리
-  const [opacity, setOpacity] = useState(useFadeEffect ? 0 : 1);
+  const [_opacity, setOpacity] = useState(useFadeEffect ? 0 : 1);
   const [fadeOutOpacity, setFadeOutOpacity] = useState(1);
   const sectionRef = useRef(null);
   const containerRef = useRef(null);
@@ -217,9 +217,6 @@ function FadeInandOut({
     return null;
   };
 
-  // 계산된 최종 opacity
-  const finalOpacity = opacity * fadeOutOpacity;
-
   // 통합된 렌더링 로직
   return (
     <Box
@@ -268,45 +265,67 @@ function FadeInandOut({
           )}
 
           {/* 검은 배경 레이어 - 스크롤에 따라 진해짐 */}
-          {image && (
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                backgroundColor: '#000000',
-                opacity: 1 - fadeOutOpacity, // 스크롤할수록 진해짐
-                transition: 'opacity 0.1s ease-out',
-                willChange: 'opacity',
-                zIndex: 2,
-                '&::after': {
-                  // 이미지 위에 어두운 그라데이션 오버레이 (가독성 확보)
-                  content: '""',
-                  position: 'absolute',
-                  inset: 0,
-                  background:
-                    'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)',
-                },
-              }}
-            />
-          )}
+          {image &&
+            (() => {
+              // 초기 어두움: 20% (0.2)
+              const initialDarkness = 0.4;
+              // 최종 어두움: targetOpacity를 기반으로 계산 (예: targetOpacity=0.3이면 최종 어두움=0.7)
+              const finalDarkness = 1 - targetOpacity;
+              // 스크롤 진행도에 따라 초기 어두움에서 최종 어두움까지 변화
+              // fadeOutOpacity는 1에서 targetOpacity까지 감소하므로,
+              // (1 - fadeOutOpacity)는 0에서 (1 - targetOpacity)까지 증가
+              const opacityRange = 1 - targetOpacity;
+              const darkProgress =
+                opacityRange > 0 ? (1 - fadeOutOpacity) / opacityRange : 0;
+              const darkOpacity = Math.min(
+                1,
+                Math.max(
+                  initialDarkness,
+                  initialDarkness +
+                    darkProgress * (finalDarkness - initialDarkness)
+                )
+              );
+
+              return (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundColor: '#000000',
+                    opacity: darkOpacity, // 초기 20%에서 시작하여 스크롤에 따라 진해짐
+                    transition: 'opacity 0.1s ease-out',
+                    willChange: 'opacity',
+                    zIndex: 2,
+                    '&::after': {
+                      // 이미지 위에 어두운 그라데이션 오버레이 (가독성 확보)
+                      content: '""',
+                      position: 'absolute',
+                      inset: 0,
+                      background:
+                        'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)',
+                    },
+                  }}
+                />
+              );
+            })()}
 
           {/* 배경 컨텐츠 박스 - backgroundComponent용 */}
           {backgroundComponent && (
-          <Box
-            sx={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              overflow: 'hidden',
-              position: 'relative',
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden',
+                position: 'relative',
                 zIndex: 3,
-            }}
-          >
+              }}
+            >
               {renderBackground()}
-          </Box>
+            </Box>
           )}
 
           {/* image나 backgroundComponent 없을 때 기본 배경색 */}
@@ -347,9 +366,9 @@ function FadeInandOut({
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-          }}
-        >
-          {msg || children}
+            }}
+          >
+            {msg || children}
           </Box>
         </Box>
 

@@ -5,7 +5,7 @@
 
 // HeroSection 콘텐츠
 export const heroContent = {
-  mainText: '보이지 않는것을 봅니다',
+  mainText: '보이지 않는 것을 봅니다',
   typingSpeed: 60,
   deleteSpeed: 30,
   startDelay: 300,
