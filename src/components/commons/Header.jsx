@@ -7,8 +7,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  // useMediaQuery,
-  // useTheme,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -21,10 +21,16 @@ import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
 
 /**
  * Header 컴포넌트
- * Fixed 포지션으로 상단에 고정되며 테마 모드에 따라 색상이 변경됨
- * 모바일에서는 Drawer 메뉴, 인터랙티브 로고 포함
- * 스크롤 시 로고 축약 기능
- * SectionRefsContext를 사용하여 섹션 네비게이션 기능 제공
+ *
+ * Props:
+ * 없음 (전역 Context 사용)
+ *
+ * 기능:
+ * - 투명한 배경의 상단 고정 헤더
+ * - Home/Technology/Products/Career/Contact 메뉴 포함
+ * - SectionRefsContext를 사용한 섹션 이동 네비게이션 기능
+ * - 반응형 디자인 (모바일: Drawer 메뉴, 데스크톱: 가로 메뉴)
+ * - 배경 모드에 따른 텍스트 색상 자동 조정
  *
  * Example usage:
  * <Header />
@@ -32,8 +38,8 @@ import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
 const Header = () => {
   const { backgroundMode } = useBackground();
   const { scrollToSection } = useSectionRefs();
-  // const theme = useTheme();
-  //const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -49,17 +55,11 @@ const Header = () => {
 
   /**
    * 네비게이션 메뉴 클릭 핸들러
-   * @param {string} section - 이동할 섹션 ('products', 'contact')
+   * @param {string} section - 이동할 섹션 ('top', 'technology', 'technologyCards', 'products', 'career', 'contact')
    */
   const handleNavClick = (section) => {
     setDrawerOpen(false); // 모바일 메뉴 닫기
-    // 섹션 이름 매핑: 'projects' -> 'products'
-    const sectionMap = {
-      projects: 'products',
-      contact: 'contact',
-    };
-    const targetSection = sectionMap[section] || section;
-    scrollToSection(targetSection);
+    scrollToSection(section);
   };
 
   /**
@@ -71,9 +71,14 @@ const Header = () => {
 
   /**
    * 네비게이션 메뉴 아이템들
+   * SectionRefsContext의 섹션 이름과 매핑
+   * Technology 메뉴는 TechnologyCardsSection으로 이동
    */
   const menuItems = [
-    { label: siteMetadata.navigation.projects, section: 'projects' },
+    { label: siteMetadata.navigation.home, section: 'top' },
+    { label: siteMetadata.navigation.technology, section: 'technologyCards' },
+    { label: siteMetadata.navigation.product, section: 'products' },
+    { label: siteMetadata.navigation.career, section: 'career' },
     { label: siteMetadata.navigation.contact, section: 'contact' },
   ];
 
@@ -108,7 +113,7 @@ const Header = () => {
             color: textColor,
           }}
         >
-          {siteMetadata.brandName}
+          Menu
         </Typography>
         <IconButton onClick={toggleDrawer} sx={{ color: textColor }}>
           <CloseIcon />
@@ -201,8 +206,8 @@ const Header = () => {
               />
             </Box>
 
-            {/* 데스크톱 네비게이션 메뉴
-            {!isMobile && !isProjectDetailPage && (
+            {/* 데스크톱 네비게이션 메뉴 */}
+            {!isMobile && (
               <Box
                 sx={{
                   display: 'flex',
@@ -221,9 +226,10 @@ const Header = () => {
                       fontSize: { xs: '0.875rem', md: '1rem' },
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
-                      textShadow: backgroundMode === 'light' 
-                        ? '0 1px 2px rgba(255,255,255,0.8)' 
-                        : 'none',
+                      textShadow:
+                        backgroundMode === 'light'
+                          ? '0 1px 2px rgba(255,255,255,0.8)'
+                          : 'none',
                       '&:hover': {
                         opacity: 1,
                         transform: 'translateY(-1px)',
@@ -234,25 +240,29 @@ const Header = () => {
                   </Typography>
                 ))}
               </Box>
-            )} */}
+            )}
 
             {/* 모바일 햄버거 메뉴 */}
-            {/* {isMobile && !isProjectDetailPage && (
+            {isMobile && (
               <IconButton
                 onClick={toggleDrawer}
                 sx={{
                   color: textColor,
-                  filter: backgroundMode === 'light' 
-                    ? 'drop-shadow(0 1px 2px rgba(255,255,255,0.8))' 
-                    : 'none',
+                  filter:
+                    backgroundMode === 'light'
+                      ? 'drop-shadow(0 1px 2px rgba(255,255,255,0.8))'
+                      : 'none',
                   '&:hover': {
-                    bgcolor: backgroundMode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)',
+                    bgcolor:
+                      backgroundMode === 'light'
+                        ? 'rgba(0,0,0,0.04)'
+                        : 'rgba(255,255,255,0.04)',
                   },
                 }}
               >
                 <MenuIcon />
               </IconButton>
-            )} */}
+            )}
           </Box>
         </ContentArea>
       </Box>
