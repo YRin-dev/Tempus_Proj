@@ -697,10 +697,9 @@
 //export default TechnologySection;
 
 //Vv05
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Typography, Grid, Container } from '@mui/material';
 import useIsInView from '../hooks/useIsInView';
-import { useBackground } from '../context/BackgroundContext';
 
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 import AirIcon from '@mui/icons-material/Air';
@@ -713,13 +712,6 @@ function TechnologySection() {
     threshold: 0.3,
     triggerOnce: true,
   });
-  const { updateBackgroundMode } = useBackground();
-
-  useEffect(() => {
-    if (isInView) {
-      updateBackgroundMode('light');
-    }
-  }, [isInView, updateBackgroundMode]);
 
   const techData = [
     {

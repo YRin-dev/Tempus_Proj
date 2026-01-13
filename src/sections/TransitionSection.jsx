@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import { transitionContent } from '../data/contentData';
 import useIsInView from '../hooks/useIsInView';
-import { useBackground } from '../context/BackgroundContext';
 import buildingImg from '../assets/photo/buildingImg.jpeg';
 
 function TransitionSection() {
@@ -10,13 +9,6 @@ function TransitionSection() {
     threshold: 0.2,
     triggerOnce: true,
   });
-  const { updateBackgroundMode } = useBackground();
-
-  useEffect(() => {
-    if (isContentInView) {
-      updateBackgroundMode('light');
-    }
-  }, [isContentInView, updateBackgroundMode]);
 
   const [statsRef, isStatsInView] = useIsInView({
     threshold: 0.3,

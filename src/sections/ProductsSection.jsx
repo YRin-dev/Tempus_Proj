@@ -1,8 +1,7 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { Box, Typography, Grid, Container, alpha } from '@mui/material';
 import { getProjectsList } from '../data/productData';
 import useIsInView from '../hooks/useIsInView';
-import { useBackground } from '../context/BackgroundContext';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const DecorationShape = ({ top, left, right, bottom, size, color, delay }) => (
@@ -35,13 +34,6 @@ const ProductsSection = forwardRef((props, ref) => {
     threshold: 0.2,
     triggerOnce: true,
   });
-  const { updateBackgroundMode } = useBackground();
-
-  useEffect(() => {
-    if (isHeaderInView) {
-      updateBackgroundMode('light');
-    }
-  }, [isHeaderInView, updateBackgroundMode]);
 
   const colorPresets = [
     {
