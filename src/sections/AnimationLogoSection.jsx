@@ -10,6 +10,8 @@ import { Canvas } from '@react-three/fiber';
 import { EffectComposer, N8AO } from '@react-three/postprocessing';
 import { AnimatedPath } from '../components/patterns/visualHook/AnimatedPath';
 import TypingEffect from '../components/patterns/typoraphy/TypingEffect';
+import { useBackground } from '../context/BackgroundContext';
+import useIsInView from '../hooks/useIsInView';
 
 import {
   path_T,
@@ -176,6 +178,21 @@ function AnimationLogoSection() {
     setTypingKey((prev) => prev + 1);
   }, []);
 
+  const [ref, isInView] = useIsInView({
+    threshold: 0.7, // 30% 이상 보일 때 트리거
+    triggerOnce: false, // 진출입 시마다 트리거
+  });
+  const { updateBackgroundMode } = useBackground();
+
+  useEffect(() => {
+    console.log('🔍 HeroSection isInView changed:', isInView);
+    if (isInView) {
+      updateBackgroundMode('light');
+    } else {
+      updateBackgroundMode('dark');
+    }
+  }, [isInView, updateBackgroundMode]);
+
   // 마우스 위치 추적 (useCallback으로 메모이제이션하여 불필요한 리렌더링 방지)
   const handleMouseMove = useCallback((event) => {
     setMousePosition({
@@ -219,18 +236,19 @@ function AnimationLogoSection() {
 
   return (
     <Box
+      ref={ref}
       sx={{
         position: 'relative',
         minHeight: '100vh',
         height: '100vh',
         width: '100vw',
         overflow: 'hidden',
-        background: 'linear-gradient(40deg, rgb(0, 0, 0), rgb(0, 17, 82))',
+        //background: 'linear-gradient(40deg, rgb(0, 17, 82), rgb(0, 0, 0))',
       }}
       style={{
         // CSS 변수 정의
-        '--color-bg1': 'rgb(108, 0, 162)',
-        '--color-bg2': 'rgb(0, 17, 82)',
+        // '--color-bg1': 'rgb(108, 0, 162)',
+        // '--color-bg2': 'rgb(0, 17, 82)',
         '--color1': '18, 113, 255',
         '--color2': '221, 74, 255',
         '--color3': '100, 220, 255',
@@ -457,3 +475,302 @@ function AnimationLogoSection() {
 }
 
 export default AnimationLogoSection;
+
+//circuit design
+// import React, { useState, useEffect, useRef } from 'react';
+// import { Box, Stack } from '@mui/material';
+// import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+// import { AnimatedPath } from '../components/patterns/visualHook/AnimatedPath';
+// import TypingEffect from '../components/patterns/typoraphy/TypingEffect';
+// import {
+//   path_T,
+//   path_e,
+//   path_m,
+//   path_p,
+//   path_u,
+//   path_s,
+// } from '../data/logoTypePathData';
+// import { heroContent } from '../data/contentData';
+
+// /**
+//  * 복잡한 회로도 선 컴포넌트
+//  * d: SVG 경로
+//  * delay: 드로잉 시작 지연 시간
+//  */
+// const CircuitLine = ({ d, delay = 0 }) => (
+//   <g>
+//     <motion.path
+//       d={d}
+//       fill="transparent"
+//       stroke="#00f2ff"
+//       strokeWidth="1.2"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//       initial={{ pathLength: 0, opacity: 0 }}
+//       animate={{ pathLength: 1, opacity: 0.4 }}
+//       transition={{
+//         delay,
+//         duration: 2.5,
+//         ease: 'easeInOut',
+//       }}
+//     />
+//     {/* 경로의 마지막 좌표에 노드 배치 */}
+//     <motion.circle
+//       cx={d.split(' ').slice(-2)[0]}
+//       cy={d.split(' ').slice(-1)[0]}
+//       r="2.5"
+//       fill="#00f2ff"
+//       initial={{ scale: 0, opacity: 0 }}
+//       animate={{ scale: 1, opacity: 0.8 }}
+//       transition={{ delay: delay + 2.5, duration: 0.5 }}
+//     />
+//   </g>
+// );
+
+// function AnimationLogoSection() {
+//   const [typingKey, setTypingKey] = useState(0);
+//   const containerRef = useRef(null);
+
+//   // 마우스 인터랙션을 위한 Motion Value 설정
+//   const mouseX = useMotionValue(0);
+//   const mouseY = useMotionValue(0);
+
+//   // 마우스 움직임을 부드럽게 변환 (Spring 효과)
+//   const springConfig = { damping: 25, stiffness: 150 };
+//   const rotateX = useSpring(
+//     useTransform(mouseY, [-0.5, 0.5], [5, -5]),
+//     springConfig
+//   );
+//   const rotateY = useSpring(
+//     useTransform(mouseX, [-0.5, 0.5], [-5, 5]),
+//     springConfig
+//   );
+//   const translateX = useSpring(
+//     useTransform(mouseX, [-0.5, 0.5], [-20, 20]),
+//     springConfig
+//   );
+//   const translateY = useSpring(
+//     useTransform(mouseY, [-0.5, 0.5], [-20, 20]),
+//     springConfig
+//   );
+
+//   useEffect(() => {
+//     setTypingKey((prev) => prev + 1);
+//   }, []);
+
+//   // 마우스 이동 핸들러
+//   const handleMouseMove = (e) => {
+//     if (!containerRef.current) return;
+//     const rect = containerRef.current.getBoundingClientRect();
+//     const x = (e.clientX - rect.left) / rect.width - 0.5;
+//     const y = (e.clientY - rect.top) / rect.height - 0.5;
+//     mouseX.set(x);
+//     mouseY.set(y);
+//   };
+
+//   const TempusLogo = ({ size = 0.7 }) => (
+//     <Box
+//       sx={{
+//         width: '100%',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         transform: `scale(${size})`,
+//         transformOrigin: 'center bottom',
+//       }}
+//     >
+//       <Stack
+//         direction="row"
+//         spacing={1}
+//         sx={{
+//           display: 'flex',
+//           alignItems: 'flex-end',
+//           justifyContent: 'center',
+//         }}
+//       >
+//         <Box sx={{ transform: 'translate(13px, -1px)' }}>
+//           <AnimatedPath
+//             data={path_T}
+//             width={145}
+//             height={237}
+//             strokeWidth={36}
+//             color="#ffffff"
+//             startDelay={500}
+//             isTrigger={true}
+//           />
+//         </Box>
+//         <Box>
+//           <AnimatedPath
+//             data={path_e}
+//             width={141}
+//             height={171}
+//             strokeWidth={32}
+//             color="#ffffff"
+//             startDelay={600}
+//             isTrigger={true}
+//           />
+//         </Box>
+//         <Box>
+//           <AnimatedPath
+//             data={path_m}
+//             width={196}
+//             height={161}
+//             strokeWidth={32}
+//             color="#ffffff"
+//             startDelay={700}
+//             isTrigger={true}
+//           />
+//         </Box>
+//         <Box sx={{ transform: 'translateY(69px)' }}>
+//           <AnimatedPath
+//             data={path_p}
+//             width={160}
+//             height={237}
+//             strokeWidth={32}
+//             color="#ffffff"
+//             startDelay={800}
+//             isTrigger={true}
+//           />
+//         </Box>
+//         <Box>
+//           <AnimatedPath
+//             data={path_u}
+//             width={129}
+//             height={161}
+//             strokeWidth={32}
+//             color="#ffffff"
+//             startDelay={900}
+//             isTrigger={true}
+//           />
+//         </Box>
+//         <Box>
+//           <AnimatedPath
+//             data={path_s}
+//             width={114}
+//             height={161}
+//             strokeWidth={32}
+//             color="#ffffff"
+//             startDelay={1000}
+//             isTrigger={true}
+//           />
+//         </Box>
+//       </Stack>
+//     </Box>
+//   );
+
+//   return (
+//     <Box
+//       ref={containerRef}
+//       onMouseMove={handleMouseMove}
+//       sx={{
+//         minHeight: '100vh',
+//         width: '100vw',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//         background:
+//           'radial-gradient(circle at center, #002b55 0%, #000a1a 100%)',
+//         overflow: 'hidden',
+//         position: 'relative',
+//         perspective: '1000px', // 3D 효과를 위한 원근법 설정
+//       }}
+//     >
+//       {/* 1. 배경 그리드 (마우스에 따라 미세하게 움직임) */}
+//       <Box
+//         component={motion.div}
+//         style={{ x: translateX, y: translateY }}
+//         sx={{
+//           position: 'absolute',
+//           inset: -50, // 움직임을 고려해 여유분 설정
+//           backgroundImage: `linear-gradient(#ffffff03 1px, transparent 1px), linear-gradient(90deg, #ffffff03 1px, transparent 1px)`,
+//           backgroundSize: '50px 50px',
+//           zIndex: 1,
+//         }}
+//       />
+
+//       {/* 2. 회로도 레이어 (마우스 방향에 따라 기울어짐) */}
+//       <Box
+//         component={motion.svg}
+//         viewBox="0 0 1000 1000"
+//         style={{ rotateX, rotateY, x: translateX, y: translateY }}
+//         sx={{
+//           position: 'absolute',
+//           width: '110%',
+//           height: '110%',
+//           zIndex: 2,
+//           pointerEvents: 'none',
+//         }}
+//       >
+//         {/* --- 왼쪽 끝(Left Edge)에서 시작하는 선들 --- */}
+//         <CircuitLine d="M 0 200 L 150 200 L 200 250 L 400 250" delay={0.2} />
+//         <CircuitLine
+//           d="M 0 500 L 100 500 L 150 450 L 300 450 L 350 400"
+//           delay={0.8}
+//         />
+//         <CircuitLine d="M 0 800 L 200 800 L 250 750 L 250 650" delay={1.2} />
+
+//         {/* --- 오른쪽 끝(Right Edge)에서 시작하는 선들 --- */}
+//         <CircuitLine d="M 1000 150 L 850 150 L 800 200 L 650 200" delay={0.4} />
+//         <CircuitLine
+//           d="M 1000 400 L 900 400 L 850 450 L 850 600 L 800 650"
+//           delay={1.0}
+//         />
+//         <CircuitLine d="M 1000 700 L 800 700 L 750 750 L 600 750" delay={1.5} />
+
+//         {/* --- 상단 끝(Top Edge)에서 시작하는 선들 --- */}
+//         <CircuitLine d="M 200 0 L 200 100 L 250 150 L 250 250" delay={0.6} />
+//         <CircuitLine d="M 700 0 L 700 80 L 650 130 L 650 200" delay={1.4} />
+
+//         {/* --- 하단 끝(Bottom Edge)에서 시작하는 선들 --- */}
+//         <CircuitLine d="M 400 1000 L 400 850 L 450 800 L 550 800" delay={0.5} />
+//         <CircuitLine d="M 800 1000 L 800 900 L 850 850 L 950 850" delay={1.8} />
+
+//         {/* 중앙 부근을 가로지르는 긴 복합 선 */}
+//         <CircuitLine
+//           d="M 0 350 L 200 350 L 250 400 L 450 400 L 500 450 L 700 450"
+//           delay={2.0}
+//         />
+//       </Box>
+
+//       {/* 3. 메인 콘텐츠 */}
+//       <Box
+//         component={motion.div}
+//         style={{ rotateX, rotateY }}
+//         sx={{ position: 'relative', zIndex: 10, textAlign: 'center' }}
+//       >
+//         <TempusLogo size={0.8} />
+//         <Box sx={{ mt: 6 }}>
+//           <TypingEffect
+//             key={typingKey}
+//             texts={[
+//               'Precision Sensor Solutions',
+//               'Redefining Semiconductor Excellence',
+//             ]}
+//             fontSize="3.2rem"
+//             cursorColor="#00f2ff"
+//             textAlign="center"
+//             sx={{
+//               color: '#ffffff',
+//               fontWeight: 300,
+//               letterSpacing: '6px',
+//               textShadow: '0 0 20px rgba(0,242,255,0.5)',
+//             }}
+//           />
+//         </Box>
+//       </Box>
+
+//       {/* 글로우 효과 레이어 */}
+//       <Box
+//         sx={{
+//           position: 'absolute',
+//           inset: 0,
+//           background:
+//             'radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.05) 0%, transparent 70%)',
+//           zIndex: 1,
+//         }}
+//       />
+//     </Box>
+//   );
+// }
+
+// export default AnimationLogoSection;

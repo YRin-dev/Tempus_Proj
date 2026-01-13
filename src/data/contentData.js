@@ -12,6 +12,10 @@ export const heroContent = {
   cursorType: 'line',
 };
 
+export const heroContent2 = {
+  text: 'SENSORS',
+};
+
 // TransitionSection 콘텐츠
 export const transitionContent = {
   text: 'ABOUT',

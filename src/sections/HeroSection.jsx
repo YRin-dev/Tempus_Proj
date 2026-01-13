@@ -1,76 +1,61 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import FullPageSection from '../components/commons/container/FullPageSection';
-import TypingEffect from '../components/patterns/typoraphy/TypingEffect';
-import { heroContent } from '../data/contentData';
+import React, { useEffect } from 'react';
+import { Box } from '@mui/material';
 import useIsInView from '../hooks/useIsInView';
 import { useBackground } from '../context/BackgroundContext';
+import MaskingText from '../components/patterns/typoraphy/MaskingText';
 
-/**
- * HeroSection 컴포넌트
- *
- * 메인 히어로 섹션으로 타이핑 효과를 사용한 메시지를 표시합니다.
- * - FullPageSection(widthType="vw")으로 전체 뷰포트 폭 차지
- * - heroContent에서 메인 텍스트 가져오기
- * - TypingEffect를 사용한 타이핑 애니메이션
- * - useBackground('light') 모드 전환 + useIsInView 사용
- *
- * Props:
- * (현재 props 없음)
- *
- * Example usage:
- * <HeroSection />
- */
+import { heroContent2 } from '../data/contentData';
+// import circuitImg3 from '../assets/photo/curcuitbg.jpg';
+// import circuitImg4 from '../assets/photo/circuitimg3.png';
+import circuitImg5 from '../assets/photo/circuitimg4.png';
+
 function HeroSection() {
+  const [ref, isInView] = useIsInView({
+    threshold: 0.1, // 10% 이상 보일 때 트리거 (300vw 요소라서 낮춤)
+    triggerOnce: false, // 진출입 시마다 트리거
+  });
   const { updateBackgroundMode } = useBackground();
-  const [ref, isInView] = useIsInView({ threshold: 0.1, triggerOnce: false });
 
-  // 뷰포트에 10%만 보여도 light 모드로 전환
-  React.useEffect(() => {
+  useEffect(() => {
     if (isInView) {
-      updateBackgroundMode('light');
+      updateBackgroundMode('dark');
     }
   }, [isInView, updateBackgroundMode]);
 
   return (
-    <FullPageSection widthType="vw" ref={ref}>
-      <Box
+    <Box
+      ref={ref}
+      sx={{
+        width: '200vw', // 300vw에서 200vw로 변경
+        height: '100vh',
+
+        // 🎯 Container Query 설정 - fit typography의 핵심!
+        containerType: 'inline-size',
+        containerName: 'hero-section',
+
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+      }}
+    >
+      {/* ORDINARY 텍스트 마스킹 - 텍스트 레이아웃 유지, 배경만 조정 */}
+      <MaskingText
+        text={heroContent2.text}
+        backgroundImage={circuitImg5}
+        fontSize="calc(300vw / 8)" // 300vw 기준으로 유지 (200vw 컨테이너에서도 동일한 크기)
+        letterSpacing="-1cqw" // 글자 간격도 고정
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 4,
-          padding: { xs: '40px 20px', md: '80px 40px' },
-          textAlign: 'center',
-          width: '100%',
+          // 성능 최적화
+          willChange: 'font-size',
+          backfaceVisibility: 'hidden',
         }}
-      >
-        <Typography
-          variant="h1"
-          sx={{
-            fontSize: { xs: '2.5rem', md: '4rem', lg: '5rem' },
-            fontWeight: 900,
-            color: '#0F172A',
-            lineHeight: 1.2,
-            minHeight: { xs: '120px', md: '200px' },
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <TypingEffect
-            text={heroContent.mainText}
-            speed={heroContent.typingSpeed}
-            deleteSpeed={heroContent.deleteSpeed}
-            startDelay={heroContent.startDelay}
-            cursorType={heroContent.cursorType}
-          />
-        </Typography>
-      </Box>
-    </FullPageSection>
+      />
+
+      {/* 추가 배경 효과나 콘텐츠를 여기에 추가할 수 있음 */}
+    </Box>
   );
 }
 
 export default HeroSection;
-

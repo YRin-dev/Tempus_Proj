@@ -26,6 +26,7 @@ const TopSection = forwardRef((props, ref) => {
       <FreeHorizontalScrollSection height="100vh">
         <AnimationLogoSection />
         <HeroSection />
+
         <MissionSection />
       </FreeHorizontalScrollSection>
     </Box>

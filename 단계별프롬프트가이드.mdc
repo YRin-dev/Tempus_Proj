@@ -61,7 +61,7 @@ BackgroundLayer 컴포넌트 (commons 폴더):
 Header 컴포넌트 (commons 폴더):
 
 - 투명한 배경의 상단 고정 헤더
--  Home/Technology/ Products/ Career/Contact 메뉴 포함
+- Home/Technology/ Products/ Career/Contact 메뉴 포함
 - SectionRefsContext를 사용한 섹션 이동 네비게이션 기능
 
 1-2. 랜딩페이지 기본 섹션 구조 설정
@@ -94,6 +94,15 @@ TopSection.jsx는 FreeVerticalScrollSection 컴포넌트로 3개의 하위 섹�
    - Container Query Units 활용해 컨테이너 크기에 맞춰 텍스트 자동 조정
    - useBackground('light') 모드 전환 + @useIsInView.js 사용
    - 더 디테일한 내용을 원할때 클릭해서 디테일 회사 소개 페이지로 넘어 갈 수 있는 버튼 카드 아래에
+
+1-2. HEroSection 컴포넌트:
+
+- 300vw 초대형 폭 (뷰포트의 3배 너비)으로 가로 스크롤 영역에서 압도적 존재감
+- heroContent2에서 "PHYSICAL AI" 텍스트 가져오기
+- MaskingText 컴포넌트 + ordinary_people.png로 텍스트 모양 이미지 마스킹
+- calc(100cqw / 5) 폰트 사이즈로 300vw 폭을 완벽하게 채우는 타이포그래피
+- Container Query Units 활용해 컨테이너 크기에 맞춰 텍스트 자동 조정
+- useBackground('dark') 모드 전환
 
 강의중 작성
 각 섹션의 @useIsInView.js 의 thresold 값을 조정해서 @TransitionSection.jsx 이 10%만 보여둬 light로 설정

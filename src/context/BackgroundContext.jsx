@@ -33,11 +33,12 @@ export function BackgroundProvider({ children }) {
 
   // 배경색 정의
   const backgroundColors = {
-    light: '#ffffff',
+    light: '#F8F9FA',
     dark: '#020202',
     gray: '#6D7075',
     blue: '#1E3A8A',
     lightgray: '#F3F4F6',
+    gradation: 'linear-gradient(40deg, rgb(0, 17, 82), rgb(0, 0, 0))',
   };
 
   /**
@@ -50,7 +51,8 @@ export function BackgroundProvider({ children }) {
       mode === 'dark' ||
       mode === 'gray' ||
       mode === 'blue' ||
-      mode === 'lightgray'
+      mode === 'lightgray' ||
+      mode === 'gradation'
     ) {
       console.log(`🎨 Background mode change to: ${mode}`);
       setBackgroundMode(mode);
