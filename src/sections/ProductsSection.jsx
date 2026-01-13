@@ -64,7 +64,13 @@ const ProductsSection = forwardRef((props, ref) => {
   return (
     <Box
       ref={ref}
-      sx={{ width: '100%', backgroundColor: '#ffffff', overflow: 'hidden' }}
+      sx={{
+        width: '100%',
+        backgroundColor: '#ffffff',
+        overflow: 'hidden',
+        /* --- [추가] 마지막 제품 하단 여백 설정 --- */
+        pb: { xs: '100px', md: '100px' },
+      }}
     >
       {/* --- 섹션 헤더 --- */}
       <Box

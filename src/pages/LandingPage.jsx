@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSectionRefs } from '../context/SectionRefsContext';
 import TopSection from '../sections/TopSection';
-import TechnologySection from '../sections/TechnologySection';
+//import TechnologySection from '../sections/TechnologySection';
 import TechnologyCardsSection from '../sections/TechnologyCardsSection';
 import ProductsSection from '../sections/ProductsSection';
 import ContactSection from '../sections/ContactSection';
 import CareerSection from '../sections/CareerSection';
-
+import TransitionSection from '../sections/TransitionSection';
 /**
  * LandingPage 컴포넌트
  *
@@ -23,7 +23,7 @@ import CareerSection from '../sections/CareerSection';
 function LandingPage() {
   const {
     topSectionRef,
-    technologySectionRef,
+    // technologySectionRef,
     technologyCardsSectionRef,
     productsSectionRef,
     careerSectionRef,
@@ -33,7 +33,8 @@ function LandingPage() {
   return (
     <>
       <TopSection ref={topSectionRef} />
-      <TechnologySection ref={technologySectionRef} />
+      <TransitionSection />
+      {/* <TechnologySection ref={technologySectionRef} /> */}
       <TechnologyCardsSection ref={technologyCardsSectionRef} />
       <ProductsSection ref={productsSectionRef} />
       <CareerSection ref={careerSectionRef} />

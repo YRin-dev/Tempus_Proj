@@ -16,7 +16,6 @@
   font-display: swap;
 }
 
-
 :root {
   font-family: 'Pretendard', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   line-height: 1.5;
@@ -37,11 +36,12 @@
   padding: 0;
 }
 *::selection {
-  background-color: #0070FF;
+  background-color: #0070ff;
   color: #fff;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   display: flex;
   place-items: center;
@@ -74,5 +74,5 @@ button {
 @media (max-width: 768px) {
   html {
     font-size: 14px;
-}
+  }
 }

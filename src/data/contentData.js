@@ -5,11 +5,15 @@
 
 // HeroSection 콘텐츠
 export const heroContent = {
-  mainText: '보이지 않는 것을 봅니다',
-  typingSpeed: 60,
-  deleteSpeed: 30,
-  startDelay: 300,
+  mainText: ['보이지 않는 것을 봅니다', 'See the unseen'],
+  typingSpeed: [60, 60],
+  deleteSpeed: [30, 30],
+  startDelay: [300, 300],
   cursorType: 'line',
+};
+
+export const heroContent2 = {
+  text: 'SENSORS',
 };
 
 // TransitionSection 콘텐츠

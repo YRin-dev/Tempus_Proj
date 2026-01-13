@@ -7,8 +7,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  // useMediaQuery,
-  // useTheme,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -21,24 +21,41 @@ import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
 
 /**
  * Header 컴포넌트
- * Fixed 포지션으로 상단에 고정되며 테마 모드에 따라 색상이 변경됨
- * 모바일에서는 Drawer 메뉴, 인터랙티브 로고 포함
- * 스크롤 시 로고 축약 기능
- * SectionRefsContext를 사용하여 섹션 네비게이션 기능 제공
+ *
+ * Props:
+ * 없음 (전역 Context 사용)
+ *
+ * 기능:
+ * - 투명한 배경의 상단 고정 헤더
+ * - Home/Technology/Products/Career/Contact 메뉴 포함
+ * - SectionRefsContext를 사용한 섹션 이동 네비게이션 기능
+ * - 반응형 디자인 (모바일: Drawer 메뉴, 데스크톱: 가로 메뉴)
+ * - 배경 모드에 따른 텍스트 색상 자동 조정
  *
  * Example usage:
  * <Header />
  */
 const Header = () => {
-  const { backgroundMode } = useBackground();
+  const { isMissionSectionInView, isHeroSectionInView } = useBackground();
   const { scrollToSection } = useSectionRefs();
-  // const theme = useTheme();
-  //const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // 테마 모드에 따른 색상 결정
-  const textColor = backgroundMode === 'light' ? '#000000' : '#ffffff';
+  // HeroSection 또는 MissionSection이 보일 때만 dark 모드 스타일 적용
+  const isDarkMode = isHeroSectionInView || isMissionSectionInView;
+
+  // 기본값은 light 모드 (검은색 텍스트, 로고에 그림자)
+  // HeroSection 또는 MissionSection이 보일 때만 dark 모드 (흰색 텍스트)
+  const textColor = isDarkMode ? '#ffffff' : '#000000';
+
+  // 로고 필터: MissionSection이 보일 때는 흰색 반전, 그 외에는 기본값(light 모드)일 때 그림자 적용
+  const logoFilter = isMissionSectionInView
+    ? 'brightness(0) invert(1)' // 흰색으로 반전
+    : isDarkMode
+    ? 'none' // dark 모드일 때는 그림자 없음
+    : 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'; // 기본값(light 모드)일 때 그림자
 
   /**
    * 로고 클릭 핸들러 - TopSection으로 이동
@@ -49,17 +66,11 @@ const Header = () => {
 
   /**
    * 네비게이션 메뉴 클릭 핸들러
-   * @param {string} section - 이동할 섹션 ('products', 'contact')
+   * @param {string} section - 이동할 섹션 ('top', 'technology', 'technologyCards', 'products', 'career', 'contact')
    */
   const handleNavClick = (section) => {
     setDrawerOpen(false); // 모바일 메뉴 닫기
-    // 섹션 이름 매핑: 'projects' -> 'products'
-    const sectionMap = {
-      projects: 'products',
-      contact: 'contact',
-    };
-    const targetSection = sectionMap[section] || section;
-    scrollToSection(targetSection);
+    scrollToSection(section);
   };
 
   /**
@@ -71,9 +82,14 @@ const Header = () => {
 
   /**
    * 네비게이션 메뉴 아이템들
+   * SectionRefsContext의 섹션 이름과 매핑
+   * Technology 메뉴는 TechnologyCardsSection으로 이동
    */
   const menuItems = [
-    { label: siteMetadata.navigation.projects, section: 'projects' },
+    { label: siteMetadata.navigation.home, section: 'top' },
+    { label: siteMetadata.navigation.technology, section: 'technologyCards' },
+    { label: siteMetadata.navigation.product, section: 'products' },
+    { label: siteMetadata.navigation.career, section: 'career' },
     { label: siteMetadata.navigation.contact, section: 'contact' },
   ];
 
@@ -85,7 +101,7 @@ const Header = () => {
       sx={{
         width: 280,
         height: '100%',
-        bgcolor: backgroundMode === 'light' ? '#ffffff' : '#121212',
+        bgcolor: isDarkMode ? '#121212' : '#ffffff',
         position: 'relative',
       }}
     >
@@ -96,9 +112,7 @@ const Header = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           p: 2,
-          borderBottom: `1px solid ${
-            backgroundMode === 'light' ? '#e0e0e0' : '#333'
-          }`,
+          borderBottom: `1px solid ${isDarkMode ? '#333' : '#e0e0e0'}`,
         }}
       >
         <Typography
@@ -108,7 +122,7 @@ const Header = () => {
             color: textColor,
           }}
         >
-          {siteMetadata.brandName}
+          Menu
         </Typography>
         <IconButton onClick={toggleDrawer} sx={{ color: textColor }}>
           <CloseIcon />
@@ -125,7 +139,7 @@ const Header = () => {
               cursor: 'pointer',
               py: 2,
               '&:hover': {
-                bgcolor: backgroundMode === 'light' ? '#f5f5f5' : '#222',
+                bgcolor: isDarkMode ? '#222' : '#f5f5f5',
               },
             }}
           >
@@ -157,7 +171,7 @@ const Header = () => {
           py: { xs: 2, md: 3 },
           transition: 'all 0.7s ease-in-out',
           bgcolor: 'transparent',
-          backdropFilter: 'none',
+          //backdropFilter: isDarkMode ? 'none' : 'blur(10px)', // 기본값(light 모드)일 때 blur 적용
           borderBottom: 'none',
         }}
       >
@@ -193,16 +207,13 @@ const Header = () => {
                   width: 'auto',
                   objectFit: 'contain',
                   transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-                  filter:
-                    backgroundMode === 'light'
-                      ? 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'
-                      : 'none',
+                  filter: logoFilter,
                 }}
               />
             </Box>
 
-            {/* 데스크톱 네비게이션 메뉴
-            {!isMobile && !isProjectDetailPage && (
+            {/* 데스크톱 네비게이션 메뉴 */}
+            {!isMobile && (
               <Box
                 sx={{
                   display: 'flex',
@@ -221,9 +232,9 @@ const Header = () => {
                       fontSize: { xs: '0.875rem', md: '1rem' },
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
-                      textShadow: backgroundMode === 'light' 
-                        ? '0 1px 2px rgba(255,255,255,0.8)' 
-                        : 'none',
+                      textShadow: isDarkMode
+                        ? 'none'
+                        : '0 1px 2px rgba(255,255,255,0.8)', // 기본값(light 모드)일 때 그림자
                       '&:hover': {
                         opacity: 1,
                         transform: 'translateY(-1px)',
@@ -234,25 +245,27 @@ const Header = () => {
                   </Typography>
                 ))}
               </Box>
-            )} */}
+            )}
 
             {/* 모바일 햄버거 메뉴 */}
-            {/* {isMobile && !isProjectDetailPage && (
+            {isMobile && (
               <IconButton
                 onClick={toggleDrawer}
                 sx={{
                   color: textColor,
-                  filter: backgroundMode === 'light' 
-                    ? 'drop-shadow(0 1px 2px rgba(255,255,255,0.8))' 
-                    : 'none',
+                  filter: isDarkMode
+                    ? 'none'
+                    : 'drop-shadow(0 1px 2px rgba(255,255,255,0.8))', // 기본값(light 모드)일 때 그림자
                   '&:hover': {
-                    bgcolor: backgroundMode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)',
+                    bgcolor: isDarkMode
+                      ? 'rgba(255,255,255,0.04)'
+                      : 'rgba(0,0,0,0.04)',
                   },
                 }}
               >
                 <MenuIcon />
               </IconButton>
-            )} */}
+            )}
           </Box>
         </ContentArea>
       </Box>

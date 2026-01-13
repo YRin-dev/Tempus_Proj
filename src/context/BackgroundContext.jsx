@@ -26,6 +26,8 @@ export function BackgroundProvider({ children }) {
   const [backgroundMode, setBackgroundMode] = useState('light');
   const [currentBackgroundColor, setCurrentBackgroundColor] =
     useState('#ffffff');
+  const [isMissionSectionInView, setIsMissionSectionInView] = useState(false);
+  const [isHeroSectionInView, setIsHeroSectionInView] = useState(false);
 
   // 섹션별 배경색 등록을 위한 Map
   const sectionColorsRef = useRef(new Map());
@@ -33,11 +35,12 @@ export function BackgroundProvider({ children }) {
 
   // 배경색 정의
   const backgroundColors = {
-    light: '#ffffff',
+    light: '#F8F9FA',
     dark: '#020202',
     gray: '#6D7075',
     blue: '#1E3A8A',
     lightgray: '#F3F4F6',
+    gradation: 'linear-gradient(40deg, rgb(0, 17, 82), rgb(0, 0, 0))',
   };
 
   /**
@@ -50,7 +53,8 @@ export function BackgroundProvider({ children }) {
       mode === 'dark' ||
       mode === 'gray' ||
       mode === 'blue' ||
-      mode === 'lightgray'
+      mode === 'lightgray' ||
+      mode === 'gradation'
     ) {
       console.log(`🎨 Background mode change to: ${mode}`);
       setBackgroundMode(mode);
@@ -140,6 +144,22 @@ export function BackgroundProvider({ children }) {
     }
   }, []);
 
+  /**
+   * MissionSection 보임 상태 업데이트
+   * @param {boolean} inView - MissionSection이 뷰포트에 보이는지 여부
+   */
+  const updateMissionSectionInView = useCallback((inView) => {
+    setIsMissionSectionInView(inView);
+  }, []);
+
+  /**
+   * HeroSection 보임 상태 업데이트
+   * @param {boolean} inView - HeroSection이 뷰포트에 보이는지 여부
+   */
+  const updateHeroSectionInView = useCallback((inView) => {
+    setIsHeroSectionInView(inView);
+  }, []);
+
   const value = {
     backgroundMode,
     updateBackgroundMode,
@@ -147,6 +167,10 @@ export function BackgroundProvider({ children }) {
     backgroundColors,
     registerSection,
     unregisterSection,
+    isMissionSectionInView,
+    updateMissionSectionInView,
+    isHeroSectionInView,
+    updateHeroSectionInView,
   };
 
   return (
