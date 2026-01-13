@@ -36,27 +36,26 @@ import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
  * <Header />
  */
 const Header = () => {
-  const { backgroundMode, isMissionSectionInView, headerColorMode } =
-    useBackground();
+  const { isMissionSectionInView, isHeroSectionInView } = useBackground();
   const { scrollToSection } = useSectionRefs();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Header 색상 모드 결정 (headerColorMode가 있으면 우선 사용, 없으면 backgroundMode 사용)
-  const effectiveHeaderMode =
-    headerColorMode !== null ? headerColorMode : backgroundMode;
+  // HeroSection 또는 MissionSection이 보일 때만 dark 모드 스타일 적용
+  const isDarkMode = isHeroSectionInView || isMissionSectionInView;
 
-  // 테마 모드에 따른 색상 결정
-  const textColor = effectiveHeaderMode === 'light' ? '#000000' : '#ffffff';
+  // 기본값은 light 모드 (검은색 텍스트, 로고에 그림자)
+  // HeroSection 또는 MissionSection이 보일 때만 dark 모드 (흰색 텍스트)
+  const textColor = isDarkMode ? '#ffffff' : '#000000';
 
-  // MissionSection이 보일 때 로고를 흰색으로 반전
+  // 로고 필터: MissionSection이 보일 때는 흰색 반전, 그 외에는 기본값(light 모드)일 때 그림자 적용
   const logoFilter = isMissionSectionInView
     ? 'brightness(0) invert(1)' // 흰색으로 반전
-    : effectiveHeaderMode === 'light'
-    ? 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'
-    : 'none';
+    : isDarkMode
+    ? 'none' // dark 모드일 때는 그림자 없음
+    : 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'; // 기본값(light 모드)일 때 그림자
 
   /**
    * 로고 클릭 핸들러 - TopSection으로 이동
@@ -102,7 +101,7 @@ const Header = () => {
       sx={{
         width: 280,
         height: '100%',
-        bgcolor: effectiveHeaderMode === 'light' ? '#ffffff' : '#121212',
+        bgcolor: isDarkMode ? '#121212' : '#ffffff',
         position: 'relative',
       }}
     >
@@ -113,9 +112,7 @@ const Header = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           p: 2,
-          borderBottom: `1px solid ${
-            effectiveHeaderMode === 'light' ? '#e0e0e0' : '#333'
-          }`,
+          borderBottom: `1px solid ${isDarkMode ? '#333' : '#e0e0e0'}`,
         }}
       >
         <Typography
@@ -142,7 +139,7 @@ const Header = () => {
               cursor: 'pointer',
               py: 2,
               '&:hover': {
-                bgcolor: effectiveHeaderMode === 'light' ? '#f5f5f5' : '#222',
+                bgcolor: isDarkMode ? '#222' : '#f5f5f5',
               },
             }}
           >
@@ -174,7 +171,7 @@ const Header = () => {
           py: { xs: 2, md: 3 },
           transition: 'all 0.7s ease-in-out',
           bgcolor: 'transparent',
-          backdropFilter: 'none',
+          //backdropFilter: isDarkMode ? 'none' : 'blur(10px)', // 기본값(light 모드)일 때 blur 적용
           borderBottom: 'none',
         }}
       >
@@ -235,10 +232,9 @@ const Header = () => {
                       fontSize: { xs: '0.875rem', md: '1rem' },
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
-                      textShadow:
-                        effectiveHeaderMode === 'light'
-                          ? '0 1px 2px rgba(255,255,255,0.8)'
-                          : 'none',
+                      textShadow: isDarkMode
+                        ? 'none'
+                        : '0 1px 2px rgba(255,255,255,0.8)', // 기본값(light 모드)일 때 그림자
                       '&:hover': {
                         opacity: 1,
                         transform: 'translateY(-1px)',
@@ -257,15 +253,13 @@ const Header = () => {
                 onClick={toggleDrawer}
                 sx={{
                   color: textColor,
-                  filter:
-                    effectiveHeaderMode === 'light'
-                      ? 'drop-shadow(0 1px 2px rgba(255,255,255,0.8))'
-                      : 'none',
+                  filter: isDarkMode
+                    ? 'none'
+                    : 'drop-shadow(0 1px 2px rgba(255,255,255,0.8))', // 기본값(light 모드)일 때 그림자
                   '&:hover': {
-                    bgcolor:
-                      effectiveHeaderMode === 'light'
-                        ? 'rgba(0,0,0,0.04)'
-                        : 'rgba(255,255,255,0.04)',
+                    bgcolor: isDarkMode
+                      ? 'rgba(255,255,255,0.04)'
+                      : 'rgba(0,0,0,0.04)',
                   },
                 }}
               >

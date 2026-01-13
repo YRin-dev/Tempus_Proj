@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import { transitionContent } from '../data/contentData';
 import useIsInView from '../hooks/useIsInView';
-import { useBackground } from '../context/BackgroundContext';
 import buildingImg from '../assets/photo/buildingImg.jpeg';
 
 function TransitionSection() {
@@ -10,18 +9,6 @@ function TransitionSection() {
     threshold: 0.2,
     triggerOnce: true,
   });
-  const { updateHeaderColorMode } = useBackground();
-
-  // Header 색상을 light 모드로 설정 (HeroSection/MissionSection의 dark 모드 방해하지 않음)
-  useEffect(() => {
-    if (isContentInView) {
-      updateHeaderColorMode('light');
-    }
-    return () => {
-      // 섹션이 보이지 않을 때는 null로 리셋 (backgroundMode 사용)
-      updateHeaderColorMode(null);
-    };
-  }, [isContentInView, updateHeaderColorMode]);
 
   const [statsRef, isStatsInView] = useIsInView({
     threshold: 0.3,

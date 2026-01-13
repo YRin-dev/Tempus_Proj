@@ -14,13 +14,18 @@ function HeroSection() {
     threshold: 0.1, // 10% 이상 보일 때 트리거 (300vw 요소라서 낮춤)
     triggerOnce: false, // 진출입 시마다 트리거
   });
-  const { updateBackgroundMode } = useBackground();
+  const { updateBackgroundMode, updateHeroSectionInView } = useBackground();
 
   useEffect(() => {
     if (isInView) {
       updateBackgroundMode('dark');
     }
   }, [isInView, updateBackgroundMode]);
+
+  // HeroSection 보임 상태를 BackgroundContext에 업데이트
+  useEffect(() => {
+    updateHeroSectionInView(isInView);
+  }, [isInView, updateHeroSectionInView]);
 
   return (
     <Box
