@@ -27,6 +27,8 @@ export function BackgroundProvider({ children }) {
   const [currentBackgroundColor, setCurrentBackgroundColor] =
     useState('#ffffff');
   const [isMissionSectionInView, setIsMissionSectionInView] = useState(false);
+  // Header 전용 색상 모드 (null이면 backgroundMode 사용)
+  const [headerColorMode, setHeaderColorMode] = useState(null);
 
   // 섹션별 배경색 등록을 위한 Map
   const sectionColorsRef = useRef(new Map());
@@ -151,6 +153,16 @@ export function BackgroundProvider({ children }) {
     setIsMissionSectionInView(inView);
   }, []);
 
+  /**
+   * Header 전용 색상 모드 업데이트
+   * @param {string|null} mode - 'light', 'dark', 또는 null (null이면 backgroundMode 사용)
+   */
+  const updateHeaderColorMode = useCallback((mode) => {
+    if (mode === 'light' || mode === 'dark' || mode === null) {
+      setHeaderColorMode(mode);
+    }
+  }, []);
+
   const value = {
     backgroundMode,
     updateBackgroundMode,
@@ -160,6 +172,8 @@ export function BackgroundProvider({ children }) {
     unregisterSection,
     isMissionSectionInView,
     updateMissionSectionInView,
+    headerColorMode,
+    updateHeaderColorMode,
   };
 
   return (

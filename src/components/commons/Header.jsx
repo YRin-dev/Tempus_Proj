@@ -36,20 +36,25 @@ import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
  * <Header />
  */
 const Header = () => {
-  const { backgroundMode, isMissionSectionInView } = useBackground();
+  const { backgroundMode, isMissionSectionInView, headerColorMode } =
+    useBackground();
   const { scrollToSection } = useSectionRefs();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Header 색상 모드 결정 (headerColorMode가 있으면 우선 사용, 없으면 backgroundMode 사용)
+  const effectiveHeaderMode =
+    headerColorMode !== null ? headerColorMode : backgroundMode;
+
   // 테마 모드에 따른 색상 결정
-  const textColor = backgroundMode === 'light' ? '#000000' : '#ffffff';
+  const textColor = effectiveHeaderMode === 'light' ? '#000000' : '#ffffff';
 
   // MissionSection이 보일 때 로고를 흰색으로 반전
   const logoFilter = isMissionSectionInView
     ? 'brightness(0) invert(1)' // 흰색으로 반전
-    : backgroundMode === 'light'
+    : effectiveHeaderMode === 'light'
     ? 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'
     : 'none';
 
@@ -97,7 +102,7 @@ const Header = () => {
       sx={{
         width: 280,
         height: '100%',
-        bgcolor: backgroundMode === 'light' ? '#ffffff' : '#121212',
+        bgcolor: effectiveHeaderMode === 'light' ? '#ffffff' : '#121212',
         position: 'relative',
       }}
     >
@@ -109,7 +114,7 @@ const Header = () => {
           alignItems: 'center',
           p: 2,
           borderBottom: `1px solid ${
-            backgroundMode === 'light' ? '#e0e0e0' : '#333'
+            effectiveHeaderMode === 'light' ? '#e0e0e0' : '#333'
           }`,
         }}
       >
@@ -137,7 +142,7 @@ const Header = () => {
               cursor: 'pointer',
               py: 2,
               '&:hover': {
-                bgcolor: backgroundMode === 'light' ? '#f5f5f5' : '#222',
+                bgcolor: effectiveHeaderMode === 'light' ? '#f5f5f5' : '#222',
               },
             }}
           >
@@ -231,7 +236,7 @@ const Header = () => {
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       textShadow:
-                        backgroundMode === 'light'
+                        effectiveHeaderMode === 'light'
                           ? '0 1px 2px rgba(255,255,255,0.8)'
                           : 'none',
                       '&:hover': {
@@ -253,12 +258,12 @@ const Header = () => {
                 sx={{
                   color: textColor,
                   filter:
-                    backgroundMode === 'light'
+                    effectiveHeaderMode === 'light'
                       ? 'drop-shadow(0 1px 2px rgba(255,255,255,0.8))'
                       : 'none',
                   '&:hover': {
                     bgcolor:
-                      backgroundMode === 'light'
+                      effectiveHeaderMode === 'light'
                         ? 'rgba(0,0,0,0.04)'
                         : 'rgba(255,255,255,0.04)',
                   },

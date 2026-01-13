@@ -697,9 +697,10 @@
 //export default TechnologySection;
 
 //Vv05
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Grid, Container } from '@mui/material';
 import useIsInView from '../hooks/useIsInView';
+import { useBackground } from '../context/BackgroundContext';
 
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 import AirIcon from '@mui/icons-material/Air';
@@ -712,6 +713,18 @@ function TechnologySection() {
     threshold: 0.3,
     triggerOnce: true,
   });
+  const { updateHeaderColorMode } = useBackground();
+
+  // Header 색상을 light 모드로 설정 (HeroSection/MissionSection의 dark 모드 방해하지 않음)
+  useEffect(() => {
+    if (isInView) {
+      updateHeaderColorMode('light');
+    }
+    return () => {
+      // 섹션이 보이지 않을 때는 null로 리셋 (backgroundMode 사용)
+      updateHeaderColorMode(null);
+    };
+  }, [isInView, updateHeaderColorMode]);
 
   const techData = [
     {

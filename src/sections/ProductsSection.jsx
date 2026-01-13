@@ -1,7 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { Box, Typography, Grid, Container, alpha } from '@mui/material';
 import { getProjectsList } from '../data/productData';
 import useIsInView from '../hooks/useIsInView';
+import { useBackground } from '../context/BackgroundContext';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const DecorationShape = ({ top, left, right, bottom, size, color, delay }) => (
@@ -34,6 +35,18 @@ const ProductsSection = forwardRef((props, ref) => {
     threshold: 0.2,
     triggerOnce: true,
   });
+  const { updateHeaderColorMode } = useBackground();
+
+  // Header 색상을 light 모드로 설정 (HeroSection/MissionSection의 dark 모드 방해하지 않음)
+  useEffect(() => {
+    if (isHeaderInView) {
+      updateHeaderColorMode('light');
+    }
+    return () => {
+      // 섹션이 보이지 않을 때는 null로 리셋 (backgroundMode 사용)
+      updateHeaderColorMode(null);
+    };
+  }, [isHeaderInView, updateHeaderColorMode]);
 
   const colorPresets = [
     {
