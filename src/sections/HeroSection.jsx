@@ -26,7 +26,7 @@ function HeroSection() {
     <Box
       ref={ref}
       sx={{
-        width: '200vw', // 300vw에서 200vw로 변경
+        width: '230vw', // 300vw에서 200vw로 변경
         height: '100vh',
 
         // 🎯 Container Query 설정 - fit typography의 핵심!

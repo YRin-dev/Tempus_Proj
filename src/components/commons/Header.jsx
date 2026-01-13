@@ -36,7 +36,7 @@ import tempusLogoImage from '../../assets/photo/Tempuslogo.png';
  * <Header />
  */
 const Header = () => {
-  const { backgroundMode } = useBackground();
+  const { backgroundMode, isMissionSectionInView } = useBackground();
   const { scrollToSection } = useSectionRefs();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -45,6 +45,13 @@ const Header = () => {
 
   // 테마 모드에 따른 색상 결정
   const textColor = backgroundMode === 'light' ? '#000000' : '#ffffff';
+
+  // MissionSection이 보일 때 로고를 흰색으로 반전
+  const logoFilter = isMissionSectionInView
+    ? 'brightness(0) invert(1)' // 흰색으로 반전
+    : backgroundMode === 'light'
+    ? 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'
+    : 'none';
 
   /**
    * 로고 클릭 핸들러 - TopSection으로 이동
@@ -198,10 +205,7 @@ const Header = () => {
                   width: 'auto',
                   objectFit: 'contain',
                   transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-                  filter:
-                    backgroundMode === 'light'
-                      ? 'drop-shadow(0 1px 3px rgba(255,255,255,0.8)) drop-shadow(0 1px 2px rgba(255,255,255,0.6))'
-                      : 'none',
+                  filter: logoFilter,
                 }}
               />
             </Box>

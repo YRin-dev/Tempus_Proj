@@ -26,6 +26,7 @@ export function BackgroundProvider({ children }) {
   const [backgroundMode, setBackgroundMode] = useState('light');
   const [currentBackgroundColor, setCurrentBackgroundColor] =
     useState('#ffffff');
+  const [isMissionSectionInView, setIsMissionSectionInView] = useState(false);
 
   // 섹션별 배경색 등록을 위한 Map
   const sectionColorsRef = useRef(new Map());
@@ -142,6 +143,14 @@ export function BackgroundProvider({ children }) {
     }
   }, []);
 
+  /**
+   * MissionSection 보임 상태 업데이트
+   * @param {boolean} inView - MissionSection이 뷰포트에 보이는지 여부
+   */
+  const updateMissionSectionInView = useCallback((inView) => {
+    setIsMissionSectionInView(inView);
+  }, []);
+
   const value = {
     backgroundMode,
     updateBackgroundMode,
@@ -149,6 +158,8 @@ export function BackgroundProvider({ children }) {
     backgroundColors,
     registerSection,
     unregisterSection,
+    isMissionSectionInView,
+    updateMissionSectionInView,
   };
 
   return (

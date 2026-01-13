@@ -17,7 +17,7 @@ import useIsInView from '../../../hooks/useIsInView';
  * @param {object} sx - 추가 스타일 [Optional]
  *
  * Example usage:
- * <FadeInTypography 
+ * <FadeInTypography
  *   text="Hello world from designers"
  *   variant="h2"
  *   direction="up"
@@ -42,7 +42,7 @@ function FadeInTypography({
   const timeoutsRef = useRef([]);
 
   // 텍스트를 단어별로 분리
-  const words = text.split(' ').filter(word => word.trim() !== '');
+  const words = text.split(' ').filter((word) => word.trim() !== '');
 
   // 방향별 초기 스타일 설정
   const getInitialStyle = (direction) => {
@@ -101,13 +101,13 @@ function FadeInTypography({
   useEffect(() => {
     if (isInView && !hasAnimated) {
       setHasAnimated(true);
-      
+
       // 각 단어에 대해 딜레이를 주고 보이게 설정
       words.forEach((_, index) => {
         const timeout = setTimeout(() => {
-          setVisibleWords(prev => new Set([...prev, index]));
+          setVisibleWords((prev) => new Set([...prev, index]));
         }, index * wordDelay);
-        
+
         timeoutsRef.current.push(timeout);
       });
     }
@@ -135,20 +135,18 @@ function FadeInTypography({
       sx={{
         display: 'inline-block',
         overflow: 'hidden', // 애니메이션 중 요소가 컨테이너를 벗어나지 않도록
-        ...sx,
       }}
       {...props}
     >
-      <Typography variant={variant} color={color}>
+      <Typography variant={variant} color={color} sx={sx}>
         {words.map((word, index) => {
           const isVisible = visibleWords.has(index);
-          const style = isVisible ? getVisibleStyle() : getInitialStyle(direction);
-          
+          const style = isVisible
+            ? getVisibleStyle()
+            : getInitialStyle(direction);
+
           return (
-            <span
-              key={`${word}-${index}`}
-              style={style}
-            >
+            <span key={`${word}-${index}`} style={style}>
               {word}
             </span>
           );
@@ -169,4 +167,4 @@ FadeInTypography.propTypes = {
   sx: PropTypes.object,
 };
 
-export default FadeInTypography; 
+export default FadeInTypography;

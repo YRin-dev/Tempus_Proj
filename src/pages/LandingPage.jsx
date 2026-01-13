@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSectionRefs } from '../context/SectionRefsContext';
 import TopSection from '../sections/TopSection';
-import TechnologySection from '../sections/TechnologySection';
+//import TechnologySection from '../sections/TechnologySection';
 import TechnologyCardsSection from '../sections/TechnologyCardsSection';
 import ProductsSection from '../sections/ProductsSection';
 import ContactSection from '../sections/ContactSection';
@@ -23,7 +23,7 @@ import TransitionSection from '../sections/TransitionSection';
 function LandingPage() {
   const {
     topSectionRef,
-    technologySectionRef,
+    // technologySectionRef,
     technologyCardsSectionRef,
     productsSectionRef,
     careerSectionRef,
@@ -34,7 +34,7 @@ function LandingPage() {
     <>
       <TopSection ref={topSectionRef} />
       <TransitionSection />
-      <TechnologySection ref={technologySectionRef} />
+      {/* <TechnologySection ref={technologySectionRef} /> */}
       <TechnologyCardsSection ref={technologyCardsSectionRef} />
       <ProductsSection ref={productsSectionRef} />
       <CareerSection ref={careerSectionRef} />
